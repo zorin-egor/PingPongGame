@@ -26,7 +26,7 @@ class Button : public View {
 											 	_positionAttr,
 											 	_textureAttr,
 											 	_transformationAttr,
-											 	Button::getVerticesCoords(_x, _y, _width, _height, _verticesCoords),
+											 	Matrix::setVerticesCoords(_x, _y, _width, _height, _verticesCoords),
 											    _textureCoords,
 											    _matrixCoords),
 
@@ -61,7 +61,6 @@ class Button : public View {
 		bool pressed;
 
 		void setTextureCoords(bool isPressed);
-		GLfloat * getVerticesCoords(float x, float y, float width, float height, GLfloat * verticesCoords);
 };
 
 #endif /* BUTTON_H_ */

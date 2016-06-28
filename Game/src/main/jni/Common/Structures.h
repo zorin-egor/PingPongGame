@@ -184,6 +184,27 @@ public:
 
         return textureCoords;
     }
+
+    static GLfloat * setVerticesCoords(float x, float y, float width, float height, GLfloat * verticesCoords){
+
+        // Top left
+        verticesCoords[0] = x;
+        verticesCoords[1] = y;
+
+        // Bottom left
+        verticesCoords[2] = x;
+        verticesCoords[3] = y - height;
+
+        // Bottom right
+        verticesCoords[4] = x + width;
+        verticesCoords[5] = y - height;
+
+        // Top right
+        verticesCoords[6] = x + width;
+        verticesCoords[7] = y;
+
+        return verticesCoords;
+    }
 };
 
 #endif //GAME_PINGPONG_STRUCTURES_H

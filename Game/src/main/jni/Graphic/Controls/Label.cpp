@@ -13,33 +13,12 @@ void  Label::init(){
                                           positionAttr,
                                           textureAttr,
                                           transformationAttr,
-                                          getVerticesCoords(x + width_one * (float)i, width_one, matrix->getDefaultVerticesCoords()),
+                                          Matrix::setVerticesCoords(x + width_one * (float)i, y, width_one, height, matrix->getDefaultVerticesCoords()),
                                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 4, 4, position),
                                           matrix->getDefaultMatrix4x4());
             labelLinks.push_back(partOfLabel);
         }
     }
-}
-
-GLfloat * Label::getVerticesCoords(float _x, float _width, GLfloat * verticesCoords){
-
-    // Top left
-    verticesCoords[0] = _x;
-    verticesCoords[1] = y;
-
-    // Bottom left
-    verticesCoords[2] = _x;
-    verticesCoords[3] = y - height;
-
-    // Bottom right
-    verticesCoords[4] = _x + _width;
-    verticesCoords[5] = y - height;
-
-    // Top right
-    verticesCoords[6] = _x + _width;
-    verticesCoords[7] = y;
-
-    return verticesCoords;
 }
 
 void Label::setNumber(std::string _number){

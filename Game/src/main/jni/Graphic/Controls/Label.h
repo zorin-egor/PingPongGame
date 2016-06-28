@@ -46,7 +46,6 @@ class Label {
         };
 
     private:
-        GLfloat * getVerticesCoords(float x, float width, GLfloat * verticesCoords);
         void init();
 
         Matrix * matrix;
