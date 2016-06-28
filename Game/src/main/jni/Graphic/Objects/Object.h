@@ -2,13 +2,13 @@
 #define GAME_PINGPONG_OBJECT_H
 
 
+#include <Common/Structures.h>
 #include "Graphic/View.h"
 
 class Object : public View {
 
     public:
-        Object(bool _isUpButton,
-               float _x,
+        Object(float _x,
                float _y,
                float _width,
                float _height,
@@ -24,17 +24,24 @@ class Object : public View {
                                                 _positionAttr,
                                                 _textureAttr,
                                                 _transformationAttr,
-                                                _verticesCoords,
+                                                Matrix::setVerticesCoords(x, y, width, height, _verticesCoords),
                                                 _textureCoords,
-                                                _matrixCoords )
+                                                _matrixCoords ),
+                                          x(_x),
+                                          y(_y),
+                                          width(_width),
+                                          height(_height)
         {
-
-
 
         }
 
+    bool isObjectsInteract(Object * A, Object * B);
 
     private:
+
+            // Object position
+            float width, height;
+            float x, y;
 
 };
 
