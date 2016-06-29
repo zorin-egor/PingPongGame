@@ -37,11 +37,20 @@ class Object : public View {
 
     bool isObjectsInteract(Object * A, Object * B);
 
-    private:
+    float getWidth() const {
+        return width;
+    }
 
-            // Object position
-            float width, height;
-            float x, y;
+    float getHeight() const {
+        return height;
+    }
+
+    private:
+        float getMinimalCoords(GLfloat * a, GLfloat * b);
+
+        // Object position
+        float width, height;
+        float x, y;
 
 };
 

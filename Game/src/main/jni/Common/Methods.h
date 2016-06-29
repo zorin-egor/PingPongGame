@@ -9,15 +9,15 @@ class Methods {
 
     public:
 
-        static float getFullRandom(){
+        inline static float getFullRandom(){
             return (static_cast <float> (rand()) / static_cast <float> (RAND_MAX) * 2) - 1;
         }
 
-        static float getShortRandom(){
+        inline static float getShortRandom(){
             return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
         }
 
-        static float convertCoordinatesToOpenGL(bool inverse, int screenSize, float coordinate){
+        inline static float convertCoordinatesToOpenGL(bool inverse, int screenSize, float coordinate){
             return (coordinate / screenSize * 2 - 1) * (inverse? -1 : 1);
         }
 
@@ -48,6 +48,11 @@ class Methods {
                 }
 
             return result;
+        }
+
+        template <class A>
+        inline static A getMin(A a, A b){
+            return a < b? a : b;
         }
 };
 
