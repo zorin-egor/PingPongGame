@@ -46,7 +46,7 @@ class Object : public View {
     }
 
     private:
-        float getMinimalCoords(GLfloat * a, GLfloat * b);
+        float equalCoords(GLfloat * a, GLfloat * b);
 
         // Object position
         float width, height;

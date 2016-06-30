@@ -4,6 +4,7 @@
 #include <ctime>
 #include <stdlib.h>
 #include <string>
+#include <GLES2/gl2.h>
 
 class Methods {
 
@@ -53,6 +54,11 @@ class Methods {
         template <class A>
         inline static A getMin(A a, A b){
             return a < b? a : b;
+        }
+
+        template <class A>
+        inline static A getMax(A a, A b){
+            return a > b? a : b;
         }
 };
 
