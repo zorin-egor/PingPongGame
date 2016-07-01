@@ -16,10 +16,10 @@ extern "C" {
         line1[3] = 0.5f;
 
         GLfloat * line2 = new GLfloat[4];
-        line1[0] = 0.0f;
-        line1[1] = 0.5f;
-        line1[2] = 0.5f;
-        line1[3] = 0.0f;
+        line2[0] = 0.0f;
+        line2[1] = 0.5f;
+        line2[2] = 0.5f;
+        line2[3] = 0.0f;
 
         GLfloat * point = new GLfloat[2];
 
