@@ -1,0 +1,10 @@
+#ifndef GAME_PINGPONG_PLATFORM_H
+#define GAME_PINGPONG_PLATFORM_H
+
+
+class Platform {
+
+};
+
+
+#endif //GAME_PINGPONG_PLATFORM_H

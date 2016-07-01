@@ -8,7 +8,8 @@
 class Object : public View {
 
     public:
-        Object(float _x,
+        Object(float _step,
+               float _x,
                float _y,
                float _width,
                float _height,
@@ -30,12 +31,12 @@ class Object : public View {
                                           x(_x),
                                           y(_y),
                                           width(_width),
-                                          height(_height)
+                                          height(_height),
+                                          step(_step)
         {
-
+            dx = 0;
+            dy = 0;
         }
-
-    bool isObjectsInteract(Object * A, Object * B);
 
     float getWidth() const {
         return width;
@@ -45,13 +46,39 @@ class Object : public View {
         return height;
     }
 
-    private:
-        float equalCoords(GLfloat * a, GLfloat * b);
+    void setStep(float _step) {
+        step = _step;
+    }
 
+    float getDx() const {
+        return dx;
+    }
+
+    void setDx(float _dx) {
+        dx = _dx;
+    }
+
+    float getDy() const {
+        return dy;
+    }
+
+    void setDy(float _dy) {
+        dy = _dy;
+    }
+
+    virtual bool collision(Object object) = 0;
+    virtual bool move() = 0;
+
+    virtual ~Object(){
+
+    }
+
+    private:
         // Object position
         float width, height;
         float x, y;
-
+        float dx, dy;
+        float step;
 };
 
 

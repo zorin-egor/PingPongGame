@@ -15,7 +15,8 @@ class Line {
             A a, b, c;
         };
 
-        static float determinate(GLfloat a, GLfloat b, GLfloat c, GLfloat d) {
+        template <class A>
+        static float determinate(A a, A b, A c, A d) {
             return a * d - b * c;
         }
 
@@ -28,7 +29,8 @@ class Line {
             return coeff;
         }
 
-        inline static bool between (float a, float b, float c) {
+        template <class A>
+        inline static bool between (A a, A b, A c) {
             return Methods::getMin(a,b) <= c + Line::getEps() && c <= Methods::getMax(a,b) + Line::getEps();
         }
 
@@ -69,14 +71,26 @@ class Line {
             for(int i = 0; i < 4; i++){
                 lineRect1[0] = rect1[i * 2];
                 lineRect1[1] = rect1[i * 2 + 1];
-                lineRect1[2] = rect1[i * 2 + 2];
-                lineRect1[3] = rect1[i * 2 + 3];
+
+                if(i != 3){
+                    lineRect1[2] = rect1[i * 2 + 2];
+                    lineRect1[3] = rect1[i * 2 + 3];
+                } else {
+                        lineRect1[2] = rect1[0];
+                        lineRect1[3] = rect1[1];
+                    }
 
                 for(int j = 0; j < 4; j++){
                     lineRect2[0] = rect2[j * 2];
                     lineRect2[1] = rect2[j * 2 + 1];
-                    lineRect2[2] = rect2[j * 2 + 2];
-                    lineRect2[3] = rect2[j * 2 + 3];
+
+                    if(j != 3){
+                        lineRect2[2] = rect2[j * 2 + 2];
+                        lineRect2[3] = rect2[j * 2 + 3];
+                    } else {
+                            lineRect2[2] = rect2[0];
+                            lineRect2[3] = rect2[1];
+                        }
 
                     if(crossPoints->size() < 4){
                         intersect(lineRect1, lineRect2, crossPoints);
