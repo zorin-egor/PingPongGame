@@ -3,48 +3,89 @@
 
 #include <GLES2/gl2.h>
 #include <cmath>
+#include <vector>
+#include <Main/Main.h>
 
 class Line {
 
     private:
 
+        template <class A>
         struct line {
-            float a, b, c;
+            A a, b, c;
         };
 
-        static float determinate(float a, float b, float c, float d) {
+        static float determinate(GLfloat a, GLfloat b, GLfloat c, GLfloat d) {
             return a * d - b * c;
         }
 
-        static line coefficients(float x1, float y1, float x2, float y2){
-            line coeff;
+        template <class A>
+        static line<A> coefficients(A x1, A y1, A x2, A y2){
+            line<A> coeff;
             coeff.a = y1 - y2;
             coeff.b = x2 - x1;
-            coeff.c = x1 * y2 - x2 * y1;
+            coeff.c = -1 * coeff.a * x1 - coeff.b * y1;
             return coeff;
+        }
+
+        inline static bool between (float a, float b, float c) {
+            return Methods::getMin(a,b) <= c + Line::getEps() && c <= Methods::getMax(a,b) + Line::getEps();
+        }
+
+        inline const static float getEps(){
+            return 0.00000000001f;
         }
 
     public:
 
-        static bool intersect(GLfloat * line1, GLfloat * line2, GLfloat * point) {
-            line coeff1 = Line::coefficients(line1[0], line1[1], line1[2], line1[3]);
-            line coeff2 = Line::coefficients(line2[0], line2[1], line2[2], line2[3]);
+        static bool intersect (GLfloat * line1, GLfloat * line2, std::vector<GLfloat> * twoPoints) {
+            line<float> coeff1 = Line::coefficients(line1[0], line1[1], line1[2], line1[3]);
+            line<float> coeff2 = Line::coefficients(line2[0], line2[1], line2[2], line2[3]);
 
-            float zn = Line::determinate(coeff1.a, coeff1.b, coeff2.a, coeff2.b);
+            float D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
+            float Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
+            float Dy = -determinate (coeff1.a, coeff1.c, coeff2.a, coeff2.c);
 
-            if (fabsf(zn) < 0.00000001f)
+            if (fabs(D0) < Line::getEps())
                 return false;
 
-            float aC = coeff1.b * line1[1] + coeff1.a * line1[0];
-            float bC = coeff2.b * line2[1] + coeff2.a * line2[0];
+            float pX = Dx / D0;
+            float pY = Dy / D0;
 
-            float DX = determinate(aC, coeff1.b, bC, coeff2.b);
-            float DY = determinate(coeff1.a, aC, coeff2.a, bC);
+            if(between (line1[0], line1[2], pX) && between (line1[1], line1[3], pY)
+               && between (line2[0], line2[2], pX) && between (line2[1], line2[3], pY)){
+                twoPoints->push_back(pX);
+                twoPoints->push_back(pY);
+                return true;
+            }
 
-            point[0] = DX / zn;
-            point[1] = DY / zn;
+            return false;
+        }
 
-            return true;
+        static bool intersectRect(GLfloat * rect1, GLfloat * rect2, std::vector<GLfloat> * crossPoints){
+            GLfloat lineRect1[4];
+            GLfloat lineRect2[4];
+
+            for(int i = 0; i < 4; i++){
+                lineRect1[0] = rect1[i * 2];
+                lineRect1[1] = rect1[i * 2 + 1];
+                lineRect1[2] = rect1[i * 2 + 2];
+                lineRect1[3] = rect1[i * 2 + 3];
+
+                for(int j = 0; j < 4; j++){
+                    lineRect2[0] = rect2[j * 2];
+                    lineRect2[1] = rect2[j * 2 + 1];
+                    lineRect2[2] = rect2[j * 2 + 2];
+                    lineRect2[3] = rect2[j * 2 + 3];
+
+                    if(crossPoints->size() < 4){
+                        intersect(lineRect1, lineRect2, crossPoints);
+                    } else
+                        return true;
+                }
+            }
+
+            return false;
         }
 };
 

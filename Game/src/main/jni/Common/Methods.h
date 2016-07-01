@@ -60,6 +60,13 @@ class Methods {
         inline static A getMax(A a, A b){
             return a > b? a : b;
         }
+
+        template <class A>
+        inline static void swap(A & a, A & b){
+            A temp = b;
+            b = a;
+            a = temp;
+        }
 };
 
 #endif //GAME_PINGPONG_METHODS_H
