@@ -1,8 +1,7 @@
 #ifndef GAME_PINGPONG_OBJECT_H
 #define GAME_PINGPONG_OBJECT_H
 
-
-#include <Common/Structures.h>
+#include "Common/Structures.h"
 #include "Graphic/View.h"
 
 class Object : public View {
@@ -25,14 +24,14 @@ class Object : public View {
                                                 _positionAttr,
                                                 _textureAttr,
                                                 _transformationAttr,
-                                                Matrix::setVerticesCoords(x, y, width, height, _verticesCoords),
+                                                Matrix::setVerticesCoords(_x, _y, _width, _height, _verticesCoords),
                                                 _textureCoords,
                                                 _matrixCoords ),
+                                          step(_step),
                                           x(_x),
                                           y(_y),
                                           width(_width),
-                                          height(_height),
-                                          step(_step)
+                                          height(_height)
         {
             dx = 0;
             dy = 0;
@@ -66,19 +65,29 @@ class Object : public View {
         dy = _dy;
     }
 
-    virtual bool collision(Object object) = 0;
-    virtual bool move() = 0;
+    std::vector<GLfloat> * getCrossPoints() {
+        return &crossPoints;
+    }
+
+    void move();
+    virtual bool collision(Object * object) = 0;
 
     virtual ~Object(){
 
     }
 
-    private:
+private:
+        // Points of cross. Any cross has 4 points.
+        std::vector<GLfloat> crossPoints;
+
         // Object position
         float width, height;
         float x, y;
         float dx, dy;
         float step;
+
+        // Play field
+        GLfloat * field;
 };
 
 

@@ -6,6 +6,8 @@
 #include <string>
 #include <stdlib.h>
 
+#include "Graphic/Objects/Platform/Platform.h"
+#include "Graphic/Objects/Object.h"
 #include "Graphic/Controls/Label.h"
 #include "Graphic/Controls/Button.h"
 #include "Particles/Particles.h"
@@ -14,7 +16,6 @@
 #include "Textures/ManageTexture.h"
 #include "Common/Structures.h"
 #include "Common/LogGL.h"
-
 
 class Main {
 
@@ -27,6 +28,7 @@ class Main {
                 assetManager(_assetManager)
         {
             deltaRotate = -3.14f;
+            deltaStep = 0.1f;
             srand(static_cast <unsigned> (time(0)));
             init();
             createObjects();
@@ -40,6 +42,9 @@ class Main {
             delete right;
             delete textures;
             delete bordDown;
+            delete field;
+            delete player;
+            delete bot;
         }
 
         void step();
@@ -148,6 +153,9 @@ class Main {
         View * bordDown;
         View * bordUp;
         Label * speed;
+        Object * field;
+        Platform * player;
+        Platform * bot;
 
         Button * left;
         Button * playPause;
@@ -156,6 +164,7 @@ class Main {
         ManageTexture * textures;
 
         float deltaRotate;
+        float deltaStep;
 };
 
 

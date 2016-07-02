@@ -1,8 +1,46 @@
 #ifndef GAME_PINGPONG_PLATFORM_H
 #define GAME_PINGPONG_PLATFORM_H
 
+#include "Graphic/Objects/Object.h"
+#include "Common/Methods.h"
+#include "Common/Intersect.h"
 
-class Platform {
+class Platform : public Object {
+
+    public:
+        Platform(float _step,
+                 float _x,
+                 float _y,
+                 float _width,
+                 float _height,
+                 GLuint _textureID,
+                 GLuint _programID,
+                 GLint _positionAttr,
+                 GLint _textureAttr,
+                 GLint _transformationAttr,
+                 GLfloat * _verticesCoords,
+                 GLfloat * _textureCoords,
+                 GLfloat * _matrixCoords) : Object( _step,
+                                                    _x,
+                                                    _y,
+                                                    _width,
+                                                    _height,
+                                                    _textureID,
+                                                    _programID,
+                                                    _positionAttr,
+                                                    _textureAttr,
+                                                    _transformationAttr,
+                                                    _verticesCoords,
+                                                    _textureCoords,
+                                                    _matrixCoords )
+
+            {
+
+            }
+
+    bool collision(Object * object);
+
+    private:
 
 };
 

@@ -101,6 +101,7 @@ void Main::createObjects(){
                       Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                       matrix->getDefaultMatrix4x4());
 
+    // Right button
     right = new Button(true,
                        0.3f, -0.75f, 0.7f, 0.2f,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
@@ -112,6 +113,7 @@ void Main::createObjects(){
                        Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 2, Matrix::ONE),
                        matrix->getDefaultMatrix4x4());
 
+    // Play pause button
     playPause = new Button(false,
                            -0.22f, -0.75f, 0.5f, 0.2f,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
@@ -123,6 +125,7 @@ void Main::createObjects(){
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
                            matrix->getDefaultMatrix4x4());
 
+    // Label of speed
     speed = new Label(  matrix,
                         textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                         polygons,
@@ -130,10 +133,46 @@ void Main::createObjects(){
                         polygonsTextureAttr,
                         polygonsTransformationAttr,
                         "000",
-                        -0.5f,
-                        0.95f,
-                        1.0f,
-                        0.1f);
+                        -0.5f, 0.95f, 1.0f, 0.1f);
+
+    // Field
+    field = new Platform( deltaStep,
+                           -1.0f, 1.0f, 2.0f, 2.0f,
+                           textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                           polygons,
+                           polygonsPositionAttr,
+                           polygonsTextureAttr,
+                           polygonsTransformationAttr,
+                           matrix->getDefaultVerticesCoords(),
+                           matrix->getDefaultTextureCoord(),
+                           matrix->getDefaultMatrix4x4());
+
+    field->setVisible(false);
+
+
+    // Player platform
+    player = new Platform( deltaStep,
+                           -0.25, -0.5f, 0.7f, 0.1f,
+                           textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                           polygons,
+                           polygonsPositionAttr,
+                           polygonsTextureAttr,
+                           polygonsTransformationAttr,
+                           matrix->getDefaultVerticesCoords(),
+                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
+                           matrix->getDefaultMatrix4x4());
+
+    // Bot platform
+    bot = new Platform( deltaStep,
+                           -0.25, 0.7f, 0.7f, 0.1f,
+                           textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                           polygons,
+                           polygonsPositionAttr,
+                           polygonsTextureAttr,
+                           polygonsTransformationAttr,
+                           matrix->getDefaultVerticesCoords(),
+                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
+                           matrix->getDefaultMatrix4x4());
 }
 
 void Main::step(){
@@ -143,6 +182,7 @@ void Main::step(){
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGLError("Main::step - glClear");
 
+    // Draw
     graphicInterface();
 }
 
@@ -174,6 +214,12 @@ void Main::graphicInterface(){
 
     // Button playPause
     playPause->render();
+
+    // Player
+    player->render();
+
+    // Bot
+    bot->render();
 }
 
 void Main::rotateBackground(){
