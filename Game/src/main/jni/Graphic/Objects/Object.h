@@ -35,48 +35,56 @@ class Object : public View {
         {
             dx = 0;
             dy = 0;
+
+            defaultCoords = new GLfloat[8];
+            memcpy(defaultCoords, getPolygonCoordinates(), 8 * sizeof(GLfloat));
         }
 
-    float getWidth() const {
-        return width;
-    }
+        float getWidth() const {
+            return width;
+        }
 
-    float getHeight() const {
-        return height;
-    }
+        float getHeight() const {
+            return height;
+        }
 
-    void setStep(float _step) {
-        step = _step;
-    }
+        void setStep(float _step) {
+            step = _step;
+        }
 
-    float getDx() const {
-        return dx;
-    }
+        float getStep() {
+            return step;
+        }
 
-    void setDx(float _dx) {
-        dx = _dx;
-    }
+        float getDx() const {
+            return dx;
+        }
 
-    float getDy() const {
-        return dy;
-    }
+        void setDx(float _dx) {
+            dx = _dx;
+        }
 
-    void setDy(float _dy) {
-        dy = _dy;
-    }
+        float getDy() const {
+            return dy;
+        }
 
-    std::vector<GLfloat> * getCrossPoints() {
-        return &crossPoints;
-    }
+        void setDy(float _dy) {
+            dy = _dy;
+        }
 
-    void move();
-    virtual bool collision(Object * object) = 0;
+        std::vector<GLfloat> * getCrossPoints() {
+            return &crossPoints;
+        }
 
-    virtual ~Object(){
+        void setDefaultPosition();
+        void move();
+        virtual bool collision(Object * object) = 0;
 
-    }
+        virtual ~Object(){
 
-private:
+        }
+
+    private:
         // Points of cross. Any cross has 4 points.
         std::vector<GLfloat> crossPoints;
 
@@ -86,8 +94,7 @@ private:
         float dx, dy;
         float step;
 
-        // Play field
-        GLfloat * field;
+        GLfloat * defaultCoords;
 };
 
 

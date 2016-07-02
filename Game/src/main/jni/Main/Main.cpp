@@ -136,8 +136,8 @@ void Main::createObjects(){
                         -0.5f, 0.95f, 1.0f, 0.1f);
 
     // Field
-    field = new Platform( deltaStep,
-                           -1.0f, 1.0f, 2.0f, 2.0f,
+    field = new Platform( deltaStepPlatforms,
+                           -1.0f, 0.8f, 2.0f, 1.6f,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
                            polygonsPositionAttr,
@@ -151,8 +151,8 @@ void Main::createObjects(){
 
 
     // Player platform
-    player = new Platform( deltaStep,
-                           -0.25, -0.5f, 0.7f, 0.1f,
+    player = new Platform( deltaStepPlatforms,
+                           -0.25, -0.4f, 0.7f, 0.1f,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
                            polygonsPositionAttr,
@@ -163,7 +163,7 @@ void Main::createObjects(){
                            matrix->getDefaultMatrix4x4());
 
     // Bot platform
-    bot = new Platform( deltaStep,
+    bot = new Platform( deltaStepPlatforms,
                            -0.25, 0.7f, 0.7f, 0.1f,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
@@ -173,6 +173,18 @@ void Main::createObjects(){
                            matrix->getDefaultVerticesCoords(),
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
                            matrix->getDefaultMatrix4x4());
+
+    // Bot platform
+    ball = new Ball( deltaStepBall,
+                    0.0, 0.0f, 0.2f, 0.2f,
+                    textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                    polygons,
+                    polygonsPositionAttr,
+                    polygonsTextureAttr,
+                    polygonsTransformationAttr,
+                    matrix->getDefaultVerticesCoords(),
+                    Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
+                    matrix->getDefaultMatrix4x4());
 }
 
 void Main::step(){
@@ -181,6 +193,9 @@ void Main::step(){
     checkGLError("Main::step - glClearColor");
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGLError("Main::step - glClear");
+
+    // Logic
+    logic();
 
     // Draw
     graphicInterface();
@@ -220,6 +235,25 @@ void Main::graphicInterface(){
 
     // Bot
     bot->render();
+
+    // Ball
+    ball->render();
+}
+
+void Main::logic(){
+    if(left->getState() && !player->collision(field)){
+        player->setDx(-1.0f * player->getStep());
+    } else if(right->getState() && !player->collision(field)){
+                player->setDx(player->getStep());
+            } else {
+                    player->setDx(0.0f);
+                    player->getCrossPoints()->clear();
+                }
+
+    ball->collision(player);
+    ball->collision(bot);
+    ball->collision(field);
+    ball->move();
 }
 
 void Main::rotateBackground(){

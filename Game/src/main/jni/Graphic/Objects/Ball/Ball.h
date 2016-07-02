@@ -1,8 +1,11 @@
 #ifndef GAME_PINGPONG_BALL_H
 #define GAME_PINGPONG_BALL_H
 
+#include <typeinfo>
+#include <Graphic/Objects/Platform/Platform.h>
 
 #include "Graphic/Objects/Object.h"
+#include "Common/Intersect.h"
 
 class Ball : public Object {
 
@@ -33,14 +36,13 @@ class Ball : public Object {
                                                 _textureCoords,
                                                 _matrixCoords )
         {
-
+                setDy(_step);
         }
 
-    bool collision(Object object);
-    void move();
+    bool collision(Object * object);
+    bool collision(Platform * object);
 
     private:
-
 
 };
 

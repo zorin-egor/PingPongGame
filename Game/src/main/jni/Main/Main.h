@@ -6,6 +6,7 @@
 #include <string>
 #include <stdlib.h>
 
+#include "Graphic/Objects/Ball/Ball.h"
 #include "Graphic/Objects/Platform/Platform.h"
 #include "Graphic/Objects/Object.h"
 #include "Graphic/Controls/Label.h"
@@ -28,7 +29,8 @@ class Main {
                 assetManager(_assetManager)
         {
             deltaRotate = -3.14f;
-            deltaStep = 0.1f;
+            deltaStepBall = 0.05f;
+            deltaStepPlatforms = 0.07f;
             srand(static_cast <unsigned> (time(0)));
             init();
             createObjects();
@@ -117,6 +119,7 @@ class Main {
         GLfloat * setBordDownPosition(GLfloat * positionCoords);
         GLfloat * setBordUpPosition(GLfloat * positionCoords);
         void graphicInterface();
+        void logic();
 
         Matrix * matrix;
         Particles * particles;
@@ -154,8 +157,9 @@ class Main {
         View * bordUp;
         Label * speed;
         Object * field;
-        Platform * player;
-        Platform * bot;
+        Object * player;
+        Object * bot;
+        Object * ball;
 
         Button * left;
         Button * playPause;
@@ -164,7 +168,8 @@ class Main {
         ManageTexture * textures;
 
         float deltaRotate;
-        float deltaStep;
+        float deltaStepBall;
+        float deltaStepPlatforms;
 };
 
 

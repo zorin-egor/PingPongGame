@@ -2,6 +2,8 @@
 
 bool Platform::collision(Object * object){
 
+    move();
+
     GLfloat * wallCoords = object->getPolygonCoordinates();
     GLfloat * platformCoords = getPolygonCoordinates();
 
@@ -39,6 +41,8 @@ bool Platform::collision(Object * object){
     Line::intersect(wallLine, platformLine, crossPoint);
 
     if(crossPoint->size() >= 4){
+        setDx(-1.0f * getDx());
+        move();
         return true;
     }
 
@@ -69,6 +73,8 @@ bool Platform::collision(Object * object){
     Line::intersect(wallLine, platformLine, crossPoint);
 
     if(crossPoint->size() >= 4){
+        setDx(-1.0f * getDx());
+        move();
         return true;
     }
 

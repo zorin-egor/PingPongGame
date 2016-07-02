@@ -4,7 +4,8 @@
 #include <GLES2/gl2.h>
 #include <cmath>
 #include <vector>
-#include <Main/Main.h>
+
+#include "Common/Methods.h"
 
 class Line {
 
@@ -35,7 +36,7 @@ class Line {
         }
 
         inline const static float getEps(){
-            return 0.00000000001f;
+            return 0.000001f;
         }
 
     public:
