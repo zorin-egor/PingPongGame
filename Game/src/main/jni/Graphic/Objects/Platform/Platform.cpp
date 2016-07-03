@@ -29,7 +29,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[5];
 
     // Left wall
-    Line::intersect(wallLine, platformLine, crossPoint);
+    Line::intersectSegments(wallLine, platformLine, crossPoint);
 
     // Platform line up
     platformLine[0] = platformCoords[0];
@@ -38,7 +38,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[7];
 
     // Left wall
-    Line::intersect(wallLine, platformLine, crossPoint);
+    Line::intersectSegments(wallLine, platformLine, crossPoint);
 
     if(crossPoint->size() >= 4){
         setDx(-1.0f * getDx());
@@ -61,7 +61,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[5];
 
     // Left wall
-    Line::intersect(wallLine, platformLine, crossPoint);
+    Line::intersectSegments(wallLine, platformLine, crossPoint);
 
     // Platform line up
     platformLine[0] = platformCoords[0];
@@ -70,7 +70,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[7];
 
     // Left wall
-    Line::intersect(wallLine, platformLine, crossPoint);
+    Line::intersectSegments(wallLine, platformLine, crossPoint);
 
     if(crossPoint->size() >= 4){
         setDx(-1.0f * getDx());

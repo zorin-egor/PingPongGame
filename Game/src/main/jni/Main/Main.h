@@ -6,6 +6,7 @@
 #include <string>
 #include <stdlib.h>
 
+#include "Graphic/Objects/Platform/Enemy.h"
 #include "Graphic/Objects/Ball/Ball.h"
 #include "Graphic/Objects/Platform/Platform.h"
 #include "Graphic/Objects/Object.h"
@@ -65,7 +66,7 @@ class Main {
             delete bordDown;
             delete field;
             delete player;
-            delete bot;
+            delete enemy;
         }
 
         void step();
@@ -182,7 +183,7 @@ class Main {
         Label * speed;
         Object * field;
         Platform * player;
-        Platform * bot;
+        Enemy * enemy;
         Ball * ball;
 
         Button * left;

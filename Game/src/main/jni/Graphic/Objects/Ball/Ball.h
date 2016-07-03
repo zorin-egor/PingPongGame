@@ -2,8 +2,9 @@
 #define GAME_PINGPONG_BALL_H
 
 #include <typeinfo>
-#include <Graphic/Objects/Platform/Platform.h>
+#include <queue>
 
+#include "Graphic/Objects/Platform/Platform.h"
 #include "Graphic/Objects/Object.h"
 #include "Common/Intersect.h"
 
@@ -54,7 +55,12 @@ class Ball : public Object {
             Ball::isOut = isOut;
         }
 
+        std::queue<GLfloat> * getLastPoint() {
+            return &lastPoint;
+        }
+
     private:
+        std::queue<GLfloat> lastPoint;
 
         const float DX_MIN;
         const float DX_MAX;

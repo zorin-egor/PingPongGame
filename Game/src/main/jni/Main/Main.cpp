@@ -165,8 +165,8 @@ void Main::createObjects(){
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                            matrix->getDefaultMatrix4x4());
 
-    // Bot platform
-    bot = new Platform( PLATFORMS_SPEED,
+    // Enemy platform
+    enemy = new Enemy( PLATFORMS_SPEED + 0.05,
                         -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                         textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                         polygons,
@@ -177,7 +177,7 @@ void Main::createObjects(){
                         Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
                         matrix->getDefaultMatrix4x4());
 
-    // Bot platform
+    // Enemy platform
     ball = new Ball( BALL_SPEED,
                     0.0, 0.0f, BALL_WIDTH, BALL_HEIGHT,
                     textures->getTexturesPackIDs(ManageTexture::OBJECTS),
@@ -222,8 +222,9 @@ void Main::logic(){
                     player->getCrossPoints()->clear();
                 }
 
+    enemy->collision(ball);
     ball->collision(player);
-    ball->collision(bot);
+    ball->collision(enemy);
     ball->collision(field);
     ball->setStep(ball->getStep() + 0.001f);
 
@@ -296,6 +297,6 @@ void Main::renderObjects(){
     // Player
     player->render();
 
-    // Bot
-    bot->render();
+    // Enemy
+    enemy->render();
 }

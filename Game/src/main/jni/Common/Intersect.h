@@ -46,7 +46,7 @@ class Line {
             return between(line[0], line[2], x) && between (line[1], line[3], y);
         }
 
-        static bool intersect (GLfloat * line1, GLfloat * line2, std::vector<GLfloat> * twoPoints) {
+        static bool intersectSegments(GLfloat *line1, GLfloat *line2, std::vector<GLfloat> *twoPoints) {
             line<float> coeff1 = Line::coefficients(line1[0], line1[1], line1[2], line1[3]);
             line<float> coeff2 = Line::coefficients(line2[0], line2[1], line2[2], line2[3]);
 
@@ -68,6 +68,24 @@ class Line {
 
             return false;
         }
+
+        static bool intersectLines(GLfloat *line1, GLfloat *line2, std::vector<GLfloat> *twoPoints) {
+            line<float> coeff1 = Line::coefficients(line1[0], line1[1], line1[2], line1[3]);
+            line<float> coeff2 = Line::coefficients(line2[0], line2[1], line2[2], line2[3]);
+
+            float D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
+            float Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
+            float Dy = -determinate (coeff1.a, coeff1.c, coeff2.a, coeff2.c);
+
+            if (fabs(D0) < Line::getEps())
+                return false;
+
+            twoPoints->push_back(Dx / D0);
+            twoPoints->push_back(Dy / D0);
+
+            return true;
+        }
+
 
         static bool intersectRect(GLfloat * rect1, GLfloat * rect2, std::vector<GLfloat> * crossPoints){
             GLfloat lineRect1[4];
@@ -98,7 +116,7 @@ class Line {
                         }
 
                     if(crossPoints->size() < 4){
-                        intersect(lineRect1, lineRect2, crossPoints);
+                        intersectSegments(lineRect1, lineRect2, crossPoints);
                     } else
                         return true;
                 }
