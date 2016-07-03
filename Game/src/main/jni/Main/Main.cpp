@@ -230,9 +230,10 @@ void Main::logic(){
     if(ball->getIsOut()){
         playPause->setState(false);
         ball->setIsOut(false);
+        ball->setDx(0.0f);
     }
 
-    speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 3));
+    speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
 
     ball->move();
 }

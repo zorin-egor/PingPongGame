@@ -10,26 +10,41 @@ bool Ball::collision(Platform * object){
 
     // It's intersect
     if(crossPoint->size() >= 4){
-        float width = crossPoint->at(1) > 0? -1.0 * getWidth() : getWidth();
-        float centerX = crossPoint->at(0) + (getWidth() * 0.5f);
+        float width = getWidth();
+        float sign = 1.0f;
+
+        if(crossPoint->at(1) > 0){
+            width = -1.0f * width;
+            sign *= -1.0f;
+        }
+
+        float centerX = crossPoint->at(0) + (width * 0.5f);
         float centerY = crossPoint->at(1);
 
         switch(object->getRebound(centerX, centerY, width)){
             case Platform::LAST_LEFT :
+                setDy(-1.0f * getDy());
+                setDx(getDx() - sign * DX_MAX);
                 break;
             case Platform::LEFT :
+                setDy(-1.0f * getDy());
+                setDx(getDx() - sign * DX_MIN);
                 break;
             case Platform::CENTER :
+                setDy(-1.0f * getDy());
                 break;
             case Platform::RIGHT :
+                setDy(-1.0f * getDy());
+                setDx(getDx() + sign * DX_MIN);
                 break;
             case Platform::LAST_RIGHT :
+                setDy(-1.0f * getDy());
+                setDx(getDx() + sign * DX_MAX);
                 break;
             case Platform::NONE :
                 break;
         }
 
-        setDy(-1 * getDy());
         crossPoint->clear();
         return true;
     }
@@ -131,7 +146,7 @@ bool Ball::collisionLeftRightWall(Object *object) {
 }
 
 
-bool Ball::collisionUpDownWall(Object *object){
+bool Ball::collisionUpDownWall(Object * object){
     GLfloat * wallCoords = object->getPolygonCoordinates();
     GLfloat * ballCoords = getPolygonCoordinates();
 
@@ -159,7 +174,7 @@ bool Ball::collisionUpDownWall(Object *object){
     // Left wall
     Line::intersect(wallLine, ballLine, crossPoint);
 
-    // Ball line up
+    // Ball line right
     ballLine[0] = ballCoords[4];
     ballLine[1] = ballCoords[5];
     ballLine[2] = ballCoords[6];
@@ -178,16 +193,16 @@ bool Ball::collisionUpDownWall(Object *object){
     crossPoint->clear();
 
     // Up wall line
-    wallLine[0] = wallCoords[5];
-    wallLine[1] = wallCoords[6];
+    wallLine[0] = wallCoords[6];
+    wallLine[1] = wallCoords[7];
     wallLine[2] = wallCoords[0];
     wallLine[3] = wallCoords[1];
 
     // Platform line down
-    ballLine[0] = ballCoords[2];
-    ballLine[1] = ballCoords[3];
-    ballLine[2] = ballCoords[4];
-    ballLine[3] = ballCoords[5];
+    ballLine[0] = ballCoords[0];
+    ballLine[1] = ballCoords[1];
+    ballLine[2] = ballCoords[2];
+    ballLine[3] = ballCoords[3];
 
     // Left wall
     Line::intersect(wallLine, ballLine, crossPoint);

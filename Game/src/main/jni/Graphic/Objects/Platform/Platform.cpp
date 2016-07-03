@@ -115,7 +115,7 @@ Platform::REBOUND_AREA Platform::getRebound(float x, float y, float width){
             if(Line::between(platformLine[index] + 3.0f * width, platformLine[index] + 4.0f * width, x))
                 return Platform::RIGHT;
 
-            if(Line::between(platformLine[index] + 4.0f * width, platformLine[index] + 5.0f * width, x))
+            if(Line::between(platformLine[index] + 4.0f * width, platformLine[0], x))
                 return Platform::LAST_RIGHT;
         }
     }

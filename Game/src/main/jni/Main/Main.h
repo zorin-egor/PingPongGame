@@ -41,7 +41,7 @@ class Main {
                 BUTTON_START_WIDTH(0.5f),
                 PLATFORMS_WIDTH(0.5f),
                 PLATFORMS_HEIGHT(0.07f),
-                PLATFORMS_SPEED(0.07f),
+                PLATFORMS_SPEED(0.04f),
                 BALL_WIDTH(PLATFORMS_WIDTH / 5.0f),
                 BALL_HEIGHT(((float)_width / (float)_height) * BALL_WIDTH),
                 BALL_SPEED(0.01f),

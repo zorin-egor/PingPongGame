@@ -34,7 +34,10 @@ class Ball : public Object {
                                                 _transformationAttr,
                                                 _verticesCoords,
                                                 _textureCoords,
-                                                _matrixCoords )
+                                                _matrixCoords ),
+
+                                        DX_MAX(0.05f),
+                                        DX_MIN(0.02)
         {
                 setDy(_step);
                 isOut = false;
@@ -51,7 +54,11 @@ class Ball : public Object {
             Ball::isOut = isOut;
         }
 
-private:
+    private:
+
+        const float DX_MIN;
+        const float DX_MAX;
+
         bool isOut;
         bool collisionLeftRightWall(Object * object);
         bool collisionUpDownWall(Object * object);
