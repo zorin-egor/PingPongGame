@@ -19,6 +19,13 @@ class Matrix {
 
         static const enum COORDINATES { X = 1, Y = 2, Z = 3};
 
+
+        template<class A>
+        static const struct TwoPointLine{
+            A x1, y1;
+            A x2, y2;
+        };
+
         ~Matrix(){
             // Clear all link on arrays
             if(!arrayLInks.empty())

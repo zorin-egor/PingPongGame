@@ -5,7 +5,7 @@ void Button::action( float _x, float _y){
 	if(_x > x && _y < y && _x < (x + width) && _y > (y - height)){
 		//LOGI("Button click!");
 		setTextureCoords(pressed = pressed? false : true);
-	} else if(pressed){
+	} else if(pressed && !isSwitch){
 				// If buttons lost focus
 				setTextureCoords(pressed = false);
 			}

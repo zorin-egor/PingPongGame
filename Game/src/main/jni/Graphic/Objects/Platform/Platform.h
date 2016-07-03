@@ -8,6 +8,9 @@
 class Platform : public Object {
 
     public:
+
+        static const enum REBOUND_AREA {NONE = 0, LAST_LEFT = 1, LEFT = 2, CENTER = 3, RIGHT = 4, LAST_RIGHT = 5};
+
         Platform(float _step,
                  float _x,
                  float _y,
@@ -39,9 +42,7 @@ class Platform : public Object {
             }
 
     bool collision(Object * object);
-
-    private:
-
+    REBOUND_AREA getRebound(float x, float y, float width);
 };
 
 

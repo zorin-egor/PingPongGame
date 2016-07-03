@@ -38,8 +38,8 @@ class Methods {
             return stringForFill;
         }
 
-        static std::string intToStrong(int number){
-            std::string result = "";
+        static std::string intToString(int number){
+            std::string result = number == 0? "0" : "";
                 while(number){
                     int x = number % 10;
                     number /= 10;

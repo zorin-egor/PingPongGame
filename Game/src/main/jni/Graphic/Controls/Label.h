@@ -13,26 +13,27 @@ class Label {
 
     public:
         Label(Matrix * _matrix,
+              float _x,
+              float _y,
+              float _width,
+              float _height,
               GLuint _textureID,
               GLuint _programID,
               GLint _positionAttr,
               GLint _textureAttr,
               GLint _transformationAttr,
-              std::string _number,
-              float _x,
-              float _y,
-              float _width,
-              float _height) : matrix(_matrix),
-                               textureID(_textureID),
-                               programID(_programID),
-                               positionAttr(_positionAttr),
-                               textureAttr(_textureAttr),
-                               transformationAttr(_transformationAttr),
-                               number(_number),
-                               x(_x),
-                               y(_y),
-                               width(_width),
-                               height(_height)
+              std::string _number) :
+                                    matrix(_matrix),
+                                    x(_x),
+                                    y(_y),
+                                    width(_width),
+                                    height(_height),
+                                    textureID(_textureID),
+                                    programID(_programID),
+                                    positionAttr(_positionAttr),
+                                    textureAttr(_textureAttr),
+                                    transformationAttr(_transformationAttr),
+                                    number(_number)
         {
             init();
         }

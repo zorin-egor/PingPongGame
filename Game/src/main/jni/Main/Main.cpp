@@ -90,8 +90,9 @@ void Main::createObjects(){
                         matrix->getDefaultMatrix4x4());
 
     // Left button
-    left = new Button(true,
-                      -0.95f, -0.75f, 0.7f, 0.2f,
+    left = new Button(false,
+                      true,
+                      -0.95f, -0.75f, BUTTON_CONTROL_WIDTH, BUTTON_CONTROL_HEIGHT,
                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                       polygons,
                       polygonsPositionAttr,
@@ -102,8 +103,9 @@ void Main::createObjects(){
                       matrix->getDefaultMatrix4x4());
 
     // Right button
-    right = new Button(true,
-                       0.3f, -0.75f, 0.7f, 0.2f,
+    right = new Button(false,
+                       true,
+                       0.3f, -0.75f, BUTTON_CONTROL_WIDTH, BUTTON_CONTROL_HEIGHT,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -114,8 +116,9 @@ void Main::createObjects(){
                        matrix->getDefaultMatrix4x4());
 
     // Play pause button
-    playPause = new Button(false,
-                           -0.22f, -0.75f, 0.5f, 0.2f,
+    playPause = new Button(true,
+                           false,
+                           -0.22f, -0.75f, BUTTON_START_WIDTH, BUTTON_START_HEIGHT,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                            polygons,
                            polygonsPositionAttr,
@@ -127,17 +130,17 @@ void Main::createObjects(){
 
     // Label of speed
     speed = new Label(  matrix,
+                        -0.5f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
                         textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                         polygons,
                         polygonsPositionAttr,
                         polygonsTextureAttr,
                         polygonsTransformationAttr,
-                        "000",
-                        -0.5f, 0.95f, 1.0f, 0.1f);
+                        "000");
 
     // Field
-    field = new Platform( deltaStepPlatforms,
-                           -1.0f, 0.8f, 2.0f, 1.6f,
+    field = new Platform( PLATFORMS_SPEED,
+                           -1.0f, BORDER_UP + 0.05f, 2.0f, (BORDER_UP + 0.05f) * 2.0f,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
                            polygonsPositionAttr,
@@ -151,8 +154,8 @@ void Main::createObjects(){
 
 
     // Player platform
-    player = new Platform( deltaStepPlatforms,
-                           -0.25, -0.4f, 0.7f, 0.1f,
+    player = new Platform( PLATFORMS_SPEED,
+                           -0.25, -0.5f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
                            polygonsPositionAttr,
@@ -163,20 +166,20 @@ void Main::createObjects(){
                            matrix->getDefaultMatrix4x4());
 
     // Bot platform
-    bot = new Platform( deltaStepPlatforms,
-                           -0.25, 0.7f, 0.7f, 0.1f,
-                           textures->getTexturesPackIDs(ManageTexture::OBJECTS),
-                           polygons,
-                           polygonsPositionAttr,
-                           polygonsTextureAttr,
-                           polygonsTransformationAttr,
-                           matrix->getDefaultVerticesCoords(),
-                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
-                           matrix->getDefaultMatrix4x4());
+    bot = new Platform( PLATFORMS_SPEED,
+                        -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
+                        textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                        polygons,
+                        polygonsPositionAttr,
+                        polygonsTextureAttr,
+                        polygonsTransformationAttr,
+                        matrix->getDefaultVerticesCoords(),
+                        Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
+                        matrix->getDefaultMatrix4x4());
 
     // Bot platform
-    ball = new Ball( deltaStepBall,
-                    0.0, 0.0f, 0.2f, 0.2f,
+    ball = new Ball( BALL_SPEED,
+                    0.0, 0.0f, BALL_WIDTH, BALL_HEIGHT,
                     textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                     polygons,
                     polygonsPositionAttr,
@@ -195,14 +198,66 @@ void Main::step(){
     checkGLError("Main::step - glClear");
 
     // Logic
-    logic();
+    if(playPause->getState())
+        logic();
 
     // Draw
-    graphicInterface();
+    drawFrame();
 }
 
-void Main::graphicInterface(){
+void Main::drawFrame(){
     // Draw something under
+    renderBackground();
+    renderObjects();
+    renderInterface();
+}
+
+void Main::logic(){
+    if(left->getState() && !player->collision(field)){
+        player->setDx(NEGATIVE * player->getStep());
+    } else if(right->getState() && !player->collision(field)){
+                player->setDx(player->getStep());
+            } else {
+                    player->setDx(STOP_MOVE);
+                    player->getCrossPoints()->clear();
+                }
+
+    ball->collision(player);
+    ball->collision(bot);
+    ball->collision(field);
+    ball->setStep(ball->getStep() + 0.001f);
+
+    if(ball->getIsOut()){
+        playPause->setState(false);
+        ball->setIsOut(false);
+    }
+
+    speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 3));
+
+    ball->move();
+}
+
+void Main::rotateBackground(){
+    if(deltaRotate >= CENTER_ROTATE)
+        deltaRotate = NEGATIVE * CENTER_ROTATE;
+
+    center->setTransformationMatrix(Matrix::setRotateMatrix4x4(Matrix::setRotateMatrix4x4(center->getTransformationMatrix(), deltaRotate += CENTER_SPEED, Matrix::X), deltaRotate, Matrix::Z));
+    center->render();
+}
+
+GLfloat * Main::setBordDownPosition(GLfloat * positionCoords){
+    positionCoords[1] = BORDER_DOWN;
+    positionCoords[7] = BORDER_DOWN;
+    return positionCoords;
+}
+
+GLfloat * Main::setBordUpPosition(GLfloat * positionCoords){
+    positionCoords[3] = BORDER_UP;
+    positionCoords[5] = BORDER_UP;
+    return positionCoords;
+}
+
+void Main::renderBackground(){
     // Background
     background->render();
 
@@ -211,7 +266,9 @@ void Main::graphicInterface(){
 
     // Particles
     particles->render();
+}
 
+void Main::renderInterface(){
     // Bord down
     bordDown->render();
 
@@ -229,50 +286,15 @@ void Main::graphicInterface(){
 
     // Button playPause
     playPause->render();
+}
+
+void Main::renderObjects(){
+    // Ball
+    ball->render();
 
     // Player
     player->render();
 
     // Bot
     bot->render();
-
-    // Ball
-    ball->render();
 }
-
-void Main::logic(){
-    if(left->getState() && !player->collision(field)){
-        player->setDx(-1.0f * player->getStep());
-    } else if(right->getState() && !player->collision(field)){
-                player->setDx(player->getStep());
-            } else {
-                    player->setDx(0.0f);
-                    player->getCrossPoints()->clear();
-                }
-
-    ball->collision(player);
-    ball->collision(bot);
-    ball->collision(field);
-    ball->move();
-}
-
-void Main::rotateBackground(){
-    if(deltaRotate >= 3.14f)
-        deltaRotate = -3.14f;
-
-    center->setTransformationMatrix(Matrix::setRotateMatrix4x4(Matrix::setRotateMatrix4x4(center->getTransformationMatrix(), deltaRotate += 0.01f, Matrix::X), deltaRotate, Matrix::Z));
-    center->render();
-}
-
-GLfloat * Main::setBordDownPosition(GLfloat * positionCoords){
-    positionCoords[1] = -0.6f;
-    positionCoords[7] = -0.6f;
-    return positionCoords;
-}
-
-GLfloat * Main::setBordUpPosition(GLfloat * positionCoords){
-    positionCoords[3] = 0.8f;
-    positionCoords[5] = 0.8f;
-    return positionCoords;
-}
-

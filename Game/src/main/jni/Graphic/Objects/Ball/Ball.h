@@ -37,13 +37,24 @@ class Ball : public Object {
                                                 _matrixCoords )
         {
                 setDy(_step);
+                isOut = false;
         }
 
-    bool collision(Object * object);
-    bool collision(Platform * object);
+        bool collision(Object * object);
+        bool collision(Platform * object);
 
-    private:
+        bool getIsOut() const {
+            return isOut;
+        }
 
+        void setIsOut(bool isOut) {
+            Ball::isOut = isOut;
+        }
+
+private:
+        bool isOut;
+        bool collisionLeftRightWall(Object * object);
+        bool collisionUpDownWall(Object * object);
 };
 
 

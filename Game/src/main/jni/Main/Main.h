@@ -22,16 +22,35 @@ class Main {
 
     public:
         Main(   JNIEnv * _env, jint _width, jint _height, jobject _pngManager, jobject _assetManager) :
+
                 env(_env),
                 height(_height),
                 width(_width),
                 pngManager(_pngManager),
-                assetManager(_assetManager)
+                assetManager(_assetManager),
+
+                CENTER_ROTATE(3.14f),
+                CENTER_SPEED(0.005f),
+                CENTER_PERIOD(-3.14f),
+                BORDER_UP(0.8f),
+                BORDER_DOWN(-0.6f),
+                NEGATIVE(-1.0f),
+                BUTTON_CONTROL_HEIGHT(0.2f),
+                BUTTON_CONTROL_WIDTH(0.7f),
+                BUTTON_START_HEIGHT(0.2f),
+                BUTTON_START_WIDTH(0.5f),
+                PLATFORMS_WIDTH(0.5f),
+                PLATFORMS_HEIGHT(0.07f),
+                PLATFORMS_SPEED(0.07f),
+                BALL_WIDTH(PLATFORMS_WIDTH / 5.0f),
+                BALL_HEIGHT(((float)_width / (float)_height) * BALL_WIDTH),
+                BALL_SPEED(0.01f),
+                STOP_MOVE(0.0f),
+                LABEL_HEIGHT(0.1f),
+                LABEL_WIDTH(1.0f)
         {
             deltaRotate = -3.14f;
-            deltaStepBall = 0.05f;
-            deltaStepPlatforms = 0.07f;
-            srand(static_cast <unsigned> (time(0)));
+            srand(static_cast<unsigned> (time(0)));
             init();
             createObjects();
         }
@@ -116,9 +135,14 @@ class Main {
         void init();
         void createObjects();
         void rotateBackground();
+
+        void renderBackground();
+        void renderInterface();
+        void renderObjects();
+
         GLfloat * setBordDownPosition(GLfloat * positionCoords);
         GLfloat * setBordUpPosition(GLfloat * positionCoords);
-        void graphicInterface();
+        void drawFrame();
         void logic();
 
         Matrix * matrix;
@@ -157,9 +181,9 @@ class Main {
         View * bordUp;
         Label * speed;
         Object * field;
-        Object * player;
-        Object * bot;
-        Object * ball;
+        Platform * player;
+        Platform * bot;
+        Ball * ball;
 
         Button * left;
         Button * playPause;
@@ -168,8 +192,26 @@ class Main {
         ManageTexture * textures;
 
         float deltaRotate;
-        float deltaStepBall;
-        float deltaStepPlatforms;
+
+        const float CENTER_ROTATE;
+        const float CENTER_SPEED;
+        const float CENTER_PERIOD;
+        const float BORDER_UP;
+        const float BORDER_DOWN;
+        const float NEGATIVE;
+        const float BUTTON_CONTROL_HEIGHT;
+        const float BUTTON_CONTROL_WIDTH;
+        const float BUTTON_START_HEIGHT;
+        const float BUTTON_START_WIDTH;
+        const float PLATFORMS_WIDTH;
+        const float PLATFORMS_HEIGHT;
+        const float PLATFORMS_SPEED;
+        const float BALL_WIDTH;
+        const float BALL_HEIGHT;
+        const float BALL_SPEED;
+        const float STOP_MOVE;
+        const float LABEL_HEIGHT;
+        const float LABEL_WIDTH;
 };
 
 

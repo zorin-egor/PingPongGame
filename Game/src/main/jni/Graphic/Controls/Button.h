@@ -9,7 +9,8 @@ class Button : public View {
 
 	public:
 
-		Button(	bool _isUpButton,
+		Button(bool _isSwitch,
+			   bool _isUpButton,
 			   float _x,
 			   float _y,
 			   float _width,
@@ -30,6 +31,7 @@ class Button : public View {
 											    _textureCoords,
 											    _matrixCoords),
 
+										  	isSwitch(_isSwitch),
 											isUpButton(_isUpButton),
 											x(_x),
 											y(_y),
@@ -45,12 +47,14 @@ class Button : public View {
 
 		void setState(bool _pressed){
 			pressed = _pressed;
+			setTextureCoords(pressed);
 		}
 
 		void action(float _x, float _y);
 
 	private:
 
+		bool isSwitch;
 		bool isUpButton;
 
 		// Button position

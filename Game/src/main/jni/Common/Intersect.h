@@ -16,6 +16,10 @@ class Line {
             A a, b, c;
         };
 
+        inline static const float getEps(){
+            return 0.000001f;
+        }
+
         template <class A>
         static float determinate(A a, A b, A c, A d) {
             return a * d - b * c;
@@ -30,16 +34,17 @@ class Line {
             return coeff;
         }
 
+    public:
+
         template <class A>
         inline static bool between (A a, A b, A c) {
             return Methods::getMin(a,b) <= c + Line::getEps() && c <= Methods::getMax(a,b) + Line::getEps();
         }
 
-        inline const static float getEps(){
-            return 0.000001f;
+        template <class A>
+        inline static bool betweenLine(A * line, A x, A y) {
+            return between(line[0], line[2], x) && between (line[1], line[3], y);
         }
-
-    public:
 
         static bool intersect (GLfloat * line1, GLfloat * line2, std::vector<GLfloat> * twoPoints) {
             line<float> coeff1 = Line::coefficients(line1[0], line1[1], line1[2], line1[3]);
@@ -55,8 +60,7 @@ class Line {
             float pX = Dx / D0;
             float pY = Dy / D0;
 
-            if(between (line1[0], line1[2], pX) && between (line1[1], line1[3], pY)
-               && between (line2[0], line2[2], pX) && between (line2[1], line2[3], pY)){
+            if(betweenLine(line1, pX, pY) && betweenLine(line2, pX, pY)){
                 twoPoints->push_back(pX);
                 twoPoints->push_back(pY);
                 return true;
