@@ -29,7 +29,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[5];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     // Platform line up
     platformLine[0] = platformCoords[0];
@@ -38,7 +38,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[7];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     if(crossPoint->size() >= 4){
         setDx(-1.0f * getDx());
@@ -61,7 +61,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[5];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     // Platform line up
     platformLine[0] = platformCoords[0];
@@ -70,7 +70,7 @@ bool Platform::collision(Object * object){
     platformLine[3] = platformCoords[7];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     if(crossPoint->size() >= 4){
         setDx(-1.0f * getDx());
@@ -100,22 +100,22 @@ Platform::REBOUND_AREA Platform::getRebound(float x, float y, float width){
             }
 
         // If point belongs line
-        if(Line::betweenLine(platformLine, x, y)){
+        if(Intersect::betweenLine(platformLine, x, y)){
             int index = 2;
 
-            if(Line::between(platformLine[index], platformLine[index] + width, x))
+            if(Intersect::between(platformLine[index], platformLine[index] + width, x))
                 return Platform::LAST_LEFT;
 
-            if(Line::between(platformLine[index] + width, platformLine[index] + 2.0f * width, x))
+            if(Intersect::between(platformLine[index] + width, platformLine[index] + 2.0f * width, x))
                 return Platform::LEFT;
 
-            if(Line::between(platformLine[index] + 2.0f * width, platformLine[index] + 3.0f * width, x))
+            if(Intersect::between(platformLine[index] + 2.0f * width, platformLine[index] + 3.0f * width, x))
                 return Platform::CENTER;
 
-            if(Line::between(platformLine[index] + 3.0f * width, platformLine[index] + 4.0f * width, x))
+            if(Intersect::between(platformLine[index] + 3.0f * width, platformLine[index] + 4.0f * width, x))
                 return Platform::RIGHT;
 
-            if(Line::between(platformLine[index] + 4.0f * width, platformLine[0], x))
+            if(Intersect::between(platformLine[index] + 4.0f * width, platformLine[0], x))
                 return Platform::LAST_RIGHT;
         }
     }

@@ -5,26 +5,109 @@
 #include <vector>
 #include <cmath>
 
+// Common types
+template<class A>
+struct Point {
+    A x;
+    A y;
+};
+
+template<class A>
+struct Line {
+    A * x1;
+    A * y1;
+    A * x2;
+    A * y2;
+};
+
+template <class A>
+struct CommonLine {
+    A a, b, c;
+};
+
+template<class A>
+struct Rectangle {
+    Line<A> left;
+    Line<A> down;
+    Line<A> right;
+    Line<A> up;
+
+    static Rectangle<A> getRectangle(A * rectangleArray){
+        Rectangle<A> rectangle1Structure;
+        Line<A> left;
+        left.x1 = &rectangleArray[0];
+        left.y1 = &rectangleArray[1];
+        left.x2 = &rectangleArray[2];
+        left.y2 = &rectangleArray[3];
+
+        Line<A> down;
+        down.x1 = &rectangleArray[2];
+        down.y1 = &rectangleArray[3];
+        down.x2 = &rectangleArray[4];
+        down.y2 = &rectangleArray[5];
+
+        Line<A> right;
+        right.x1 = &rectangleArray[4];
+        right.y1 = &rectangleArray[5];
+        right.x2 = &rectangleArray[6];
+        right.y2 = &rectangleArray[7];
+
+        Line<A> up;
+        up.x1 = &rectangleArray[6];
+        up.y1 = &rectangleArray[7];
+        up.x2 = &rectangleArray[0];
+        up.y2 = &rectangleArray[1];
+
+        rectangle1Structure.left = left;
+        rectangle1Structure.down = down;
+        rectangle1Structure.right = right;
+        rectangle1Structure.up = up;
+
+        return rectangle1Structure;
+    }
+
+    static Point<A> getCenter(A * rectangleArray){
+        Point<A> centerPoint;
+        centerPoint.x = rectangleArray[0] + (rectangleArray[0] - rectangleArray[6]) * 0.5f;
+        centerPoint.y = rectangleArray[1] - (rectangleArray[1] - rectangleArray[2]) * 0.5f;
+        return centerPoint;
+    }
+
+    static Point<A> getCenter(Rectangle<A> * rectangleArray){
+        Point<A> centerPoint;
+        centerPoint.x = rectangleArray->up.x2 + (rectangleArray->up.x2 - rectangleArray->up.x1) * (A)0.5f;
+        centerPoint.y = rectangleArray->left.y1 - (rectangleArray->left.y1 - rectangleArray->left.y2) * (A)0.5f;
+        return centerPoint;
+    }
+
+    Point<A> getCenter(){
+        Point<A> centerPoint;
+        centerPoint.x = up.x2 + (up.x2 - up.x1) * (A)0.5f;
+        centerPoint.y = left.y1 - (left.y1 - left.y2) * (A)0.5f;
+        return centerPoint;
+    }
+};
+
+// Work with vectors and matrix
 class Matrix {
 
     private:
+        // Pick all arrays links
         std::vector<GLfloat *> arrayLInks;
 
     public:
 
+        // Position of texture
+        // 0 - 1 - 2 - 3
+        //  .   .   .
+        // 12 - 13 - 14 -15
         static const enum TEXTURE_COORDS {  ONE = 0, TWO = 1, THREE = 2, FOUR = 3,
                                             FIFE = 4, SIX = 5, SEVEN = 6, EIGHT  = 7,
                                             NINE = 8, TEN = 8, ELEVEN = 10, TWELVE = 11,
                                             THIRTEEN  = 12, FOURTEEN = 13, FIFTEEN = 14, SIXTEEN = 15 };
 
+        // Choose axis
         static const enum COORDINATES { X = 1, Y = 2, Z = 3};
-
-
-        template<class A>
-        static const struct TwoPointLine{
-            A x1, y1;
-            A x2, y2;
-        };
 
         ~Matrix(){
             // Clear all link on arrays
@@ -33,6 +116,7 @@ class Matrix {
                     delete [] *it;
         }
 
+        // Matrix for move-rotate-scale
         GLfloat * getDefaultMatrix4x4(){
             GLfloat * matrix = new GLfloat[16];
             arrayLInks.push_back(matrix);
@@ -64,6 +148,7 @@ class Matrix {
             return matrix;
         }
 
+        // Matrix for texture position
         GLfloat * getDefaultTextureCoord(){
             // 1---4
             // |   |
@@ -91,6 +176,7 @@ class Matrix {
             return texture;
         }
 
+        // Matrix for position on screen
         GLfloat * getDefaultVerticesCoords(){
             // 1---4
             // | \ |
@@ -118,6 +204,7 @@ class Matrix {
             return vertices;
         }
 
+        // Set texture coordinates with number
         static GLfloat * setTextureCoords(GLfloat * textureCoords, int x, int y, int number){
             int cells = x * y;
 
@@ -151,6 +238,7 @@ class Matrix {
             return textureCoords;
         }
 
+        // Move
         static GLfloat * setMoveMatrix4x4(GLfloat * textureCoords, GLfloat x, GLfloat y){
             textureCoords[12] = x;
             textureCoords[13] = y;
@@ -159,6 +247,7 @@ class Matrix {
             return textureCoords;
         }
 
+        // Scale
         static  GLfloat * setScaleMatrix4x4(GLfloat * textureCoords, GLfloat x, GLfloat y){
             textureCoords[0] = 1.0f;
             textureCoords[5] = y;
@@ -167,6 +256,7 @@ class Matrix {
             return textureCoords;
         }
 
+        // Rotate
         static  GLfloat * setRotateMatrix4x4(GLfloat * textureCoords, GLfloat a, COORDINATES axis){
             switch(axis){
                 case X :
@@ -192,6 +282,7 @@ class Matrix {
             return textureCoords;
         }
 
+        // Set position coordinates with width and height
         static GLfloat * setVerticesCoords(float x, float y, float width, float height, GLfloat * verticesCoords){
 
             // Top left

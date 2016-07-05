@@ -15,7 +15,7 @@ bool Ball::collision(Platform * object){
     lastPoint.push(ballCoords[1] - getHeight() * 0.5f);
 
     // It's intersect
-    if(Line::intersectRect(platformCoords, ballCoords, crossPoint)){
+    if(Intersect::intersectRect(platformCoords, ballCoords, crossPoint)){
         float width = getWidth();
         float sign = 1.0f;
 
@@ -96,7 +96,7 @@ bool Ball::collisionLeftRightWall(Object *object) {
     platformLine[3] = platformCoords[5];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     // Platform line up
     platformLine[0] = platformCoords[0];
@@ -105,7 +105,7 @@ bool Ball::collisionLeftRightWall(Object *object) {
     platformLine[3] = platformCoords[7];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     // It's intersect
     if(crossPoint->size() >= 4){
@@ -129,7 +129,7 @@ bool Ball::collisionLeftRightWall(Object *object) {
     platformLine[3] = platformCoords[5];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     // Platform line up
     platformLine[0] = platformCoords[0];
@@ -138,7 +138,7 @@ bool Ball::collisionLeftRightWall(Object *object) {
     platformLine[3] = platformCoords[7];
 
     // Left wall
-    Line::intersectSegments(wallLine, platformLine, crossPoint);
+    Intersect::intersectSegments(wallLine, platformLine, crossPoint);
 
     // It's intersect
     if(crossPoint->size() >= 4){
@@ -178,7 +178,7 @@ bool Ball::collisionUpDownWall(Object * object){
     ballLine[3] = ballCoords[3];
 
     // Left wall
-    Line::intersectSegments(wallLine, ballLine, crossPoint);
+    Intersect::intersectSegments(wallLine, ballLine, crossPoint);
 
     // Ball line right
     ballLine[0] = ballCoords[4];
@@ -187,7 +187,7 @@ bool Ball::collisionUpDownWall(Object * object){
     ballLine[3] = ballCoords[7];
 
     // Left wall
-    Line::intersectSegments(wallLine, ballLine, crossPoint);
+    Intersect::intersectSegments(wallLine, ballLine, crossPoint);
 
     // It's intersect
     if(crossPoint->size() >= 4){
@@ -211,7 +211,7 @@ bool Ball::collisionUpDownWall(Object * object){
     ballLine[3] = ballCoords[3];
 
     // Left wall
-    Line::intersectSegments(wallLine, ballLine, crossPoint);
+    Intersect::intersectSegments(wallLine, ballLine, crossPoint);
 
     // Platform line up
     ballLine[0] = ballCoords[4];
@@ -220,7 +220,7 @@ bool Ball::collisionUpDownWall(Object * object){
     ballLine[3] = ballCoords[7];
 
     // Left wall
-    Line::intersectSegments(wallLine, ballLine, crossPoint);
+    Intersect::intersectSegments(wallLine, ballLine, crossPoint);
 
     // It's intersect
     if(crossPoint->size() >= 4){

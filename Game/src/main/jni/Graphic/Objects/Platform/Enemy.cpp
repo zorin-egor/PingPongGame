@@ -6,7 +6,7 @@ void Enemy::collision(Ball * object){
 
     GLfloat ballY = rectBall[1] - object->getHeight() * 0.5f;
 
-    if(ballY > -0.2f){
+//    if(ballY > -0.2f){
         if(object->getLastPoint()->size() > 2){
             std::vector<GLfloat> crossPoint;
 
@@ -25,10 +25,10 @@ void Enemy::collision(Ball * object){
             lineEnemy[3] = rectEnemy[5];
 
 
-            if(Line::intersectLines(lineBall, lineEnemy, &crossPoint)){
+            if(Intersect::intersectLines(lineBall, lineEnemy, &crossPoint)){
                 GLfloat crossX = crossPoint.at(0);
                 GLfloat centerEnemy = lineEnemy[0] + object->getWidth() * 0.5f;
-                GLfloat deltaCross = getWidth() * 0.2;
+                GLfloat deltaCross = getWidth() * 0.2f;
 
                 if(centerEnemy - deltaCross < crossX && crossX < centerEnemy + deltaCross){
                     dX = 0.0f;
@@ -40,15 +40,16 @@ void Enemy::collision(Ball * object){
             }
         }
 
-    } else {
-            GLfloat enemyCenterX = rectEnemy[2] + getWidth() * 0.5f;
-            if(enemyCenterX > 0.2f)
-                dX = -1.0f * getStep();
-            else if(enemyCenterX < -0.2f)
-                    dX = getStep();
-                 else
-                    dX = 0.0f;
-        }
+//    }
+//        else {
+//            GLfloat enemyCenterX = rectEnemy[2] + getWidth() * 0.5f;
+//            if(enemyCenterX > 0.2f)
+//                dX = -1.0f * getStep();
+//            else if(enemyCenterX < -0.2f)
+//                    dX = getStep();
+//                 else
+//                    dX = 0.0f;
+//        }
 
     move();
 }
