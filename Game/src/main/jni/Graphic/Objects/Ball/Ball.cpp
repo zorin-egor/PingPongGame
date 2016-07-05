@@ -26,23 +26,23 @@ bool Ball::collision(Platform * object){
 
         switch(object->getRebound(centerX, centerY, width)){
             case Platform::LAST_LEFT :
-                setDy(-1.0f * getDy());
+                setDy(-1.0f * dY);
                 setDx(getDx() - sign * DX_MAX);
                 break;
             case Platform::LEFT :
-                setDy(-1.0f * getDy());
+                setDy(-1.0f * dY);
                 setDx(getDx() - sign * DX_MIN);
                 break;
             case Platform::CENTER :
-                setDy(-1.0f * getDy());
+                setDy(-1.0f * dY);
                 break;
             case Platform::RIGHT :
-                setDy(-1.0f * getDy());
+                setDy(-1.0f * dY);
                 setDx(getDx() + sign * DX_MIN);
                 break;
             case Platform::LAST_RIGHT :
-                setDy(-1.0f * getDy());
-                setDx(getDx() + sign * DX_MAX);
+                setDy(-1.0f * dY);
+                setDx(dX + sign * DX_MAX);
                 break;
             case Platform::NONE :
                 break;
@@ -109,10 +109,10 @@ bool Ball::collisionUpDownWall(Object * object){
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
     // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->up), &(getRectangle()->left), crossPoint);
+    Intersect::intersectSegments(&object->getRectangle()->up, &getRectangle()->left, crossPoint);
 
     // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->up), &(getRectangle()->right), crossPoint);
+    Intersect::intersectSegments(&object->getRectangle()->up, &getRectangle()->right, crossPoint);
 
     // It's intersect
     if(crossPoint->size() >= 4){
@@ -124,10 +124,10 @@ bool Ball::collisionUpDownWall(Object * object){
     crossPoint->clear();
 
     // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->down), &(getRectangle()->left), crossPoint);
+    Intersect::intersectSegments(&object->getRectangle()->down, &getRectangle()->left, crossPoint);
 
     // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->down), &(getRectangle()->right), crossPoint);
+    Intersect::intersectSegments(&object->getRectangle()->down, &getRectangle()->right, crossPoint);
 
     // It's intersect
     if(crossPoint->size() >= 4){

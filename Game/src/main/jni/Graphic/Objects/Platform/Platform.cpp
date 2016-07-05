@@ -11,10 +11,10 @@ bool Platform::collision(Object * object){
     Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->down, crossPoint);
 
     // Right side
-    Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->down, crossPoint);
+    Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->up, crossPoint);
 
     if(crossPoint->size() >= 4){
-        setDx(-1.0f * dx);
+        setDx(-1.0f * dX);
         move();
         return true;
     }
@@ -22,13 +22,13 @@ bool Platform::collision(Object * object){
     crossPoint->clear();
 
     // Left side
-    Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->up, crossPoint);
+    Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->down, crossPoint);
 
     // Right side
     Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->up, crossPoint);
 
     if(crossPoint->size() >= 4){
-        setDx(-1.0f * dx);
+        setDx(-1.0f * dX);
         move();
         return true;
     }

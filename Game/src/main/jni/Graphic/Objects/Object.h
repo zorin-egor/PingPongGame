@@ -33,8 +33,8 @@ class Object : public View {
                                           width(_width),
                                           height(_height)
         {
-            dx = 0;
-            dy = 0;
+            dX = 0;
+            dY = 0;
 
             defaultCoords = new GLfloat[8];
             memcpy(defaultCoords, getPolygonCoordinates(), 8 * sizeof(GLfloat));
@@ -57,19 +57,19 @@ class Object : public View {
         }
 
         float getDx() const {
-            return dx;
+            return dX;
         }
 
         void setDx(float _dx) {
-            dx = _dx;
+            dX = _dx;
         }
 
         float getDy() const {
-            return dy;
+            return dY;
         }
 
         void setDy(float _dy) {
-            dy = _dy;
+            dY = _dy;
         }
 
         std::vector<GLfloat> * getCrossPoints() {
@@ -91,7 +91,7 @@ class Object : public View {
         // Object position
         float width, height;
         float x, y;
-        float dx, dy;
+        float dX, dY;
         float step;
 
         GLfloat * defaultCoords;

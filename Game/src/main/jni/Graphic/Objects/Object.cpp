@@ -2,8 +2,8 @@
 
 void Object::move(){
     for(int i = 0; i < 4; i++){
-        polygonCoordinates[i * 2] += getDx();
-        polygonCoordinates[i * 2 + 1] += getDy();
+        polygonCoordinates[i * 2] += dX;
+        polygonCoordinates[i * 2 + 1] += dY;
     }
 }
 

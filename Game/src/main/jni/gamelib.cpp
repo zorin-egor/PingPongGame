@@ -55,8 +55,6 @@ extern "C" {
 //        *rectangle.left.x1 = -0.7f;
 //        *rectangle.left.x2 = -0.7f;
 //        bool iscrossSeg = Intersect::intersectSegments(&rectangle.left, &rectangle.up, &crossPPP);
-
-
     }
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_step(JNIEnv* env, jobject obj){

@@ -38,8 +38,6 @@ class Enemy : public Platform{
 
         void collision(Ball * object);
 
-    private:
-        GLfloat dX;
 };
 
 
