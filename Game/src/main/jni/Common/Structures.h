@@ -12,6 +12,7 @@ struct Point {
     A y;
 };
 
+//Real coords of object
 template<class A>
 struct Line {
     A * x1;
@@ -27,63 +28,55 @@ struct CommonLine {
 
 template<class A>
 struct Rectangle {
+
+    std::vector<Line<A> *> iterateLine;
+
     Line<A> left;
     Line<A> down;
     Line<A> right;
     Line<A> up;
 
-    static Rectangle<A> getRectangle(A * rectangleArray){
-        Rectangle<A> rectangle1Structure;
-        Line<A> left;
+    Rectangle(){
+        iterateLine.push_back(&left);
+        iterateLine.push_back(&down);
+        iterateLine.push_back(&right);
+        iterateLine.push_back(&up);
+    }
+
+    void setRectangle(A * rectangleArray){
         left.x1 = &rectangleArray[0];
         left.y1 = &rectangleArray[1];
         left.x2 = &rectangleArray[2];
         left.y2 = &rectangleArray[3];
 
-        Line<A> down;
         down.x1 = &rectangleArray[2];
         down.y1 = &rectangleArray[3];
         down.x2 = &rectangleArray[4];
         down.y2 = &rectangleArray[5];
 
-        Line<A> right;
         right.x1 = &rectangleArray[4];
         right.y1 = &rectangleArray[5];
         right.x2 = &rectangleArray[6];
         right.y2 = &rectangleArray[7];
 
-        Line<A> up;
         up.x1 = &rectangleArray[6];
         up.y1 = &rectangleArray[7];
         up.x2 = &rectangleArray[0];
         up.y2 = &rectangleArray[1];
-
-        rectangle1Structure.left = left;
-        rectangle1Structure.down = down;
-        rectangle1Structure.right = right;
-        rectangle1Structure.up = up;
-
-        return rectangle1Structure;
-    }
-
-    static Point<A> getCenter(A * rectangleArray){
-        Point<A> centerPoint;
-        centerPoint.x = rectangleArray[0] + (rectangleArray[0] - rectangleArray[6]) * 0.5f;
-        centerPoint.y = rectangleArray[1] - (rectangleArray[1] - rectangleArray[2]) * 0.5f;
-        return centerPoint;
-    }
-
-    static Point<A> getCenter(Rectangle<A> * rectangleArray){
-        Point<A> centerPoint;
-        centerPoint.x = rectangleArray->up.x2 + (rectangleArray->up.x2 - rectangleArray->up.x1) * (A)0.5f;
-        centerPoint.y = rectangleArray->left.y1 - (rectangleArray->left.y1 - rectangleArray->left.y2) * (A)0.5f;
-        return centerPoint;
     }
 
     Point<A> getCenter(){
         Point<A> centerPoint;
-        centerPoint.x = up.x2 + (up.x2 - up.x1) * (A)0.5f;
-        centerPoint.y = left.y1 - (left.y1 - left.y2) * (A)0.5f;
+        centerPoint.x = *(up.x2) + (*(up.x2) - *(up.x1)) * 0.5f;
+        centerPoint.y = *(left.y1) - (*(left.y1) - *(left.y2)) * (A)0.5f;
+        return centerPoint;
+    }
+
+    template<class T>
+    static Point<T> getCenter(T * rectangleArray){
+        Point<T> centerPoint;
+        centerPoint.x = rectangleArray[0] + (rectangleArray[0] - rectangleArray[6]) * 0.5f;
+        centerPoint.y = rectangleArray[1] - (rectangleArray[1] - rectangleArray[2]) * 0.5f;
         return centerPoint;
     }
 };

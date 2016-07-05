@@ -84,7 +84,7 @@ class Object : public View {
 
         }
 
-    private:
+    protected:
         // Points of cross. Any cross has 4 points.
         std::vector<GLfloat> crossPoints;
 

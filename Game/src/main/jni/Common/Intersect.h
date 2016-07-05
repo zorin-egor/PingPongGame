@@ -43,8 +43,8 @@ class Intersect {
         }
 
         static bool intersectSegments(Line<GLfloat> * line1, Line<GLfloat> * line2, std::vector<GLfloat> *twoPoints) {
-            CommonLine<GLfloat> coeff1 = Intersect::coefficients(line1->x1, line1->y1, line1->x2, line1->y2);
-            CommonLine<GLfloat> coeff2 = Intersect::coefficients(line2->x1, line2->y1, line2->x2, line2->y2);
+            CommonLine<GLfloat *> coeff1 = Intersect::coefficients(line1->x1, line1->y1, line1->x2, line1->y2);
+            CommonLine<GLfloat *> coeff2 = Intersect::coefficients(line2->x1, line2->y1, line2->x2, line2->y2);
 
             float D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
             float Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
@@ -66,8 +66,8 @@ class Intersect {
         }
 
         static bool intersectLines(Line<GLfloat> * line1, Line<GLfloat> * line2, std::vector<GLfloat> * twoPoints) {
-            CommonLine<GLfloat> coeff1 = Intersect::coefficients(line1->x1, line1->y1, line1->x2, line1->y2);
-            CommonLine<GLfloat> coeff2 = Intersect::coefficients(line2->x1, line2->y1, line2->x2, line2->y2);
+            CommonLine<GLfloat *> coeff1 = Intersect::coefficients(line1->x1, line1->y1, line1->x2, line1->y2);
+            CommonLine<GLfloat *> coeff2 = Intersect::coefficients(line2->x1, line2->y1, line2->x2, line2->y2);
 
             float D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
             float Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
@@ -88,27 +88,27 @@ class Intersect {
             Line<GLfloat> lineRect2;
 
             for(int i = 0; i < 4; i++){
-                lineRect1.x1 = rect1[i * 2];
-                lineRect1.y1 = rect1[i * 2 + 1];
+                lineRect1.x1 = &rect1[i * 2];
+                lineRect1.y1 = &rect1[i * 2 + 1];
 
                 if(i != 3){
-                    lineRect1.x2 = rect1[i * 2 + 2];
-                    lineRect1.y2 = rect1[i * 2 + 3];
+                    lineRect1.x2 = &rect1[i * 2 + 2];
+                    lineRect1.y2 = &rect1[i * 2 + 3];
                 } else {
-                        lineRect1.x2 = rect1[0];
-                        lineRect1.y2 = rect1[1];
+                        lineRect1.x2 = &rect1[0];
+                        lineRect1.y2 = &rect1[1];
                     }
 
                 for(int j = 0; j < 4; j++){
-                    lineRect2.x1 = rect2[j * 2];
-                    lineRect2.y1 = rect2[j * 2 + 1];
+                    lineRect2.x1 = &rect2[j * 2];
+                    lineRect2.y1 = &rect2[j * 2 + 1];
 
                     if(j != 3){
-                        lineRect2.x2 = rect2[j * 2 + 2];
-                        lineRect2.y2 = rect2[j * 2 + 3];
+                        lineRect2.x2 = &rect2[j * 2 + 2];
+                        lineRect2.y2 = &rect2[j * 2 + 3];
                     } else {
-                            lineRect2.x2 = rect2[0];
-                            lineRect2.y2 = rect2[1];
+                            lineRect2.x2 = &rect2[0];
+                            lineRect2.y2 = &rect2[1];
                         }
 
                     if(crossPoints->size() < 4){

@@ -4,6 +4,7 @@
 
 #include "AbstractClasses/Render.h"
 #include "Common/LogGL.h"
+#include "Common/Structures.h"
 
 #ifndef GAME_PINGPONG_VIEW_H
 #define GAME_PINGPONG_VIEW_H
@@ -29,6 +30,7 @@ class View : public Render {
                     transformationMatrix(_tranformationMatrix)
         {
             isVisible = true;
+            rectangle.setRectangle(polygonCoordinates);
         }
 
 
@@ -66,11 +68,16 @@ class View : public Render {
             return transformationMatrix;
         }
 
+        Rectangle<GLfloat> * getRectangle(){
+            return &rectangle;
+        }
+
         virtual ~View(){
 
         }
 
     protected:
+        Rectangle<GLfloat> rectangle;
 
         bool isVisible;
 

@@ -4,6 +4,7 @@
 #include "Graphic/Objects/Object.h"
 #include "Common/Methods.h"
 #include "Common/Intersect.h"
+#include "Common/Structures.h"
 
 class Platform : public Object {
 
