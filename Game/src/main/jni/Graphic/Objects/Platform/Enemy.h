@@ -40,7 +40,6 @@ class Enemy : public Platform{
 
     private:
         GLfloat dX;
-        void move();
 };
 
 

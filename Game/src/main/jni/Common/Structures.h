@@ -4,6 +4,7 @@
 #include <GLES2/gl2.h>
 #include <vector>
 #include <cmath>
+#include "Methods.h"
 
 // Common types
 template<class A>
@@ -19,6 +20,21 @@ struct Line {
     A * y1;
     A * x2;
     A * y2;
+
+    A getCenterX(){
+        return Methods::getMin(*x1, *x2) + (Methods::getMax(*x1, *x2) - Methods::getMin(*x1, *x2)) * (A)0.5f;
+    }
+
+    A getCenterY(){
+        return Methods::getMin(*y1, *y2) + (Methods::getMax(*y1, *y2) - Methods::getMin(*y1, *y2)) * (A)0.5f;
+    }
+
+    Point<A> getCenterXY(){
+        Point<A> point;
+        point.x = getCenterX();
+        point.y = getCenterY();
+        return point;
+    }
 };
 
 template <class A>
@@ -67,16 +83,15 @@ struct Rectangle {
 
     Point<A> getCenter(){
         Point<A> centerPoint;
-        centerPoint.x = *(up.x2) + (*(up.x2) - *(up.x1)) * 0.5f;
+        centerPoint.x = *(up.x2) + (*(up.x1) - *(up.x2)) * 0.5f;
         centerPoint.y = *(left.y1) - (*(left.y1) - *(left.y2)) * (A)0.5f;
         return centerPoint;
     }
 
-    template<class T>
-    static Point<T> getCenter(T * rectangleArray){
-        Point<T> centerPoint;
-        centerPoint.x = rectangleArray[0] + (rectangleArray[0] - rectangleArray[6]) * 0.5f;
-        centerPoint.y = rectangleArray[1] - (rectangleArray[1] - rectangleArray[2]) * 0.5f;
+    static Point<A> getCenter(A * rectangleArray){
+        Point<A> centerPoint;
+        centerPoint.x = rectangleArray[0] + (rectangleArray[6] - rectangleArray[0]) * 0.5f;
+        centerPoint.y = rectangleArray[1] - (rectangleArray[1] - rectangleArray[3]) * 0.5f;
         return centerPoint;
     }
 };
