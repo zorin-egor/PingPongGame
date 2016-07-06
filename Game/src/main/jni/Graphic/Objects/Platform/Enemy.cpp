@@ -19,7 +19,7 @@ void Enemy::collision(Ball * object){
 
         if(Intersect::intersectLines(&pLineBall, &getRectangle()->down, &crossPoint)){
             GLfloat crossX = crossPoint.at(0);
-            GLfloat centerEnemy = getRectangle()->down.getCenterX() + object->getWidth() * 0.5f;
+            GLfloat centerEnemy = getRectangle()->down.getCenterX();
             GLfloat deltaCross = getWidth() * 0.2f;
 
             if(centerEnemy - deltaCross < crossX && crossX < centerEnemy + deltaCross){

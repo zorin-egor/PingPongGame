@@ -89,7 +89,7 @@ class Intersect {
             for(int i = 0; i < 4; i++)
                 for(int j = 0; j < 4; j++){
                     if(crossPoints->size() < 4){
-                        intersectSegments(rect1->iterateLine.at(i), rect2->iterateLine.at(j), crossPoints);
+                        intersectSegments(rect1->iterateSides.at(i), rect2->iterateSides.at(j), crossPoints);
                     } else
                         return true;
             }

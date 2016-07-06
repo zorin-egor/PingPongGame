@@ -45,7 +45,7 @@ struct CommonLine {
 template<class A>
 struct Rectangle {
 
-    std::vector<Line<A> *> iterateLine;
+    std::vector<Line<A> *> iterateSides;
 
     Line<A> left;
     Line<A> down;
@@ -53,10 +53,10 @@ struct Rectangle {
     Line<A> up;
 
     Rectangle(){
-        iterateLine.push_back(&left);
-        iterateLine.push_back(&down);
-        iterateLine.push_back(&right);
-        iterateLine.push_back(&up);
+        iterateSides.push_back(&left);
+        iterateSides.push_back(&down);
+        iterateSides.push_back(&right);
+        iterateSides.push_back(&up);
     }
 
     void setRectangle(A * rectangleArray){
@@ -75,10 +75,10 @@ struct Rectangle {
         right.x2 = &rectangleArray[6];
         right.y2 = &rectangleArray[7];
 
-        up.x1 = &rectangleArray[6];
-        up.y1 = &rectangleArray[7];
-        up.x2 = &rectangleArray[0];
-        up.y2 = &rectangleArray[1];
+        up.x1 = &rectangleArray[0];
+        up.y1 = &rectangleArray[1];
+        up.x2 = &rectangleArray[6];
+        up.y2 = &rectangleArray[7];
     }
 
     Point<A> getCenter(){

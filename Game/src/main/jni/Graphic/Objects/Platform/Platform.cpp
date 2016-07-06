@@ -41,22 +41,28 @@ Platform::REBOUND_AREA Platform::getRebound(float x, float y, float width){
     // Find line of rectangle across with point
     for(int i = 0; i < 4; i++) {
         // If point belongs line
-        if(Intersect::betweenLine(getRectangle()->iterateLine.at(i), x, y)){
+        if(Intersect::betweenLine(getRectangle()->iterateSides.at(i), x, y)){
+            GLfloat startX;
 
-            if(Intersect::between(*getRectangle()->iterateLine.at(i)->x1, *getRectangle()->iterateLine.at(i)->x1 + width, x))
+            if(getRectangle()->getCenter().y > 0)
+                startX = *getRectangle()->iterateSides.at(i)->x2;
+            else
+                startX = *getRectangle()->iterateSides.at(i)->x1;
+
+            if(Intersect::between(startX, startX + width, x))
                 return Platform::LAST_LEFT;
 
-            if(Intersect::between(*getRectangle()->iterateLine.at(i)->x1 + width, *getRectangle()->iterateLine.at(i)->x1 + 2.0f * width, x))
+            if(Intersect::between(startX + width, startX + 2.0f * width, x))
                 return Platform::LEFT;
 
-            if(Intersect::between(*getRectangle()->iterateLine.at(i)->x1 + 2.0f * width, *getRectangle()->iterateLine.at(i)->x1 + 3.0f * width, x))
+            if(Intersect::between(startX + 2.0f * width, startX + 3.0f * width, x))
                 return Platform::CENTER;
 
-            if(Intersect::between(*getRectangle()->iterateLine.at(i)->x1 + 3.0f * width, *getRectangle()->iterateLine.at(i)->x1 + 4.0f * width, x))
+            if(Intersect::between(startX + 3.0f * width, startX + 4.0f * width, x))
                 return Platform::RIGHT;
 
-            if(Intersect::between(*getRectangle()->iterateLine.at(i)->x1 + 4.0f * width, *getRectangle()->iterateLine.at(i)->x2, x))
-                return Platform::LAST_RIGHT;
+            if(Intersect::between(startX + 4.0f * width, *getRectangle()->iterateSides.at(i)->x2, x))
+                return Platform::LAST_RIGHT; 
         }
     }
 

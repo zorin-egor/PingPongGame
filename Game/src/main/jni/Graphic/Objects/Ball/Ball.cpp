@@ -1,6 +1,8 @@
 #include "Ball.h"
 
 bool Ball::collision(Platform * object){
+    //move();
+
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
@@ -27,18 +29,18 @@ bool Ball::collision(Platform * object){
         switch(object->getRebound(centerX, centerY, width)){
             case Platform::LAST_LEFT :
                 setDy(-1.0f * dY);
-                setDx(getDx() - sign * DX_MAX);
+                setDx(dX - sign * DX_MAX);
                 break;
             case Platform::LEFT :
                 setDy(-1.0f * dY);
-                setDx(getDx() - sign * DX_MIN);
+                setDx(dX - sign * DX_MIN);
                 break;
             case Platform::CENTER :
                 setDy(-1.0f * dY);
                 break;
             case Platform::RIGHT :
                 setDy(-1.0f * dY);
-                setDx(getDx() + sign * DX_MIN);
+                setDx(dX + sign * DX_MIN);
                 break;
             case Platform::LAST_RIGHT :
                 setDy(-1.0f * dY);
@@ -79,7 +81,7 @@ bool Ball::collisionLeftRightWall(Object * object) {
 
     // It's intersect
     if(crossPoint->size() >= 4){
-        setDx(-1.0f * getDx());
+        setDx(-1.0f * dX);
         move();
         return true;
     }
@@ -94,7 +96,7 @@ bool Ball::collisionLeftRightWall(Object * object) {
 
     // It's intersect
     if(crossPoint->size() >= 4){
-        setDx(-1.0f * getDx());
+        setDx(-1.0f * dX);
         move();
         return true;
     }
