@@ -6,8 +6,8 @@ void Enemy::collision(Ball * object){
 
         // Get trajectory of ball
         GLfloat lineBall[4];
-        lineBall[0] = getRectangle()->getCenter().x;
-        lineBall[1] = getRectangle()->getCenter().y;
+        lineBall[0] = object->getRectangle()->getCenter().x;
+        lineBall[1] = object->getRectangle()->getCenter().y;
         lineBall[2] = object->getLastPoint()->front();
         lineBall[3] = object->getLastPoint()->front();
 
@@ -17,7 +17,7 @@ void Enemy::collision(Ball * object){
         pLineBall.x2 = &lineBall[2];
         pLineBall.y2 = &lineBall[3];
 
-        if(Intersect::intersectLines(&pLineBall, &getRectangle()->down, &crossPoint)){
+        if(Intersect::intersectSegmentsAndLines(&crossHorizonLine, &pLineBall, &crossPoint)){
             GLfloat crossX = crossPoint.at(0);
             GLfloat centerEnemy = getRectangle()->down.getCenterX();
             GLfloat deltaCross = getWidth() * 0.2f;
@@ -32,5 +32,19 @@ void Enemy::collision(Ball * object){
         }
     }
 
-    move();
+    Platform::collision(object);
+    //move();
+}
+
+void Enemy::setCrossHorizont(GLfloat * _crossHorizontArray){
+    crossHorizonArray = new GLfloat[4];
+    crossHorizonArray[0] = -1.0f;
+    crossHorizonArray[1] = _crossHorizontArray[3];
+    crossHorizonArray[2] = 1.0f;
+    crossHorizonArray[3] = _crossHorizontArray[5];
+
+    crossHorizonLine.x1 = &crossHorizonArray[0];
+    crossHorizonLine.y1 = &crossHorizonArray[1];
+    crossHorizonLine.x2 = &crossHorizonArray[2];
+    crossHorizonLine.y2 = &crossHorizonArray[3];
 }

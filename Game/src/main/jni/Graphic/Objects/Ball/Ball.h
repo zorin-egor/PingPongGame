@@ -7,6 +7,7 @@
 #include "Graphic/Objects/Platform/Platform.h"
 #include "Graphic/Objects/Object.h"
 #include "Common/Intersect.h"
+#include "Common/Structures.h"
 
 class Ball : public Object {
 
@@ -40,7 +41,7 @@ class Ball : public Object {
                                         DX_MAX(0.05f),
                                         DX_MIN(0.02)
         {
-                setDy(_step);
+                setDy(Methods::getRandSign() * _step);
                 isOut = false;
         }
 

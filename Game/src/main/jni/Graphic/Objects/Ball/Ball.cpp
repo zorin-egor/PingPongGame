@@ -1,8 +1,6 @@
 #include "Ball.h"
 
 bool Ball::collision(Platform * object){
-    //move();
-
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
@@ -13,7 +11,7 @@ bool Ball::collision(Platform * object){
     lastPoint.push(getRectangle()->getCenter().x);
     lastPoint.push(getRectangle()->getCenter().y);
 
-    // It's intersect
+    // It's intersect of two objects
     if(Intersect::intersectRect(object->getRectangle(), getRectangle(), crossPoint)){
         float width = getWidth();
         float sign = 1.0f;
@@ -23,7 +21,7 @@ bool Ball::collision(Platform * object){
             sign *= -1.0f;
         }
 
-        float centerX = crossPoint->at(0) + (width * 0.5f);
+        float centerX = Line<GLfloat>::getCenter(crossPoint->at(0), crossPoint->at(2));
         float centerY = crossPoint->at(1);
 
         switch(object->getRebound(centerX, centerY, width)){
@@ -60,9 +58,11 @@ bool Ball::collision(Platform * object){
 
 bool Ball::collision(Object * object){
 
+    // It's occurs more
     if(collisionLeftRightWall(object))
         return true;
 
+    // It's less
     if(collisionUpDownWall(object))
         return true;
 
@@ -73,33 +73,25 @@ bool Ball::collisionLeftRightWall(Object * object) {
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
-    // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->left), &(getRectangle()->up), crossPoint);
-
-    // Right wall
-    Intersect::intersectSegments(&(object->getRectangle()->left), &(getRectangle()->down), crossPoint);
-
-    // It's intersect
-    if(crossPoint->size() >= 4){
-        setDx(-1.0f * dX);
-        move();
-        return true;
-    }
+    // Left wall and up/down ball side
+    if(Intersect::intersectSegments(&(object->getRectangle()->left), &(getRectangle()->up), crossPoint))
+        if(Intersect::intersectSegments(&(object->getRectangle()->left), &(getRectangle()->down), crossPoint))
+            if(crossPoint->size() >= 4){
+                setDx(-1.0f * dX);
+                move();
+                return true;
+            }
 
     crossPoint->clear();
 
-    // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->right), &(getRectangle()->up), crossPoint);
-
-    // Left wall
-    Intersect::intersectSegments(&(object->getRectangle()->right), &(getRectangle()->down), crossPoint);
-
-    // It's intersect
-    if(crossPoint->size() >= 4){
-        setDx(-1.0f * dX);
-        move();
-        return true;
-    }
+    // Right wall and up/down ball side
+    if(Intersect::intersectSegments(&(object->getRectangle()->right), &(getRectangle()->up), crossPoint))
+        if(Intersect::intersectSegments(&(object->getRectangle()->right), &(getRectangle()->down), crossPoint))
+            if(crossPoint->size() >= 4){
+                setDx(-1.0f * dX);
+                move();
+                return true;
+            }
 
     crossPoint->clear();
     return false;
@@ -110,33 +102,27 @@ bool Ball::collisionUpDownWall(Object * object){
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
-    // Left wall
-    Intersect::intersectSegments(&object->getRectangle()->up, &getRectangle()->left, crossPoint);
-
-    // Left wall
-    Intersect::intersectSegments(&object->getRectangle()->up, &getRectangle()->right, crossPoint);
-
-    // It's intersect
-    if(crossPoint->size() >= 4){
-        setDefaultPosition();
-        isOut = true;
-        return true;
-    }
+    // Up wall and left/right ball side
+    if(Intersect::intersectSegments(&object->getRectangle()->up, &getRectangle()->left, crossPoint))
+        if(Intersect::intersectSegments(&object->getRectangle()->up, &getRectangle()->right, crossPoint))
+            if(crossPoint->size() >= 4){
+                setDefaultPosition();
+                dX = 0.0f;
+                isOut = true;
+                return true;
+            }
 
     crossPoint->clear();
 
-    // Left wall
-    Intersect::intersectSegments(&object->getRectangle()->down, &getRectangle()->left, crossPoint);
-
-    // Left wall
-    Intersect::intersectSegments(&object->getRectangle()->down, &getRectangle()->right, crossPoint);
-
-    // It's intersect
-    if(crossPoint->size() >= 4){
-        setDefaultPosition();
-        isOut = true;
-        return true;
-    }
+    // Down wall and left/right ball side
+    if(Intersect::intersectSegments(&object->getRectangle()->down, &getRectangle()->left, crossPoint))
+        if(Intersect::intersectSegments(&object->getRectangle()->down, &getRectangle()->right, crossPoint))
+            if(crossPoint->size() >= 4){
+                setDefaultPosition();
+                dX = 0.0f;
+                isOut = true;
+                return true;
+            }
 
     crossPoint->clear();
     return false;

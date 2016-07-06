@@ -30,6 +30,24 @@ class Intersect {
             return coeff;
         }
 
+        template <class A>
+        static bool intersect(Line<A> * line1, Line<A> * line2, Point<A> * crossPoint) {
+            CommonLine<A> coeff1 = Intersect::coefficients(*(line1->x1), *(line1->y1), *(line1->x2), *(line1->y2));
+            CommonLine<A> coeff2 = Intersect::coefficients(*(line2->x1), *(line2->y1), *(line2->x2), *(line2->y2));
+
+            A D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
+            A Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
+            A Dy = -determinate (coeff1.a, coeff1.c, coeff2.a, coeff2.c);
+
+            if (fabs(D0) < Intersect::getEps())
+                return false;
+
+            crossPoint->x = Dx / D0;
+            crossPoint->y = Dy / D0;
+
+            return true;
+        }
+
     public:
 
         template <class A>
@@ -44,42 +62,38 @@ class Intersect {
 
         template <class A>
         static bool intersectSegments(Line<A> * line1, Line<A> * line2, std::vector<A> * twoPoints) {
-            CommonLine<A> coeff1 = Intersect::coefficients(*(line1->x1), *(line1->y1), *(line1->x2), *(line1->y2));
-            CommonLine<A> coeff2 = Intersect::coefficients(*(line2->x1), *(line2->y1), *(line2->x2), *(line2->y2));
+            Point<A> point;
+            if(Intersect::intersect(line1, line2, &point))
+                if(betweenLine(line1, point.x, point.y) && betweenLine(line2, point.x, point.y)){
+                    twoPoints->push_back(point.x);
+                    twoPoints->push_back(point.y);
+                    return true;
+                }
 
-            A D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
-            A Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
-            A Dy = -determinate (coeff1.a, coeff1.c, coeff2.a, coeff2.c);
+            return false;
+        }
 
-            if (fabs(D0) < Intersect::getEps())
-                return false;
-
-            A pX = Dx / D0;
-            A pY = Dy / D0;
-
-            if(betweenLine(line1, pX, pY) && betweenLine(line2, pX, pY)){
-                twoPoints->push_back(pX);
-                twoPoints->push_back(pY);
-                return true;
-            }
+        template <class A>
+        static bool intersectSegmentsAndLines(Line<A> * line1, Line<A> * line2, std::vector<A> * twoPoints) {
+            Point<A> point;
+            if(Intersect::intersect(line1, line2, &point))
+                if(betweenLine(line1, point.x, point.y)){
+                    twoPoints->push_back(point.x);
+                    twoPoints->push_back(point.y);
+                    return true;
+                }
 
             return false;
         }
 
         template <class A>
         static bool intersectLines(Line<A> * line1, Line<A> * line2, std::vector<A> * twoPoints) {
-            CommonLine<A> coeff1 = Intersect::coefficients(*(line1->x1), *(line1->y1), *(line1->x2), *(line1->y2));
-            CommonLine<A> coeff2 = Intersect::coefficients(*(line2->x1), *(line2->y1), *(line2->x2), *(line2->y2));
-
-            A D0 = determinate (coeff1.a, coeff1.b, coeff2.a, coeff2.b);
-            A Dx = determinate (coeff1.b, coeff1.c, coeff2.b, coeff2.c);
-            A Dy = -determinate (coeff1.a, coeff1.c, coeff2.a, coeff2.c);
-
-            if (fabs(D0) < Intersect::getEps())
-                return false;
-
-            twoPoints->push_back(Dx / D0);
-            twoPoints->push_back(Dy / D0);
+            Point<A> point;
+            if(Intersect::intersect(line1, line2, &point)){
+                twoPoints->push_back(point.x);
+                twoPoints->push_back(point.y);
+                return true;
+            }
 
             return true;
         }

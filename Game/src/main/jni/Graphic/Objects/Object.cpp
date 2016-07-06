@@ -11,4 +11,6 @@ void Object::setDefaultPosition(){
     for(int i = 0; i < 8; i++){
         polygonCoordinates[i] = defaultCoords[i];
     }
+
+    dY *= Methods::getRandSign();
 }

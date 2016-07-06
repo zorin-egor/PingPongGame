@@ -42,6 +42,10 @@ class Platform : public Object {
 
             }
 
+    virtual ~Platform(){
+
+    }
+
     bool collision(Object * object);
     REBOUND_AREA getRebound(float x, float y, float width);
 };

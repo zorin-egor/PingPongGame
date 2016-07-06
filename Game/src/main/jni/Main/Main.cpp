@@ -213,6 +213,7 @@ void Main::drawFrame(){
 }
 
 void Main::logic(){
+
     if(left->getState() && !player->collision(field)){
         player->setDx(NEGATIVE * player->getStep());
     } else if(right->getState() && !player->collision(field)){
@@ -226,16 +227,13 @@ void Main::logic(){
     ball->collision(player);
     ball->collision(enemy);
     ball->collision(field);
-    ball->setStep(ball->getStep() + 0.001f);
 
     if(ball->getIsOut()){
         playPause->setState(false);
         ball->setIsOut(false);
-        ball->setDx(0.0f);
     }
 
     speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
-
     ball->move();
 }
 

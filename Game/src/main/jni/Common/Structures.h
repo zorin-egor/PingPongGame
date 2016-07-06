@@ -35,6 +35,10 @@ struct Line {
         point.y = getCenterY();
         return point;
     }
+
+    static A getCenter(A a, A b){
+        return Methods::getMin(a, b) + (Methods::getMax(a, b) - Methods::getMin(a, b)) * (A)0.5f;
+    }
 };
 
 template <class A>

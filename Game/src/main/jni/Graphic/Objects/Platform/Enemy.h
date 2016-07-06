@@ -1,8 +1,9 @@
 #ifndef GAME_PINGPONG_BOT_H
 #define GAME_PINGPONG_BOT_H
 
+#include "Common/Structures.h"
 #include "Graphic/Objects/Ball/Ball.h"
-#include "Platform.h"
+#include "Graphic/Objects/Platform/Platform.h"
 
 class Enemy : public Platform{
 
@@ -34,10 +35,19 @@ class Enemy : public Platform{
                                                  _matrixCoords )
         {
                 dX = 0;
+                setCrossHorizont(_verticesCoords);
         }
 
         void collision(Ball * object);
 
+        virtual ~Enemy(){
+            delete [] crossHorizonArray;
+        }
+
+    private:
+        void setCrossHorizont(GLfloat * _crossHorizontArray);
+        Line<GLfloat> crossHorizonLine;
+        GLfloat * crossHorizonArray;
 };
 
 

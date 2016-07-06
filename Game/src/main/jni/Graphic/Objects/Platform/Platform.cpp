@@ -2,36 +2,31 @@
 
 bool Platform::collision(Object * object){
 
+    // Move and check collision, If true change dX and do step back
     move();
 
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
-    // Left side
-    Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->down, crossPoint);
-
-    // Right side
-    Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->up, crossPoint);
-
-    if(crossPoint->size() >= 4){
-        setDx(-1.0f * dX);
-        move();
-        return true;
-    }
+    // Left wall and down/up platform side
+    if(Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->down, crossPoint))
+        if(Intersect::intersectSegments(&object->getRectangle()->left, &getRectangle()->up, crossPoint))
+            if(crossPoint->size() >= 4){
+                setDx(-1.0f * dX);
+                move();
+                return true;
+            }
 
     crossPoint->clear();
 
-    // Left side
-    Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->down, crossPoint);
-
-    // Right side
-    Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->up, crossPoint);
-
-    if(crossPoint->size() >= 4){
-        setDx(-1.0f * dX);
-        move();
-        return true;
-    }
+    // Right wall and down/up platform side
+    if(Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->down, crossPoint))
+        if(Intersect::intersectSegments(&object->getRectangle()->right, &getRectangle()->up, crossPoint))
+            if(crossPoint->size() >= 4){
+                setDx(-1.0f * dX);
+                move();
+                return true;
+            }
 
     crossPoint->clear();
     return false;

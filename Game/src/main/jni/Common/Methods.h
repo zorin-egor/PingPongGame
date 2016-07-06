@@ -51,6 +51,11 @@ class Methods {
             return result;
         }
 
+        inline static int getRandSign(){
+            int sign[2] = {-1, 1};
+            return sign[rand() % 2];
+        }
+
         template <class A>
         inline static A getMin(A a, A b){
             return a < b? a : b;
