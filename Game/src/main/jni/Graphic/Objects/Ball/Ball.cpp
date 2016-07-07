@@ -4,7 +4,7 @@ bool Ball::collision(Platform * object){
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
-    while(lastPoint.size() > 4)
+    while(lastPoint.size() > 2)
         lastPoint.pop();
 
     // Save current points of center

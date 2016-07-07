@@ -9,7 +9,9 @@ void Enemy::collision(Ball * object){
         lineBall[0] = object->getRectangle()->getCenter().x;
         lineBall[1] = object->getRectangle()->getCenter().y;
         lineBall[2] = object->getLastPoint()->front();
+        object->getLastPoint()->pop();
         lineBall[3] = object->getLastPoint()->front();
+        object->getLastPoint()->pop();
 
         Line<GLfloat> pLineBall;
         pLineBall.x1 = &lineBall[0];
@@ -33,7 +35,6 @@ void Enemy::collision(Ball * object){
     }
 
     Platform::collision(object);
-    //move();
 }
 
 void Enemy::setCrossHorizont(GLfloat * _crossHorizontArray){
