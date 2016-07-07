@@ -13,42 +13,58 @@ bool Ball::collision(Platform * object){
 
     // It's intersect of two objects
     if(Intersect::intersectRect(object->getRectangle(), getRectangle(), crossPoint)){
+        increaseSpeed();
         float width = getWidth();
-        float sign = 1.0f;
-
-        if(crossPoint->at(1) > 0){
-            width = -1.0f * width;
-            sign *= -1.0f;
-        }
-
         float centerX = Line<GLfloat>::getCenter(crossPoint->at(0), crossPoint->at(2));
-        float centerY = crossPoint->at(1);
+        float centerY = Methods::getMax(crossPoint->at(1), crossPoint->at(3));
+        float shiftY = -1.0f * Intersect::getEps();
+
+        if(getRectangle()->getCenter().y > 0){
+            width = -1.0f * width;
+            sign = -1.0f;
+            centerY = Methods::getMin(crossPoint->at(1), crossPoint->at(3));
+            shiftY += fabsf(*getRectangle()->up.y1) - fabsf(centerY);
+        } else {
+                shiftY += fabsf(*getRectangle()->down.y1) - fabsf(centerY);
+                sign = 1.0f;
+            }
 
         switch(object->getRebound(centerX, centerY, width)){
             case Platform::LAST_LEFT :
-                setDy(-1.0f * dY);
-                setDx(dX - sign * DX_MAX);
+                dY = -1.0f * dY;
+                dX = -1.0f * sign * DX_MAX;
+                moveY(sign * shiftY);
+                LOGI("LAST_LEFT");
                 break;
             case Platform::LEFT :
-                setDy(-1.0f * dY);
-                setDx(dX - sign * DX_MIN);
+                dY = -1.0f * dY;
+                dX = -1.0f * sign * DX_MIN;
+                moveY(sign * shiftY);
+                LOGI("LEFT");
                 break;
             case Platform::CENTER :
-                setDy(-1.0f * dY);
+                dY = -1.0f * dY;
+                moveY(sign * shiftY);
+                LOGI("CENTER");
                 break;
             case Platform::RIGHT :
-                setDy(-1.0f * dY);
-                setDx(dX + sign * DX_MIN);
+                dY = -1.0f * dY;
+                dX = sign * DX_MIN;
+                moveY(sign * shiftY);
+                LOGI("RIGHT");
                 break;
             case Platform::LAST_RIGHT :
-                setDy(-1.0f * dY);
-                setDx(dX + sign * DX_MAX);
+                dY = -1.0f * dY;
+                dX = sign * DX_MAX;
+                moveY(sign * shiftY);
+                LOGI("LAST_RIGHT");
                 break;
             case Platform::NONE :
                 break;
         }
 
         crossPoint->clear();
+
         return true;
     }
 
@@ -77,7 +93,7 @@ bool Ball::collisionLeftRightWall(Object * object) {
     if(Intersect::intersectSegments(&(object->getRectangle()->left), &(getRectangle()->up), crossPoint))
         if(Intersect::intersectSegments(&(object->getRectangle()->left), &(getRectangle()->down), crossPoint))
             if(crossPoint->size() >= 4){
-                setDx(-1.0f * dX);
+                dX = -1.0f * dX;
                 move();
                 return true;
             }
@@ -88,7 +104,7 @@ bool Ball::collisionLeftRightWall(Object * object) {
     if(Intersect::intersectSegments(&(object->getRectangle()->right), &(getRectangle()->up), crossPoint))
         if(Intersect::intersectSegments(&(object->getRectangle()->right), &(getRectangle()->down), crossPoint))
             if(crossPoint->size() >= 4){
-                setDx(-1.0f * dX);
+                dX = -1.0f * dX;
                 move();
                 return true;
             }
@@ -125,5 +141,23 @@ bool Ball::collisionUpDownWall(Object * object){
             }
 
     crossPoint->clear();
+
+    if( !Intersect::between(-1.0f, 1.0f, getRectangle()->getCenter().x) &&
+        !Intersect::between(-1.0f, 1.0f, getRectangle()->getCenter().y)){
+            setDefaultPosition();
+            dX = 0.0f;
+            isOut = true;
+            return true;
+    }
+
     return false;
+}
+
+void Ball::increaseSpeed(){
+    if(fabsf(dY) < INCREASE_SPEED_TO){
+        if(dY > 0)
+            dY += DELTA_SPEED;
+        else
+            dY -= DELTA_SPEED;
+    }
 }

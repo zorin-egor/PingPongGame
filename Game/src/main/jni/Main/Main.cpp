@@ -155,7 +155,7 @@ void Main::createObjects(){
 
     // Player platform
     player = new Platform( PLATFORMS_SPEED,
-                           -0.25, -0.5f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
+                           -0.25, -0.4f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
                            polygonsPositionAttr,
@@ -166,7 +166,7 @@ void Main::createObjects(){
                            matrix->getDefaultMatrix4x4());
 
     // Enemy platform
-    enemy = new Enemy( PLATFORMS_SPEED + 0.05,
+    enemy = new Enemy( PLATFORMS_SPEED + 0.04,
                         -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                         textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                         polygons,
@@ -225,7 +225,7 @@ void Main::logic(){
 
     enemy->collision(ball);
     ball->collision(player);
-    ball->collision(enemy);
+    ball->collision((Platform *)enemy);
     ball->collision(field);
 
     if(ball->getIsOut()){

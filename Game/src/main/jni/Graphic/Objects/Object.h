@@ -78,6 +78,8 @@ class Object : public View {
 
         void setDefaultPosition();
         void move();
+        void moveY(GLfloat y);
+        void moveX(GLfloat x);
         virtual bool collision(Object * object) = 0;
 
         virtual ~Object(){

@@ -4,7 +4,7 @@ void Enemy::collision(Ball * object){
     if(object->getLastPoint()->size() > 2){
         std::vector<GLfloat> crossPoint;
 
-        // Get trajectory of ball
+        // Get trajectory of ball and get Line links object
         GLfloat lineBall[4];
         lineBall[0] = object->getRectangle()->getCenter().x;
         lineBall[1] = object->getRectangle()->getCenter().y;
@@ -19,6 +19,7 @@ void Enemy::collision(Ball * object){
         pLineBall.x2 = &lineBall[2];
         pLineBall.y2 = &lineBall[3];
 
+        // If ball fly to out, else go to center!
         if(Intersect::intersectSegmentsAndLines(&crossHorizonLine, &pLineBall, &crossPoint)){
             GLfloat crossX = crossPoint.at(0);
             GLfloat centerEnemy = getRectangle()->down.getCenterX();
@@ -31,7 +32,16 @@ void Enemy::collision(Ball * object){
             } else if(crossX > centerEnemy + deltaCross){
                 dX = getStep();
             }
-        }
+        } else {
+                GLfloat cX = getRectangle()->getCenter().x;
+                GLfloat cEps = getWidth() / 2.5f;
+                if(cX> cEps)
+                    dX = -1.0f * getStep();
+                else if(cX < -1.0 * cEps)
+                        dX = getStep();
+                     else
+                        dX = 0.0f;
+            }
     }
 
     Platform::collision(object);

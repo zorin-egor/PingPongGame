@@ -38,11 +38,14 @@ class Ball : public Object {
                                                 _textureCoords,
                                                 _matrixCoords ),
 
-                                        DX_MAX(0.05f),
-                                        DX_MIN(0.02)
+                                        DX_MAX(0.06f),
+                                        DX_MIN(0.03),
+                                        INCREASE_SPEED_TO(_height),
+                                        DELTA_SPEED(0.00001f)
         {
                 setDy(Methods::getRandSign() * _step);
                 isOut = false;
+                sign = 1.0f;
         }
 
         bool collision(Object * object);
@@ -65,10 +68,15 @@ class Ball : public Object {
 
         const float DX_MIN;
         const float DX_MAX;
+        const float INCREASE_SPEED_TO;
+        const float DELTA_SPEED;
+
+        float sign;
 
         bool isOut;
         bool collisionLeftRightWall(Object * object);
         bool collisionUpDownWall(Object * object);
+        void increaseSpeed();
 };
 
 

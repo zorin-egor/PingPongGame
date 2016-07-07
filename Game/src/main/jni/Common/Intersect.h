@@ -12,10 +12,6 @@ class Intersect {
 
     private:
 
-        inline static const float getEps(){
-            return 0.000001f;
-        }
-
         template <class A>
         static float determinate(A a, A b, A c, A d) {
             return a * d - b * c;
@@ -49,6 +45,10 @@ class Intersect {
         }
 
     public:
+
+        inline static const float getEps(){
+            return 0.000001f;
+        }
 
         template <class A>
         inline static bool between (A a, A b, A c) {
@@ -100,15 +100,13 @@ class Intersect {
 
         template <class A>
         static bool intersectRect(Rectangle<A> * rect1, Rectangle<A> * rect2, std::vector<A> * crossPoints){
-            for(int i = 0; i < 4; i++)
+            for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 4; j++){
-                    if(crossPoints->size() < 4){
-                        intersectSegments(rect1->iterateSides.at(i), rect2->iterateSides.at(j), crossPoints);
-                    } else
-                        return true;
+                    intersectSegments(rect1->iterateSides.at(i), rect2->iterateSides.at(j), crossPoints);
+                }
             }
 
-            return false;
+            return crossPoints->size() >= 4? true : false;
         }
 };
 
