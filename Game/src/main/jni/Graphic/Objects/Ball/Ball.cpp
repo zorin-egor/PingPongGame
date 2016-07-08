@@ -44,6 +44,7 @@ bool Ball::collision(Platform * object){
                 break;
             case Platform::CENTER :
                 dY = -1.0f * dY;
+                dX = 0.0f;
                 moveY(sign * shiftY);
                 LOGI("CENTER");
                 break;
