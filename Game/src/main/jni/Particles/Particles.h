@@ -7,7 +7,7 @@
 #include "AbstractClasses/Render.h"
 #include "Common/LogGL.h"
 
-class Particles : public Render{
+class Particles : public Render {
 
     public:
         Particles(unsigned int _count,

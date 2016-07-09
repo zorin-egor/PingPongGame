@@ -45,7 +45,7 @@ class Main {
                 PLATFORMS_SPEED(0.04f),
                 BALL_WIDTH(PLATFORMS_WIDTH / 5.0f),
                 BALL_HEIGHT(((float)_width / (float)_height) * BALL_WIDTH),
-                BALL_SPEED(0.005f),
+                BALL_SPEED(0.02f),
                 STOP_MOVE(0.0f),
                 LABEL_HEIGHT(0.1f),
                 LABEL_WIDTH(1.0f)
@@ -173,6 +173,7 @@ class Main {
         // Programs
         GLuint polygons;
         GLuint sprites;
+        GLuint splash;
 
         // Polygons
         GLint polygonsPositionAttr;
@@ -188,6 +189,13 @@ class Main {
         GLint spritesSize;
         GLint spritesColorStart;
         GLint spritesColorEnd;
+
+        // Splash
+        GLint splashPosition;
+        GLint splashColorStart;
+        GLint splashColorEnd;
+        GLint splashDelta;
+        GLint splashSize;
 
         // Objects
         View * background;

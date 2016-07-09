@@ -43,6 +43,25 @@ const char * MakeShaders::f_point_shader =  "precision mediump float;"
                                             "    gl_FragColor = v_Color * texture2D(t_texture, gl_PointCoord);"
                                             "}";
 
+const char * MakeShaders::v_splash_shader = "attribute vec2 a_ArrayCoords;"
+                                            "attribute vec4 a_ColorStart;"
+                                            "attribute vec4 a_ColorEnd;"
+                                            "attribute float a_Delta;"
+                                            "uniform vec2 u_Size;"
+                                            "varying vec4 v_Color;"
+                                            "void main(){"
+                                            "   v_Color = mix(a_ColorStart, a_ColorEnd, a_Delta);"
+                                            "   gl_PointSize = mix(u_Size.x, u_Size.y, a_Delta);"
+                                            "   gl_Position = vec4(a_ArrayCoords, 1.0, 1.0);"
+                                            "}";
+
+const char * MakeShaders::f_splash_shader = "precision mediump float;"
+                                            "varying vec4 v_Color;"
+                                            "uniform sampler2D t_texture;"
+                                            "void main(){"
+                                            "    gl_FragColor = v_Color * texture2D(t_texture, gl_PointCoord);"
+                                            "}";
+
 GLuint MakeShaders::compileShader(GLenum shaderType, const char* pSource) {
     // Создаём шейдер и получаем ссылку него, где shaderType - тип шейдера
     GLuint shader = glCreateShader(shaderType);

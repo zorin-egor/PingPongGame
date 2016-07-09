@@ -4,30 +4,43 @@ void Main::init() {
     // Polygons
     polygons = MakeShaders::createProgram(MakeShaders::v_main_shader, MakeShaders::f_main_shader);
     polygonsPositionAttr = glGetAttribLocation(polygons, "a_Position");
-    checkGLError("Main::init - a_Position");
+    checkGLError("Main::init - polygons - a_Position");
     polygonsTextureAttr = glGetAttribLocation(polygons, "a_Texture");
-    checkGLError("Main::init - a_Texture");
+    checkGLError("Main::init - polygons - a_Texture");
     polygonsTransformationAttr = glGetUniformLocation(polygons, "u_Matrix");
-    checkGLError("Main::init - u_Matrix");
+    checkGLError("Main::init - polygons - u_Matrix");
 
     // Sprites
     sprites = MakeShaders::createProgram(MakeShaders::v_point_shader, MakeShaders::f_point_shader);
     spritesRandomPosition = glGetAttribLocation(sprites, "a_RandomArrayCoords");
-    checkGLError("Main::init - a_RandomArrayCoords");
+    checkGLError("Main::init - sprites - a_RandomArrayCoords");
     spritesRandomSpeed = glGetAttribLocation(sprites, "a_RandomArraySpeed");
-    checkGLError("Main::init - a_RandomArraySpeed");
+    checkGLError("Main::init - sprites - a_RandomArraySpeed");
     spritesRandomRadius = glGetAttribLocation(sprites, "a_RandomArrayRadius");
-    checkGLError("Main::init - a_RandomArrayRadius");
+    checkGLError("Main::init - sprites - a_RandomArrayRadius");
     spritesDelta = glGetAttribLocation(sprites, "a_Delta");
-    checkGLError("Main::init - a_Delta");
+    checkGLError("Main::init - sprites - a_Delta");
     spritesSize = glGetUniformLocation(sprites, "u_Size");
-    checkGLError("Main::init - u_Size");
+    checkGLError("Main::init - sprites - u_Size");
     spritesTotalDeltaSpeed = glGetUniformLocation(sprites, "u_TotalDeltaSpeed");
-    checkGLError("Main::init - u_TotalDeltaSpeed");
+    checkGLError("Main::init - sprites - u_TotalDeltaSpeed");
     spritesColorStart = glGetAttribLocation(sprites, "a_ColorStart");
-    checkGLError("Main::init - a_ColorStart");
+    checkGLError("Main::init - sprites - a_ColorStart");
     spritesColorEnd = glGetAttribLocation(sprites, "a_ColorEnd");
-    checkGLError("Main::init - a_ColorEnd");
+    checkGLError("Main::init - sprites - a_ColorEnd");
+
+    // Splash
+    splash = MakeShaders::createProgram(MakeShaders::v_splash_shader, MakeShaders::f_splash_shader);
+    splashPosition = glGetAttribLocation(splash, "a_ArrayCoords");
+    checkGLError("Main::init - splash - a_ArrayCoords");
+    splashColorStart = glGetAttribLocation(splash, "a_ColorStart");
+    checkGLError("Main::init - splash - a_ColorStart");
+    splashColorEnd = glGetAttribLocation(splash, "a_ColorEnd");
+    checkGLError("Main::init - splash - a_ColorEnd");
+    splashDelta = glGetAttribLocation(splash, "a_Delta");
+    checkGLError("Main::init - splash - a_Delta");
+    splashSize = glGetUniformLocation(splash, "u_Size");
+    checkGLError("Main::init - splash - u_TotalDeltaSpeed");
 
     //On alfa-blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
