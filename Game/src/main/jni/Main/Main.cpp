@@ -57,6 +57,8 @@ void Main::createObjects(){
 
     matrix = new Matrix();
     textures = new ManageTexture(env, pngManager, assetManager);
+
+    // Background stars
     particles = new Particles(1000,
                               sprites,
                               textures->getTexturesPackIDs(ManageTexture::STAR),
@@ -69,6 +71,7 @@ void Main::createObjects(){
                               spritesSize,
                               spritesTotalDeltaSpeed);
 
+    // Splash by collisions
     splashObj = new Splash( 100, 50,
                             splash,
                             textures->getTexturesPackIDs(ManageTexture::SPLASH),
@@ -77,6 +80,16 @@ void Main::createObjects(){
                             splashColorEnd,
                             splashDelta,
                             splashSize);
+
+    // Plume from ball
+    plumeObj = new Plume( 200,
+                          splash,
+                          textures->getTexturesPackIDs(ManageTexture::SPLASH),
+                          splashPosition,
+                          splashColorStart,
+                          splashColorEnd,
+                          splashDelta,
+                          splashSize);
 
     // Background image
     background = new View(textures->getTexturesPackIDs(ManageTexture::BACKGROUND),
@@ -239,7 +252,7 @@ void Main::step(){
 
 void Main::drawFrame(){
     // Draw something under
-    renderBackground();
+    //renderBackground();
     renderObjects();
     renderInterface();
 }
@@ -267,6 +280,8 @@ void Main::logic(){
 
     speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
     ball->move();
+
+    plumeObj->setPlumePoints(ball->getPlumePoints());
 }
 
 void Main::rotateBackground(){
@@ -321,6 +336,9 @@ void Main::renderInterface(){
 }
 
 void Main::renderObjects(){
+    // Plume
+    plumeObj->render();
+
     // Ball
     ball->render();
 
@@ -331,5 +349,5 @@ void Main::renderObjects(){
     enemy->render();
 
     // Splash
-    splashObj->render();
+    //splashObj->render();
 }

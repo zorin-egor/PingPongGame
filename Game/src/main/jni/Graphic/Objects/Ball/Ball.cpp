@@ -4,12 +4,8 @@ bool Ball::collision(Platform * object){
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
-    while(lastPoint.size() > 2)
-        lastPoint.pop();
-
-    // Save current points of center
-    lastPoint.push(getRectangle()->getCenter().x);
-    lastPoint.push(getRectangle()->getCenter().y);
+    setPreviousPoint();
+    setQueuePointsForPlume();
 
     // It's intersect of two objects
     if(Intersect::intersectRect(object->getRectangle(), getRectangle(), crossPoint)){
@@ -162,4 +158,22 @@ void Ball::increaseSpeed(){
         else
             dY -= DELTA_SPEED;
     }
+}
+
+void Ball::setPreviousPoint(){
+    while(lastPoint.size() > 2)
+        lastPoint.pop();
+
+    // Save current points of center
+    lastPoint.push(getRectangle()->getCenter().x);
+    lastPoint.push(getRectangle()->getCenter().y);
+}
+
+void Ball::setQueuePointsForPlume(){
+    while(plumePoints.size() > 40)
+        plumePoints.pop();
+
+    // Save current points of center
+    plumePoints.push(getRectangle()->getCenter().x);
+    plumePoints.push(getRectangle()->getCenter().y);
 }

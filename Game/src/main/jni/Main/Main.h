@@ -14,11 +14,13 @@
 #include "Graphic/Controls/Button.h"
 #include "Particles/Particles.h"
 #include "Particles/Splash.h"
+#include "Particles/Plume.h"
 #include "Shaders/MakeShaders.h"
 #include "Graphic/View.h"
 #include "Textures/ManageTexture.h"
 #include "Common/Structures.h"
 #include "Common/LogGL.h"
+
 
 class Main {
 
@@ -70,6 +72,7 @@ class Main {
             delete enemy;
             delete splashObj;
             delete particles;
+            delete plumeObj;
         }
 
         void step();
@@ -164,6 +167,7 @@ class Main {
         Matrix * matrix;
         Particles * particles;
         Splash * splashObj;
+        Plume * plumeObj;
 
         // Screen
         int width;

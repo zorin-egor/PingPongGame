@@ -62,13 +62,22 @@ class Ball : public Object {
             Ball::isOut = isOut;
         }
 
-        std::queue<GLfloat> * getLastPoint() {
+        std::queue<GLfloat> * getLastPoint(){
             return &lastPoint;
         }
 
+        std::queue<GLfloat> * getPlumePoints(){
+            return &plumePoints;
+        }
+
     private:
+
+        void setPreviousPoint();
+        void setQueuePointsForPlume();
+
         Splash * splash;
         std::queue<GLfloat> lastPoint;
+        std::queue<GLfloat> plumePoints;
 
         const float DX_MIN;
         const float DX_MAX;
