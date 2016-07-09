@@ -218,7 +218,8 @@ void Main::createObjects(){
                     polygonsTransformationAttr,
                     matrix->getDefaultVerticesCoords(),
                     Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
-                    matrix->getDefaultMatrix4x4());
+                    matrix->getDefaultMatrix4x4(),
+                    splashObj);
 }
 
 void Main::step(){
@@ -238,11 +239,9 @@ void Main::step(){
 
 void Main::drawFrame(){
     // Draw something under
-    //renderBackground();
-    //renderObjects();
-    //renderInterface();
-
-    splashObj->render();
+    renderBackground();
+    renderObjects();
+    renderInterface();
 }
 
 void Main::logic(){
@@ -330,4 +329,7 @@ void Main::renderObjects(){
 
     // Enemy
     enemy->render();
+
+    // Splash
+    splashObj->render();
 }

@@ -64,6 +64,7 @@ bool Ball::collision(Platform * object){
                 break;
         }
 
+        splash->setSplashPosition(centerX, centerY);
         crossPoint->clear();
 
         return true;

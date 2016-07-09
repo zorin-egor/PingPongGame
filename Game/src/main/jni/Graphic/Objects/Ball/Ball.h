@@ -3,6 +3,7 @@
 
 #include <typeinfo>
 #include <queue>
+#include <Particles/Splash.h>
 
 #include "Graphic/Objects/Platform/Platform.h"
 #include "Graphic/Objects/Object.h"
@@ -24,20 +25,22 @@ class Ball : public Object {
              GLint _transformationAttr,
              GLfloat * _verticesCoords,
              GLfloat * _textureCoords,
-             GLfloat * _matrixCoords) : Object( _step,
-                                                _x,
-                                                _y,
-                                                _width,
-                                                _height,
-                                                _textureID,
-                                                _programID,
-                                                _positionAttr,
-                                                _textureAttr,
-                                                _transformationAttr,
-                                                _verticesCoords,
-                                                _textureCoords,
-                                                _matrixCoords ),
+             GLfloat * _matrixCoords,
+             Splash * _splash) : Object( _step,
+                                        _x,
+                                        _y,
+                                        _width,
+                                        _height,
+                                        _textureID,
+                                        _programID,
+                                        _positionAttr,
+                                        _textureAttr,
+                                        _transformationAttr,
+                                        _verticesCoords,
+                                        _textureCoords,
+                                        _matrixCoords ),
 
+                                        splash(_splash),
                                         DX_MAX(0.06f),
                                         DX_MIN(0.03),
                                         INCREASE_SPEED_TO(_height),
@@ -64,6 +67,7 @@ class Ball : public Object {
         }
 
     private:
+        Splash * splash;
         std::queue<GLfloat> lastPoint;
 
         const float DX_MIN;
