@@ -13,19 +13,25 @@ class Particles : public Render{
         Particles(unsigned int _count,
                   GLuint _programID,
                   GLuint _textureID,
-                  GLuint _positionAttr,
+                  GLuint _randomPositionAttr,
+                  GLuint _randomSpeedAttr,
+                  GLuint _randomRadiusAttr,
                   GLuint _deltaAttr,
                   GLuint _colorStartAttr,
                   GLuint _colorEndAttr,
-                  GLuint _sizeUniform) :
+                  GLuint _sizeUniform,
+                  GLuint _totalDeltaSpeedUniform) :
                 count(_count),
-                textureID(_textureID),
                 programID(_programID),
-                positionAttr(_positionAttr),
+                textureID(_textureID),
+                randomPositionAttr(_randomPositionAttr),
+                randomSpeedAttr(_randomSpeedAttr),
+                randomRadiusAttr(_randomRadiusAttr),
                 deltaAttr(_deltaAttr),
                 colorStartAttr(_colorStartAttr),
                 colorEndAttr(_colorEndAttr),
-                sizeUniform(_sizeUniform)
+                sizeUniform(_sizeUniform),
+                totalDeltaSpeedUniform(_totalDeltaSpeedUniform)
 
         {
             isVisible = true;
@@ -36,7 +42,6 @@ class Particles : public Render{
 
         virtual ~Particles(){
             delete [] positionArray;
-            delete [] deltaArray;
             delete [] colorStartArray;
             delete [] colorEndArray;
             delete [] sizeUniformArray;
@@ -64,14 +69,16 @@ class Particles : public Render{
         GLuint textureID;
         GLuint programID;
 
-        GLint positionAttr;
+        GLuint randomPositionAttr;
+        GLuint randomSpeedAttr;
+        GLuint randomRadiusAttr;
+        GLuint totalDeltaSpeedUniform;
         GLint deltaAttr;
         GLint colorStartAttr;
         GLint colorEndAttr;
         GLint sizeUniform;
 
         GLfloat * positionArray;
-        GLfloat * deltaArray;
         GLfloat * colorStartArray;
         GLfloat * colorEndArray;
         GLfloat * sizeUniformArray;

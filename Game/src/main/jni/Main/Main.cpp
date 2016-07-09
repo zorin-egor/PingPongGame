@@ -12,12 +12,18 @@ void Main::init() {
 
     // Sprites
     sprites = MakeShaders::createProgram(MakeShaders::v_point_shader, MakeShaders::f_point_shader);
-    spritesPosition = glGetAttribLocation(sprites, "a_Position");
-    checkGLError("Main::init - a_Position");
+    spritesRandomPosition = glGetAttribLocation(sprites, "a_RandomArrayCoords");
+    checkGLError("Main::init - a_RandomArrayCoords");
+    spritesRandomSpeed = glGetAttribLocation(sprites, "a_RandomArraySpeed");
+    checkGLError("Main::init - a_RandomArraySpeed");
+    spritesRandomRadius = glGetAttribLocation(sprites, "a_RandomArrayRadius");
+    checkGLError("Main::init - a_RandomArrayRadius");
     spritesDelta = glGetAttribLocation(sprites, "a_Delta");
     checkGLError("Main::init - a_Delta");
     spritesSize = glGetUniformLocation(sprites, "u_Size");
     checkGLError("Main::init - u_Size");
+    spritesTotalDeltaSpeed = glGetUniformLocation(sprites, "u_TotalDeltaSpeed");
+    checkGLError("Main::init - u_TotalDeltaSpeed");
     spritesColorStart = glGetAttribLocation(sprites, "a_ColorStart");
     checkGLError("Main::init - a_ColorStart");
     spritesColorEnd = glGetAttribLocation(sprites, "a_ColorEnd");
@@ -41,11 +47,14 @@ void Main::createObjects(){
     particles = new Particles(1000,
                               sprites,
                               textures->getTexturesPackIDs(ManageTexture::STAR),
-                              spritesPosition,
+                              spritesRandomPosition,
+                              spritesRandomSpeed,
+                              spritesRandomRadius,
                               spritesDelta,
                               spritesColorStart,
                               spritesColorEnd,
-                              spritesSize);
+                              spritesSize,
+                              spritesTotalDeltaSpeed);
 
     // Background image
     background = new View(textures->getTexturesPackIDs(ManageTexture::BACKGROUND),

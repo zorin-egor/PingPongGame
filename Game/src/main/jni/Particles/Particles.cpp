@@ -19,13 +19,25 @@ void Particles::render() {
 
     // Fill attributes and uniforms
     // Position
-    glVertexAttribPointer(positionAttr, 2, GL_FLOAT, GL_FALSE, 0, positionArray);
-    checkGLError("Particles - glVertexAttribPointer - positionAttr");
-    glEnableVertexAttribArray(positionAttr);
-    checkGLError("Particles - glVertexAttribPointer - positionAttr - enabled");
+    glVertexAttribPointer(randomPositionAttr, 2, GL_FLOAT, GL_FALSE, 0, randomArrayCoords);
+    checkGLError("Particles - glVertexAttribPointer - randomPositionAttr");
+    glEnableVertexAttribArray(randomPositionAttr);
+    checkGLError("Particles - glVertexAttribPointer - randomPositionAttr - enabled");
+
+    // Speed
+    glVertexAttribPointer(randomSpeedAttr, 1, GL_FLOAT, GL_FALSE, 0, randomArraySpeed);
+    checkGLError("Particles - glVertexAttribPointer - randomSpeedAttr");
+    glEnableVertexAttribArray(randomSpeedAttr);
+    checkGLError("Particles - glVertexAttribPointer - randomSpeedAttr - enabled");
+
+    // Radius
+    glVertexAttribPointer(randomRadiusAttr, 1, GL_FLOAT, GL_FALSE, 0, randomArrayRadius);
+    checkGLError("Particles - glVertexAttribPointer - randomRadiusAttr");
+    glEnableVertexAttribArray(randomRadiusAttr);
+    checkGLError("Particles - glVertexAttribPointer - randomRadiusAttr - enabled");
 
     // Delta
-    glVertexAttribPointer(deltaAttr, 1, GL_FLOAT, GL_FALSE, 0, deltaArray);
+    glVertexAttribPointer(deltaAttr, 1, GL_FLOAT, GL_FALSE, 0, randomArrayDelta);
     checkGLError("Particles - glVertexAttribPointer - deltaAttr");
     glEnableVertexAttribArray(deltaAttr);
     checkGLError("Particles - glVertexAttribPointer - deltaAttr - enabled");
@@ -44,7 +56,11 @@ void Particles::render() {
 
     // Size
     glUniform2f(sizeUniform, sizeUniformArray[0], sizeUniformArray[1]);
-    checkGLError("Particles - glUniform2f");
+    checkGLError("Particles - glUniform2f - sizeUniform");
+
+    // Total speed
+    glUniform1f(totalDeltaSpeedUniform, totalDeltaSpeed);
+    checkGLError("Particles - glUniform2f - totalDeltaSpeedUniform");
 
     // Draw poligon
     glDrawArrays(GL_POINTS, 0, count);
@@ -55,10 +71,6 @@ void Particles::initArrays(){
     // Two point * count
     positionArray = new GLfloat[count * 2];
     Methods::fillArray(positionArray, 0.0f, count * 2);
-
-    // Delta * count
-    deltaArray = new GLfloat[count];
-    Methods::fillArray(deltaArray, 0.0f, count);
 
     // 4 color * count
     colorStartArray = new GLfloat[count * 4];
@@ -103,13 +115,6 @@ void Particles::setValues(){
     totalDeltaSpeed = totalDeltaSpeed + deltaSpeed;
 
     for(int i = 0; i < count; i++){
-        // Set point position
-        positionArray[i * 2] = randomArrayRadius[i] * cos(randomArraySpeed[i] + totalDeltaSpeed) + randomArrayCoords[i * 2];
-        positionArray[i * 2 + 1] = 0.2f * sin(randomArraySpeed[i] + totalDeltaSpeed) + randomArrayCoords[i * 2 + 1];
-
-        // Delta
-        deltaArray[i] = randomArrayDelta[i];
-
         // Color start
         colorStartArray[i * 4] = Methods::getShortRandom() * 0.5f;
         colorStartArray[i * 4 + 1] = Methods::getShortRandom() * 0.5f;

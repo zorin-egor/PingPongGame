@@ -104,10 +104,6 @@ class Main {
             return spritesDelta;
         }
 
-        GLint getSpritesPosition() const {
-            return spritesPosition;
-        }
-
         GLint getSpritesSize() const {
             return spritesSize;
         }
@@ -130,6 +126,22 @@ class Main {
 
         GLint getPolygonsPositionAttr() const {
             return polygonsPositionAttr;
+        }
+
+        GLint getSpritesRandomPosition() const {
+            return spritesRandomPosition;
+        }
+
+        GLint getSpritesRandomSpeed() const {
+            return spritesRandomSpeed;
+        }
+
+        GLint getSpritesRandomRadius() const {
+            return spritesRandomRadius;
+        }
+
+        GLint getSpritesTotalDeltaSpeed() const {
+            return spritesTotalDeltaSpeed;
         }
 
     private:
@@ -168,8 +180,10 @@ class Main {
         GLint polygonsTransformationAttr;
 
         // Sprites
-        GLint spritesPosition;
-
+        GLint spritesRandomPosition;
+        GLint spritesRandomSpeed;
+        GLint spritesRandomRadius;
+        GLint spritesTotalDeltaSpeed;
         GLint spritesDelta;
         GLint spritesSize;
         GLint spritesColorStart;

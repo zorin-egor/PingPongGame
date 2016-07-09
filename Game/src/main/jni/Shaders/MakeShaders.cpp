@@ -19,16 +19,21 @@ const char * MakeShaders::f_main_shader =   "precision mediump float;"
                                             "   gl_FragColor = texture2D(u_Texture, v_Texcoord);"
                                             "}";
 
-const char * MakeShaders::v_point_shader =  "attribute vec2 a_Position;"
+const char * MakeShaders::v_point_shader =  "attribute vec2 a_RandomArrayCoords;"
+                                            "attribute float a_RandomArraySpeed;"
+                                            "attribute float a_RandomArrayRadius;"
                                             "attribute float a_Delta;"
                                             "attribute vec4 a_ColorStart;"
                                             "attribute vec4 a_ColorEnd;"
                                             "uniform vec2 u_Size;"
+                                            "uniform float u_TotalDeltaSpeed;"
                                             "varying vec4 v_Color;"
                                             "void main(){"
+                                            "   float x_coord = a_RandomArrayCoords.x + a_RandomArrayRadius * cos(a_RandomArraySpeed + u_TotalDeltaSpeed);"
+                                            "   float y_coord = 0.2 * sin(a_RandomArraySpeed + u_TotalDeltaSpeed) + a_RandomArrayCoords.y;"
                                             "   v_Color = mix(a_ColorStart, a_ColorEnd, a_Delta);"
                                             "   gl_PointSize = mix(u_Size.x, u_Size.y, a_Delta);"
-                                            "   gl_Position = vec4(a_Position, 1.0, 1.0);"
+                                            "   gl_Position = vec4(x_coord, y_coord, 1.0, 1.0);"
                                             "}";
 
 const char * MakeShaders::f_point_shader =  "precision mediump float;"
