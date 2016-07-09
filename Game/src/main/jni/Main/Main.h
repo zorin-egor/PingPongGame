@@ -13,6 +13,7 @@
 #include "Graphic/Controls/Label.h"
 #include "Graphic/Controls/Button.h"
 #include "Particles/Particles.h"
+#include "Particles/Splash.h"
 #include "Shaders/MakeShaders.h"
 #include "Graphic/View.h"
 #include "Textures/ManageTexture.h"
@@ -67,6 +68,8 @@ class Main {
             delete field;
             delete player;
             delete enemy;
+            delete splashObj;
+            delete particles;
         }
 
         void step();
@@ -160,6 +163,7 @@ class Main {
 
         Matrix * matrix;
         Particles * particles;
+        Splash * splashObj;
 
         // Screen
         int width;

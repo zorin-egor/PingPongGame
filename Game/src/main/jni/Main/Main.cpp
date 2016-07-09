@@ -40,7 +40,7 @@ void Main::init() {
     splashDelta = glGetAttribLocation(splash, "a_Delta");
     checkGLError("Main::init - splash - a_Delta");
     splashSize = glGetUniformLocation(splash, "u_Size");
-    checkGLError("Main::init - splash - u_TotalDeltaSpeed");
+    checkGLError("Main::init - splash - u_Size");
 
     //On alfa-blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -68,6 +68,15 @@ void Main::createObjects(){
                               spritesColorEnd,
                               spritesSize,
                               spritesTotalDeltaSpeed);
+
+    splashObj = new Splash( 100, 50,
+                            splash,
+                            textures->getTexturesPackIDs(ManageTexture::SPLASH),
+                            splashPosition,
+                            splashColorStart,
+                            splashColorEnd,
+                            splashDelta,
+                            splashSize);
 
     // Background image
     background = new View(textures->getTexturesPackIDs(ManageTexture::BACKGROUND),
@@ -229,9 +238,11 @@ void Main::step(){
 
 void Main::drawFrame(){
     // Draw something under
-    renderBackground();
-    renderObjects();
-    renderInterface();
+    //renderBackground();
+    //renderObjects();
+    //renderInterface();
+
+    splashObj->render();
 }
 
 void Main::logic(){

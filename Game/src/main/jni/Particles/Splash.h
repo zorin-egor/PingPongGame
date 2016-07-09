@@ -12,7 +12,7 @@ class Splash : public Render {
 
     public:
         Splash(unsigned int _count,
-               unsigned int _lifeTime,
+               int _lifeTime,
                GLuint _programID,
                GLuint _textureID,
                GLuint _positionAttr,
@@ -27,19 +27,16 @@ class Splash : public Render {
                                         colorStartAttr(_colorStartAttr),
                                         colorEndAttr(_colorEndAttr),
                                         deltaAttr(_deltaAttr),
-                                        sizeUniform(_sizeUniform)
+                                        sizeUniform(_sizeUniform),
+                                        TOTAL_LIFE_TIME(_lifeTime)
         {
             isVisible = true;
             initArrays();
+            setSplashPosition(0.0f, 0.0f);
         }
 
     void render();
-
-
-    void setSplashPosition(GLfloat _x, GLfloat _y){
-        x = _x;
-        y = _y;
-    }
+    void setSplashPosition(GLfloat _x, GLfloat _y);
 
     void setVisible(bool _isVisible){
         isVisible = _isVisible;
@@ -63,8 +60,9 @@ class Splash : public Render {
 
         bool isVisible;
 
+        const unsigned int TOTAL_LIFE_TIME;
         unsigned int count;
-        unsigned int lifeTime;
+        int lifeTime;
 
         GLuint programID;
         GLuint textureID;
@@ -80,8 +78,8 @@ class Splash : public Render {
         GLfloat * deltaArray;
         GLfloat * sizeArray;
 
-        GLfloat x;
-        GLfloat y;
+        GLfloat * dxArray;
+        GLfloat * dyArray;
 };
 
 

@@ -5,13 +5,19 @@ void Splash::render() {
     if(!isVisible)
         return;
 
+    // Lifecycle
+    if(lifeTime < 0)
+        return;
+
+    setValues();
+
     // Use render shader programm
     glUseProgram(programID);
-    checkGLError("Particles - glUseProgram");
+    checkGLError("Splash - glUseProgram");
 
     // Choose you texture
     glBindTexture(GL_TEXTURE_2D, textureID);
-    checkGLError("Particles - glBindTexture");
+    checkGLError("Splash - glBindTexture");
 
     // Fill attributes and uniforms
     // Position
@@ -42,10 +48,9 @@ void Splash::render() {
     glUniform2f(sizeUniform, sizeArray[0], sizeArray[1]);
     checkGLError("Splash - glUniform2f - sizeUniform");
 
-
     // Draw poligon
     glDrawArrays(GL_POINTS, 0, count);
-    checkGLError("Particles - glDrawArrays");
+    checkGLError("Splash - glDrawArrays");
 }
 
 void Splash::initArrays(){
@@ -56,7 +61,6 @@ void Splash::initArrays(){
 
     // Delta array for mix
     deltaArray = new GLfloat[count];
-    Methods::fillArray(deltaArray, 0.0f, count);
 
     // 4 color * count
     colorStartArray = new GLfloat[count * 4];
@@ -68,12 +72,48 @@ void Splash::initArrays(){
 
     // Points size
     sizeArray = new GLfloat[2];
-    sizeArray[0] = 1.0f;
-    sizeArray[1] = 4.0f;
+    sizeArray[0] = 3.0f;
+    sizeArray[1] = 10.0f;
+
+    // dt for speed
+    dxArray = new GLfloat[count];
+    dyArray = new GLfloat[count];
+    for(int i = 0; i < count; i++){
+        dxArray[i] = Methods::getFullRandom() * 0.02;
+        dyArray[i] = Methods::getFullRandom() * 0.02;
+        deltaArray[i] = Methods::getShortRandom() * 0.9;
+    }
+}
+
+void Splash::setSplashPosition(GLfloat _x, GLfloat _y){
+    lifeTime = TOTAL_LIFE_TIME;
+
+    for(int i = 0; i < count; i++){
+        positionArray[i * 2] = _x;
+        positionArray[i * 2 + 1] = _y;
+    }
 }
 
 void Splash::setValues(){
+    lifeTime--;
 
+    for(int i = 0; i < count; i++){
 
+        // Set new positions
+        positionArray[i * 2] += dxArray[i];
+        positionArray[i * 2 + 1] += dyArray[i];
 
+        // Color start
+        colorStartArray[i * 4] = Methods::getShortRandom() * 0.5f;
+        colorStartArray[i * 4 + 1] = Methods::getShortRandom() * 0.5f;
+        colorStartArray[i * 4 + 2] = Methods::getShortRandom() * 0.5f;
+        colorStartArray[i * 4 + 3] = 0.1;
+
+        // Color end
+        colorEndArray[i * 4] = Methods::getShortRandom() + 0.5f;
+        colorEndArray[i * 4 + 1] = Methods::getShortRandom() + 0.5f;
+        colorEndArray[i * 4 + 2] = Methods::getShortRandom() + 0.5f;
+        colorEndArray[i * 4 + 3] = (float) lifeTime / (float) TOTAL_LIFE_TIME;
+    }
 }
+

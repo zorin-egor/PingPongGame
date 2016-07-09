@@ -24,6 +24,7 @@ void ManageTexture::loadTexture(){
     arrayTextures[ManageTexture::BORD_UP] = loadPNG("textures/bord_up.png");
     arrayTextures[ManageTexture::NUMBERS] = loadPNG("textures/numbers.png");
     arrayTextures[ManageTexture::OBJECTS] = loadPNG("textures/objects.png");
+    arrayTextures[ManageTexture::SPLASH] = loadPNG("textures/splash.png");
 }
 
 ManageTexture::Texture * ManageTexture::loadPNG(const char* filename){

@@ -22,7 +22,8 @@ class ManageTexture {
                                         BORD_UP = 5,
                                         NUMBERS = 6,
                                         OBJECTS = 7,
-                                        SIZE = 8};
+                                        SPLASH = 8,
+                                        SIZE = 9 };
 
         ManageTexture(JNIEnv* _env, jobject _pngManager, jobject _assetsManager){
             pngManager = _pngManager;
