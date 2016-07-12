@@ -38,7 +38,7 @@ class Enemy : public Platform{
                 setCrossHorizont(_verticesCoords);
         }
 
-        void collision(Ball * object);
+        void collision(Ball * ball);
 
         virtual ~Enemy(){
             delete [] crossHorizonArray;

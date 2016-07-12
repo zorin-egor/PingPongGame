@@ -1,17 +1,17 @@
 #include "Enemy.h"
 
-void Enemy::collision(Ball * object){
-    if(object->getLastPoint()->size() > 2){
+void Enemy::collision(Ball * ball){
+    if(ball->getLastPoint()->size() > 2){
         std::vector<GLfloat> crossPoint;
 
         // Get trajectory of ball and get Line links object
         GLfloat lineBall[4];
-        lineBall[0] = object->getRectangle()->getCenter().x;
-        lineBall[1] = object->getRectangle()->getCenter().y;
-        lineBall[2] = object->getLastPoint()->front();
-        object->getLastPoint()->pop();
-        lineBall[3] = object->getLastPoint()->front();
-        object->getLastPoint()->pop();
+        lineBall[0] = ball->getRectangle()->getCenter().x;
+        lineBall[1] = ball->getRectangle()->getCenter().y;
+        lineBall[2] = ball->getLastPoint()->front();
+        ball->getLastPoint()->pop();
+        lineBall[3] = ball->getLastPoint()->front();
+        ball->getLastPoint()->pop();
 
         Line<GLfloat> pLineBall;
         pLineBall.x1 = &lineBall[0];
@@ -43,8 +43,6 @@ void Enemy::collision(Ball * object){
                         dX = 0.0f;
             }
     }
-
-    Platform::collision(object);
 }
 
 void Enemy::setCrossHorizont(GLfloat * _crossHorizontArray){

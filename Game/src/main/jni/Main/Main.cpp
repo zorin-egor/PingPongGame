@@ -269,6 +269,7 @@ void Main::logic(){
                 }
 
     enemy->collision(ball);
+    ((Platform *)enemy)->collision(field);
     ball->collision(player);
     ball->collision((Platform *)enemy);
     ball->collision(field);
