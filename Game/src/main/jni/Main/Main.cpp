@@ -242,15 +242,30 @@ void Main::step(){
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGLError("Main::step - glClear");
 
+    // Main state of application
+    switch(gameState){
+        case State::MENU:
+            break;
+
+        case State::SINGLE:
+            break;
+
+        case State::MULTI:
+            break;
+
+    }
+
+
+
     // Logic
     if(playPause->getState())
         logic();
 
     // Draw
-    drawFrame();
+    drawFrameForSingle();
 }
 
-void Main::drawFrame(){
+void Main::drawFrameForSingle(){
     // Draw something under
     //renderBackground();
     renderObjects();

@@ -20,6 +20,7 @@
 #include "Textures/ManageTexture.h"
 #include "Common/Structures.h"
 #include "Common/LogGL.h"
+#include "Main/State.h"
 
 
 class Main {
@@ -57,6 +58,7 @@ class Main {
             srand(static_cast<unsigned> (time(0)));
             init();
             createObjects();
+            gameState = State::MENU;
         }
 
         ~Main(){
@@ -161,8 +163,10 @@ class Main {
 
         GLfloat * setBordDownPosition(GLfloat * positionCoords);
         GLfloat * setBordUpPosition(GLfloat * positionCoords);
-        void drawFrame();
+        void drawFrameForSingle();
         void logic();
+
+        State gameState;
 
         Matrix * matrix;
         Particles * particles;
