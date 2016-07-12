@@ -69,7 +69,6 @@ class Plume : public Render {
         GLfloat * colorEndArray;
         GLfloat * deltaArray;
         GLfloat * sizeArray;
-
 };
 
 

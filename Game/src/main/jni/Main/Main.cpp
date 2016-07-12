@@ -349,5 +349,5 @@ void Main::renderObjects(){
     enemy->render();
 
     // Splash
-    //splashObj->render();
+    splashObj->render();
 }
