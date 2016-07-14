@@ -253,13 +253,16 @@ void Main::step(){
         case State::MULTI:
             break;
 
+        case State::EXIT:
+            break;
+
     }
 
 
 
     // Logic
     if(playPause->getState())
-        logic();
+        logicSingle();
 
     // Draw
     drawFrameForSingle();
@@ -272,7 +275,7 @@ void Main::drawFrameForSingle(){
     renderInterface();
 }
 
-void Main::logic(){
+void Main::logicSingle(){
 
     if(left->getState() && !player->collision(field)){
         player->setDx(NEGATIVE * player->getStep());

@@ -20,11 +20,14 @@ public class GameView extends GLSurfaceView {
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
-        switch(event.getAction()){
+        switch(event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
                 GameLib.action(event.getX(), event.getY(), true);
                 break;
+
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
                 GameLib.action(event.getX(), event.getY(), false);
                 break;
         }

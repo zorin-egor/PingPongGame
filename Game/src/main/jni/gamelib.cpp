@@ -18,18 +18,16 @@ extern "C" {
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_action(JNIEnv* env, jobject obj, jfloat x, jfloat y, jboolean press){
         game->getLeft()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y));
+                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                press);
 
         game->getRight()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                 Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y));
+                                 Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                 press);
 
-        if(press)
-            game->getPlayPause()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                         Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y));
-    }
-
-    JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_pause(JNIEnv* env, jobject obj){
-
+        game->getPlayPause()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
+                                     Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                     press);
     }
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_stop(JNIEnv* env, jobject obj){

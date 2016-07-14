@@ -35,7 +35,7 @@ void Enemy::collision(Ball * ball){
         } else {
                 GLfloat cX = getRectangle()->getCenter().x;
                 GLfloat cEps = getWidth() / 2.5f;
-                if(cX> cEps)
+                if(cX > cEps)
                     dX = -1.0f * getStep();
                 else if(cX < -1.0 * cEps)
                         dX = getStep();

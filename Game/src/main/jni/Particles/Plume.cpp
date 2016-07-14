@@ -71,8 +71,8 @@ void Plume::initArrays(){
 
     // Points size
     sizeArray = new GLfloat[2];
-    sizeArray[0] = 2.0f;
-    sizeArray[1] = 5.0f;
+    sizeArray[0] = MIN_SIZE;
+    sizeArray[1] = MAX_SIZE;
 }
 
 void Plume::setValues(){

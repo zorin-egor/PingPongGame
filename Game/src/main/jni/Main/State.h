@@ -4,7 +4,8 @@
 static const enum State {
     MENU = 0,
     SINGLE = 1,
-    MULTI = 2
+    MULTI = 2,
+    EXIT = 3
 };
 
 #endif //GAME_PINGPONG_STATE_H

@@ -22,7 +22,9 @@ class Plume : public Render {
                                        colorEndAttr(_colorEndAttr),
                                        deltaAttr(_deltaAttr),
                                        sizeUniform(_sizeUniform),
-                                       MAX_COUNT(_count)
+                                       MAX_COUNT(_count),
+                                       MAX_SIZE(7.0f),
+                                       MIN_SIZE(4.0f)
         {
             isVisible = true;
             initArrays();
@@ -55,6 +57,8 @@ class Plume : public Render {
         bool isVisible;
         unsigned int currentCount;
         const unsigned int MAX_COUNT;
+        const unsigned int MAX_SIZE;
+        const unsigned int MIN_SIZE;
 
         GLuint programID;
         GLuint textureID;

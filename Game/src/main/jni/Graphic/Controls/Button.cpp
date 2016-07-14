@@ -1,8 +1,8 @@
 #include "Button.h"
 
-void Button::action( float _x, float _y){
+void Button::action( float _x, float _y, bool _isDown){
 	//LOGI("Button coordinates: %f - %f; %f - %f", x, y, _x, _y);
-	if(_x > x && _y < y && _x < (x + width) && _y > (y - height)){
+	if(_x > x && _y < y && _x < (x + width) && _y > (y - height) && _isDown){
 		//LOGI("Button click!");
 		setTextureCoords(pressed = pressed? false : true);
 	} else if(pressed && !isSwitch){

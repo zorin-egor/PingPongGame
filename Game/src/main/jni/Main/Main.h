@@ -164,7 +164,7 @@ class Main {
         GLfloat * setBordDownPosition(GLfloat * positionCoords);
         GLfloat * setBordUpPosition(GLfloat * positionCoords);
         void drawFrameForSingle();
-        void logic();
+        void logicSingle();
 
         State gameState;
 
