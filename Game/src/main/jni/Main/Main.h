@@ -58,7 +58,7 @@ class Main {
             srand(static_cast<unsigned> (time(0)));
             init();
             createObjects();
-            gameState = State::MENU;
+            gameState = State::MULTI;
         }
 
         ~Main(){
@@ -75,6 +75,11 @@ class Main {
             delete splashObj;
             delete particles;
             delete plumeObj;
+            delete playerTwo;
+            delete leftTwo;
+            delete playPauseTwo;
+            delete rightTwo;
+            delete bordDownTwo;
         }
 
         void step();
@@ -99,6 +104,17 @@ class Main {
             return playPause;
         }
 
+        Button * getLeftTwo() const {
+            return leftTwo;
+        }
+
+        Button * getRightTwo() const {
+            return rightTwo;
+        }
+
+        Button * getPlayPauseTwo() const {
+            return playPauseTwo;
+        }
 
         int getWidth() const {
             return width;
@@ -156,15 +172,21 @@ class Main {
         void init();
         void createObjects();
         void rotateBackground();
-
         void renderBackground();
-        void renderInterface();
-        void renderObjects();
 
-        GLfloat * setBordDownPosition(GLfloat * positionCoords);
+        // For single
+        GLfloat * setBordDownPosition(GLfloat * positionCoords, bool isInverse);
         GLfloat * setBordUpPosition(GLfloat * positionCoords);
         void drawFrameForSingle();
         void logicSingle();
+        void renderSingleInterface();
+        void renderSingleObjects();
+
+        // For multi
+        void drawFrameForMulti();
+        void logicMulti();
+        void renderMultiInterface();
+        void renderMultiObjects();
 
         State gameState;
 
@@ -210,19 +232,28 @@ class Main {
         GLint splashSize;
 
         // Objects
+        // Common
         View * background;
         View * center;
-        View * bordDown;
-        View * bordUp;
         Label * speed;
+        View * bordDown;
         Object * field;
-        Platform * player;
-        Enemy * enemy;
         Ball * ball;
-
         Button * left;
         Button * playPause;
         Button * right;
+
+        // For single
+        View * bordUp;
+        Platform * player;
+        Platform * playerTwo;
+        Enemy * enemy;
+
+        // For multi
+        Button * leftTwo;
+        Button * playPauseTwo;
+        Button * rightTwo;
+        View * bordDownTwo;
 
         ManageTexture * textures;
 

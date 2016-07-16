@@ -188,6 +188,34 @@ class Matrix {
             return texture;
         }
 
+        // Matrix for inverse texture position
+        GLfloat * getInverseTextureCoord(){
+            // 3---2
+            // |   |
+            // 4---1
+
+            GLfloat * texture = new GLfloat[8];
+            arrayLInks.push_back(texture);
+
+            // 1 вершина
+            texture[0] = 1.0f;
+            texture[1] = 1.0f;
+
+            // 2 вершина
+            texture[2] = 1.0f;
+            texture[3] = 0.0f;
+
+            // 3 вершина
+            texture[4] = 0.0f;
+            texture[5] = 0.0f;
+
+            // 4 вершина
+            texture[6] = 0.0f;
+            texture[7] = 1.0f;
+
+            return texture;
+        }
+
         // Matrix for position on screen
         GLfloat * getDefaultVerticesCoords(){
             // 1---4

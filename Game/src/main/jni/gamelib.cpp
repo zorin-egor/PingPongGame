@@ -31,6 +31,21 @@ extern "C" {
                                      Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
                                      id,
                                      press);
+
+        game->getLeftTwo()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
+                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                id,
+                                press);
+
+        game->getRightTwo()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
+                                 Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                 id,
+                                 press);
+
+        game->getPlayPauseTwo()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
+                                     Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                     id,
+                                     press);
     }
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_stop(JNIEnv* env, jobject obj){

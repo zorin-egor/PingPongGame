@@ -117,11 +117,19 @@ void Main::createObjects(){
                         polygonsPositionAttr,
                         polygonsTextureAttr,
                         polygonsTransformationAttr,
-                        setBordDownPosition(matrix->getDefaultVerticesCoords()),
+                        setBordDownPosition(matrix->getDefaultVerticesCoords(), false),
                         matrix->getDefaultTextureCoord(),
                         matrix->getDefaultMatrix4x4());
 
-
+    // Bord down for player two
+    bordDownTwo = new View(textures->getTexturesPackIDs(ManageTexture::BORD_DOWN),
+                            polygons,
+                            polygonsPositionAttr,
+                            polygonsTextureAttr,
+                            polygonsTransformationAttr,
+                            setBordDownPosition(matrix->getDefaultVerticesCoords(), true),
+                            matrix->getInverseTextureCoord(),
+                            matrix->getDefaultMatrix4x4());
 
     // Bord up
     bordUp = new View(textures->getTexturesPackIDs(ManageTexture::BORD_UP),
@@ -172,6 +180,46 @@ void Main::createObjects(){
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
                            matrix->getDefaultMatrix4x4());
 
+
+    // Left button player two
+    leftTwo = new Button(false,
+                          true,
+                         -0.95f, 0.75f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_WIDTH, BUTTON_CONTROL_HEIGHT,
+                          textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                          polygons,
+                          polygonsPositionAttr,
+                          polygonsTextureAttr,
+                          polygonsTransformationAttr,
+                          matrix->getDefaultVerticesCoords(),
+                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
+                          matrix->getDefaultMatrix4x4());
+
+    // Right button player two
+    rightTwo = new Button(false,
+                           true,
+                           0.3f, 0.75f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_WIDTH, BUTTON_CONTROL_HEIGHT,
+                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                           polygons,
+                           polygonsPositionAttr,
+                           polygonsTextureAttr,
+                           polygonsTransformationAttr,
+                           matrix->getDefaultVerticesCoords(),
+                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 2, Matrix::ONE),
+                           matrix->getDefaultMatrix4x4());
+
+    // Play pause button player two
+    playPauseTwo = new Button(true,
+                               false,
+                               -0.22f, 0.75f + BUTTON_START_HEIGHT, BUTTON_START_WIDTH, BUTTON_START_HEIGHT,
+                               textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                               polygons,
+                               polygonsPositionAttr,
+                               polygonsTextureAttr,
+                               polygonsTransformationAttr,
+                               matrix->getDefaultVerticesCoords(),
+                               Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
+                               matrix->getDefaultMatrix4x4());
+
     // Label of speed
     speed = new Label(  matrix,
                         -0.5f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
@@ -209,6 +257,18 @@ void Main::createObjects(){
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                            matrix->getDefaultMatrix4x4());
 
+    // Player two
+    playerTwo = new Platform( PLATFORMS_SPEED,
+                               -0.25, 0.4f  + PLATFORMS_HEIGHT, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
+                               textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                               polygons,
+                               polygonsPositionAttr,
+                               polygonsTextureAttr,
+                               polygonsTransformationAttr,
+                               matrix->getDefaultVerticesCoords(),
+                               Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
+                               matrix->getDefaultMatrix4x4());
+
     // Enemy platform
     enemy = new Enemy( PLATFORMS_SPEED + 0.04,
                         -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
@@ -242,37 +302,65 @@ void Main::step(){
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGLError("Main::step - glClear");
 
+    // Draw background everywhere
+    renderBackground();
+
     // Main state of application
     switch(gameState){
         case State::MENU:
             break;
 
         case State::SINGLE:
+            // Logic
+            if(playPause->getState())
+                logicSingle();
+
+            // Draw
+            drawFrameForSingle();
             break;
 
         case State::MULTI:
+            if(playPause->getState() && playPauseTwo->getState())
+                logicMulti();
+
+            // Draw
+            drawFrameForMulti();
             break;
 
         case State::EXIT:
             break;
 
     }
-
-
-
-    // Logic
-    if(playPause->getState())
-        logicSingle();
-
-    // Draw
-    drawFrameForSingle();
 }
 
+// -------------------------------------------------------------------------------------------------
+// BACKGROUND BLOCK
+
+void Main::renderBackground(){
+    // Background
+    background->render();
+
+    // Rotate background
+    rotateBackground();
+
+    // Particles
+    particles->render();
+}
+
+void Main::rotateBackground(){
+    if(deltaRotate >= CENTER_ROTATE)
+        deltaRotate = NEGATIVE * CENTER_ROTATE;
+
+    center->setTransformationMatrix(Matrix::setRotateMatrix4x4(Matrix::setRotateMatrix4x4(center->getTransformationMatrix(), deltaRotate += CENTER_SPEED, Matrix::X), deltaRotate, Matrix::Z));
+    center->render();
+}
+
+// -------------------------------------------------------------------------------------------------
+// SINGLE BLOCK
+
 void Main::drawFrameForSingle(){
-    // Draw something under
-    //renderBackground();
-    renderObjects();
-    renderInterface();
+    renderSingleObjects();
+    renderSingleInterface();
 }
 
 void Main::logicSingle(){
@@ -280,11 +368,11 @@ void Main::logicSingle(){
     if(left->getState() && !player->collision(field)){
         player->setDx(NEGATIVE * player->getStep());
     } else if(right->getState() && !player->collision(field)){
-                player->setDx(player->getStep());
-            } else {
-                    player->setDx(STOP_MOVE);
-                    player->getCrossPoints()->clear();
-                }
+        player->setDx(player->getStep());
+    } else {
+        player->setDx(STOP_MOVE);
+        player->getCrossPoints()->clear();
+    }
 
     enemy->collision(ball);
     ((Platform *)enemy)->collision(field);
@@ -303,17 +391,16 @@ void Main::logicSingle(){
     plumeObj->setPlumePoints(ball->getPlumePoints());
 }
 
-void Main::rotateBackground(){
-    if(deltaRotate >= CENTER_ROTATE)
-        deltaRotate = NEGATIVE * CENTER_ROTATE;
+GLfloat * Main::setBordDownPosition(GLfloat * positionCoords, bool isInverse){
+    GLfloat inverseCoeff = isInverse? -1.0f : 1.0f;
+    if(!isInverse){
+        positionCoords[1] = BORDER_DOWN * inverseCoeff;
+        positionCoords[7] = BORDER_DOWN * inverseCoeff;
+    } else {
+            positionCoords[3] = BORDER_DOWN * inverseCoeff;
+            positionCoords[5] = BORDER_DOWN * inverseCoeff;
+        }
 
-    center->setTransformationMatrix(Matrix::setRotateMatrix4x4(Matrix::setRotateMatrix4x4(center->getTransformationMatrix(), deltaRotate += CENTER_SPEED, Matrix::X), deltaRotate, Matrix::Z));
-    center->render();
-}
-
-GLfloat * Main::setBordDownPosition(GLfloat * positionCoords){
-    positionCoords[1] = BORDER_DOWN;
-    positionCoords[7] = BORDER_DOWN;
     return positionCoords;
 }
 
@@ -323,18 +410,7 @@ GLfloat * Main::setBordUpPosition(GLfloat * positionCoords){
     return positionCoords;
 }
 
-void Main::renderBackground(){
-    // Background
-    background->render();
-
-    // Rotate background
-    rotateBackground();
-
-    // Particles
-    particles->render();
-}
-
-void Main::renderInterface(){
+void Main::renderSingleInterface(){
     // Bord down
     bordDown->render();
 
@@ -354,7 +430,7 @@ void Main::renderInterface(){
     playPause->render();
 }
 
-void Main::renderObjects(){
+void Main::renderSingleObjects(){
     // Plume
     plumeObj->render();
 
@@ -369,4 +445,93 @@ void Main::renderObjects(){
 
     // Splash
     splashObj->render();
+}
+
+// -------------------------------------------------------------------------------------------------
+// MULTI BLOCK
+
+void Main::logicMulti(){
+
+    // Player one
+    if(left->getState() && !player->collision(field)){
+        player->setDx(NEGATIVE * player->getStep());
+    } else if(right->getState() && !player->collision(field)){
+        player->setDx(player->getStep());
+    } else {
+        player->setDx(STOP_MOVE);
+        player->getCrossPoints()->clear();
+    }
+
+    // Player two
+    if(leftTwo->getState() && !playerTwo->collision(field)){
+        playerTwo->setDx(NEGATIVE * playerTwo->getStep());
+    } else if(rightTwo->getState() && !playerTwo->collision(field)){
+        playerTwo->setDx(playerTwo->getStep());
+    } else {
+        playerTwo->setDx(STOP_MOVE);
+        playerTwo->getCrossPoints()->clear();
+    }
+
+    ball->collision(player);
+    ball->collision(playerTwo);
+    ball->collision(field);
+
+    if(ball->getIsOut()){
+        playPause->setState(false);
+        ball->setIsOut(false);
+    }
+
+    speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
+    ball->move();
+
+    plumeObj->setPlumePoints(ball->getPlumePoints());
+}
+
+void Main::drawFrameForMulti(){
+    renderMultiObjects();
+    renderMultiInterface();
+}
+
+void Main::renderMultiInterface(){
+    // Bord down
+    bordDown->render();
+
+    // Bord up
+    bordDownTwo->render();
+
+    // Button left
+    left->render();
+
+    // Button right
+    right->render();
+
+    // Button playPause
+    playPause->render();
+
+    // Button left
+    leftTwo->render();
+
+    // Button right
+    rightTwo->render();
+
+    // Button playPause
+    playPauseTwo->render();
+}
+
+void Main::renderMultiObjects(){
+    // Plume
+    plumeObj->render();
+
+    // Ball
+    ball->render();
+
+    // Player
+    player->render();
+
+    // Enemy
+    playerTwo->render();
+
+    // Splash
+    splashObj->render();
+
 }
