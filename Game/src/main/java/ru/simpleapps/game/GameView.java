@@ -43,8 +43,6 @@ public class GameView extends GLSurfaceView {
                 break;
         }
 
-
-
         return true;
     }
 

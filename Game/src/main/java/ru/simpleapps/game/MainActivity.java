@@ -23,16 +23,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        GameLib.stop();
         finish();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(GameLib.stop()){
-                finish();
-            }
+            GameLib.back();
             return true;
         }
         return super.onKeyDown(keyCode, event);

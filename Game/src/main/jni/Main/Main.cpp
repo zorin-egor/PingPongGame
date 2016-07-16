@@ -293,6 +293,32 @@ void Main::createObjects(){
                     Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
                     matrix->getDefaultMatrix4x4(),
                     splashObj);
+
+    // Choose single mode
+    single = new Button(false,
+                          true,
+                          -0.8f, 0.5f + BUTTON_MENU_HEIGHT, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
+                          textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                          polygons,
+                          polygonsPositionAttr,
+                          polygonsTextureAttr,
+                          polygonsTransformationAttr,
+                          matrix->getDefaultVerticesCoords(),
+                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 2, Matrix::ONE),
+                          matrix->getDefaultMatrix4x4());
+
+    // Choose multiplayer mode
+    multi = new Button(false,
+                          true,
+                          -0.8f, 0.0f + BUTTON_MENU_HEIGHT, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
+                          textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                          polygons,
+                          polygonsPositionAttr,
+                          polygonsTextureAttr,
+                          polygonsTransformationAttr,
+                          matrix->getDefaultVerticesCoords(),
+                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 2, Matrix::ONE),
+                          matrix->getDefaultMatrix4x4());
 }
 
 void Main::step(){
@@ -308,9 +334,14 @@ void Main::step(){
     // Main state of application
     switch(gameState){
         case State::MENU:
+            LOGI("STATE - MENU");
+            Main::logicMenu();
+            // Draw
+            drawFrameMenu();
             break;
 
         case State::SINGLE:
+            LOGI("STATE - SINGLE");
             // Logic
             if(playPause->getState())
                 logicSingle();
@@ -320,6 +351,8 @@ void Main::step(){
             break;
 
         case State::MULTI:
+            LOGI("STATE - MULTI");
+            // Logic
             if(playPause->getState() && playPauseTwo->getState())
                 logicMulti();
 
@@ -328,6 +361,7 @@ void Main::step(){
             break;
 
         case State::EXIT:
+            LOGI("STATE - EXIT");
             break;
 
     }
@@ -353,6 +387,32 @@ void Main::rotateBackground(){
 
     center->setTransformationMatrix(Matrix::setRotateMatrix4x4(Matrix::setRotateMatrix4x4(center->getTransformationMatrix(), deltaRotate += CENTER_SPEED, Matrix::X), deltaRotate, Matrix::Z));
     center->render();
+}
+
+// -------------------------------------------------------------------------------------------------
+// MENU BLOCK
+void Main::drawFrameMenu(){
+    single->render();
+    multi->render();
+}
+
+void Main::logicMenu(){
+    if(single->getState()){
+        gameState = State::SINGLE;
+    } else if(multi->getState()){
+        gameState = State::MULTI;
+    }
+}
+
+
+// -------------------------------------------------------------------------------------------------
+// BACK BLOCK
+void Main::backAction(){
+    if(gameState == State::SINGLE || gameState == State::MULTI){
+        gameState = State::MENU;
+    } else if(gameState == State::MENU){
+        gameState = State::EXIT;
+    }
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -478,6 +538,7 @@ void Main::logicMulti(){
 
     if(ball->getIsOut()){
         playPause->setState(false);
+        playPauseTwo->setState(false);
         ball->setIsOut(false);
     }
 

@@ -52,13 +52,15 @@ class Main {
                 BALL_SPEED(0.02f),
                 STOP_MOVE(0.0f),
                 LABEL_HEIGHT(0.1f),
-                LABEL_WIDTH(1.0f)
+                LABEL_WIDTH(1.0f),
+                BUTTON_MENU_WIDTH(1.6f),
+                BUTTON_MENU_HEIGHT(0.5f)
         {
             deltaRotate = -3.14f;
             srand(static_cast<unsigned> (time(0)));
             init();
             createObjects();
-            gameState = State::MULTI;
+            gameState = State::MENU;
         }
 
         ~Main(){
@@ -80,6 +82,8 @@ class Main {
             delete playPauseTwo;
             delete rightTwo;
             delete bordDownTwo;
+            delete single;
+            delete multi;
         }
 
         void step();
@@ -116,6 +120,14 @@ class Main {
             return playPauseTwo;
         }
 
+        Button * getSingle() const {
+            return single;
+        }
+
+        Button * getMulti() const {
+            return multi;
+        }
+
         int getWidth() const {
             return width;
         }
@@ -123,6 +135,13 @@ class Main {
         int getHeight() const {
             return height;
         }
+
+        void setGameState(const State &gameState) {
+            Main::gameState = gameState;
+        }
+
+        // For back
+        void backAction();
 
         GLint getSpritesDelta() const {
             return spritesDelta;
@@ -187,6 +206,10 @@ class Main {
         void logicMulti();
         void renderMultiInterface();
         void renderMultiObjects();
+
+        // For menu
+        void drawFrameMenu();
+        void logicMenu();
 
         State gameState;
 
@@ -255,6 +278,10 @@ class Main {
         Button * rightTwo;
         View * bordDownTwo;
 
+        // For menu
+        Button * single;
+        Button * multi;
+
         ManageTexture * textures;
 
         float deltaRotate;
@@ -278,6 +305,8 @@ class Main {
         const float STOP_MOVE;
         const float LABEL_HEIGHT;
         const float LABEL_WIDTH;
+        const float BUTTON_MENU_WIDTH;
+        const float BUTTON_MENU_HEIGHT;
 };
 
 
