@@ -39,6 +39,7 @@ class Button : public View {
 											height(_height)
 		{
 			pressed = false;
+			buttonId = -1;
 		}
 
 		bool getState(){
@@ -50,13 +51,13 @@ class Button : public View {
 			setTextureCoords(pressed);
 		}
 
-		void action(float _x, float _y, bool _isDown);
+		void action(float _x, float _y, int _buttonsId, bool _isDown);
 
 	private:
 
 		bool isSwitch;
 		bool isUpButton;
-
+		int buttonId;
 		// Button position
 		float width, height;
 		float x, y;

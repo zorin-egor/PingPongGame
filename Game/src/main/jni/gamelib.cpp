@@ -16,17 +16,20 @@ extern "C" {
         game->step();
     }
 
-    JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_action(JNIEnv* env, jobject obj, jfloat x, jfloat y, jboolean press){
+    JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_action(JNIEnv* env, jobject obj, jfloat x, jfloat y, jint id, jboolean press){
         game->getLeft()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
                                 Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                id,
                                 press);
 
         game->getRight()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
                                  Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                 id,
                                  press);
 
         game->getPlayPause()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
                                      Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                     id,
                                      press);
     }
 
