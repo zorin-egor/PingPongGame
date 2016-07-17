@@ -22,15 +22,15 @@ void Button::action( float _x, float _y, int _buttonId, bool _isDown){
 void Button::setTextureCoords(bool isPressed){
 	if(isUpButton){
 		if(isPressed){
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 2, Matrix::TWO);
+			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::TWO);
 		} else {
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 2, Matrix::ONE);
+			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::ONE);
 		}
 	} else {
 		if(isPressed){
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 2, Matrix::FOUR);
+			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::THREE);
 		} else {
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 2, Matrix::THREE);
+			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::FOUR);
 		}
 	}
 }

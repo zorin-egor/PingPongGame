@@ -18,13 +18,14 @@ void ManageTexture::loadTexture(){
     arrayTextures = new Texture * [ManageTexture::SIZE];
     arrayTextures[ManageTexture::BACKGROUND] = loadPNG("textures/space.png");
     arrayTextures[ManageTexture::BUTTONS] = loadPNG("textures/buttons.png");
-    arrayTextures[ManageTexture::STAR] = loadPNG("textures/star.png");
     arrayTextures[ManageTexture::BACKGROUND_CENTER] = loadPNG("textures/space_center.png");
     arrayTextures[ManageTexture::BORD_DOWN] = loadPNG("textures/bord_down.png");
     arrayTextures[ManageTexture::BORD_UP] = loadPNG("textures/bord_up.png");
     arrayTextures[ManageTexture::NUMBERS] = loadPNG("textures/numbers.png");
     arrayTextures[ManageTexture::OBJECTS] = loadPNG("textures/objects.png");
     arrayTextures[ManageTexture::SPLASH] = loadPNG("textures/splash.png");
+    arrayTextures[ManageTexture::PARTICLES] = loadPNG("textures/particles.png");
+    arrayTextures[ManageTexture::PLUME] = loadPNG("textures/plume.png");
 }
 
 ManageTexture::Texture * ManageTexture::loadPNG(const char* filename){

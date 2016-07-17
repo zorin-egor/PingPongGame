@@ -16,14 +16,15 @@ class ManageTexture {
 
         static const enum TEXTURE_TYPE {BACKGROUND = 0,
                                         BUTTONS = 1,
-                                        STAR = 2,
-                                        BACKGROUND_CENTER = 3,
-                                        BORD_DOWN = 4,
-                                        BORD_UP = 5,
-                                        NUMBERS = 6,
-                                        OBJECTS = 7,
-                                        SPLASH = 8,
-                                        SIZE = 9 };
+                                        BACKGROUND_CENTER = 2,
+                                        BORD_DOWN = 3,
+                                        BORD_UP = 4,
+                                        NUMBERS = 5,
+                                        OBJECTS = 6,
+                                        SPLASH = 7,
+                                        PARTICLES = 8,
+                                        PLUME = 9,
+                                        SIZE = 10 };
 
         ManageTexture(JNIEnv* _env, jobject _pngManager, jobject _assetsManager){
             pngManager = _pngManager;

@@ -34,6 +34,7 @@ class Main {
                 pngManager(_pngManager),
                 assetManager(_assetManager),
 
+                SCREEN_COEFFICIENT((float)_width / (float)_height),
                 CENTER_ROTATE(3.14f),
                 CENTER_SPEED(0.005f),
                 CENTER_PERIOD(-3.14f),
@@ -48,7 +49,7 @@ class Main {
                 PLATFORMS_HEIGHT(0.2f),
                 PLATFORMS_SPEED(0.04f),
                 BALL_WIDTH(PLATFORMS_WIDTH / 5.0f),
-                BALL_HEIGHT(((float)_width / (float)_height) * BALL_WIDTH),
+                BALL_HEIGHT(SCREEN_COEFFICIENT * BALL_WIDTH),
                 BALL_SPEED(0.02f),
                 STOP_MOVE(0.0f),
                 LABEL_HEIGHT(0.1f),
@@ -300,6 +301,7 @@ class Main {
 
         float deltaRotate;
 
+        const float SCREEN_COEFFICIENT;
         const float CENTER_ROTATE;
         const float CENTER_SPEED;
         const float CENTER_PERIOD;
