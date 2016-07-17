@@ -294,7 +294,7 @@ void Main::createObjects(){
                            polygonsTextureAttr,
                            polygonsTransformationAttr,
                            matrix->getDefaultVerticesCoords(),
-                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
+                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
                            matrix->getDefaultMatrix4x4());
     // Enemy platform
     enemy = new Enemy( PLATFORMS_SPEED,
@@ -305,7 +305,7 @@ void Main::createObjects(){
                        polygonsTextureAttr,
                        polygonsTransformationAttr,
                        matrix->getDefaultVerticesCoords(),
-                       Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
+                       Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                        matrix->getDefaultMatrix4x4());
 
     // Player two
@@ -329,7 +329,7 @@ void Main::createObjects(){
                     polygonsTextureAttr,
                     polygonsTransformationAttr,
                     matrix->getDefaultVerticesCoords(),
-                    Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
+                    Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::FOUR),
                     matrix->getDefaultMatrix4x4(),
                     splashObj);
 
@@ -581,7 +581,8 @@ void Main::renderSingleInterface(){
 
 void Main::renderSingleObjects(){
     // Plume
-    plumeObj->render();
+    if(playPause->getState())
+        plumeObj->render();
 
     // Ball
     ball->render();
@@ -685,7 +686,8 @@ void Main::renderMultiInterface(){
 
 void Main::renderMultiObjects(){
     // Plume
-    plumeObj->render();
+    if(playPause->getState() && playPauseTwo->getState())
+        plumeObj->render();
 
     // Ball
     ball->render();
