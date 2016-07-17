@@ -296,6 +296,17 @@ void Main::createObjects(){
                            matrix->getDefaultVerticesCoords(),
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                            matrix->getDefaultMatrix4x4());
+    // Enemy platform
+    enemy = new Enemy( PLATFORMS_SPEED,
+                       -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
+                       textures->getTexturesPackIDs(ManageTexture::OBJECTS),
+                       polygons,
+                       polygonsPositionAttr,
+                       polygonsTextureAttr,
+                       polygonsTransformationAttr,
+                       matrix->getDefaultVerticesCoords(),
+                       Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
+                       matrix->getDefaultMatrix4x4());
 
     // Player two
     playerTwo = new Platform( PLATFORMS_SPEED,
@@ -308,18 +319,6 @@ void Main::createObjects(){
                                matrix->getDefaultVerticesCoords(),
                                Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                                matrix->getDefaultMatrix4x4());
-
-    // Enemy platform
-    enemy = new Enemy( PLATFORMS_SPEED,
-                        -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
-                        textures->getTexturesPackIDs(ManageTexture::OBJECTS),
-                        polygons,
-                        polygonsPositionAttr,
-                        polygonsTextureAttr,
-                        polygonsTransformationAttr,
-                        matrix->getDefaultVerticesCoords(),
-                        Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
-                        matrix->getDefaultMatrix4x4());
 
     // Enemy platform
     ball = new Ball( BALL_SPEED,
