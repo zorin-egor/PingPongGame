@@ -7,6 +7,8 @@
 class Object : public View {
 
     public:
+        static const enum CROSS_SIDE { NONE = 0, LEFT = 1, DOWN = 2, RIGHT = 3, UP = 4 };
+
         Object(float _step,
                float _x,
                float _y,
@@ -80,7 +82,7 @@ class Object : public View {
         void move();
         void moveY(GLfloat y);
         void moveX(GLfloat x);
-        virtual bool collision(Object * object) = 0;
+        virtual CROSS_SIDE collision(Object * object) = 0;
 
         virtual ~Object(){
 

@@ -220,15 +220,55 @@ void Main::createObjects(){
                                Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
                                matrix->getDefaultMatrix4x4());
 
-    // Label of speed
-    speed = new Label(  matrix,
-                        -0.5f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
-                        textures->getTexturesPackIDs(ManageTexture::NUMBERS),
-                        polygons,
-                        polygonsPositionAttr,
-                        polygonsTextureAttr,
-                        polygonsTransformationAttr,
-                        "000");
+    // Label of singleSpeed
+    singleSpeed = new Label(matrix,
+                            -0.25f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
+                            textures->getTexturesPackIDs(ManageTexture::NUMBERS),
+                            polygons,
+                            polygonsPositionAttr,
+                            polygonsTextureAttr,
+                            polygonsTransformationAttr,
+                            "000");
+
+    // Label of score one for single
+    singleScoreOne = new Label(matrix,
+                               -0.9f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
+                               textures->getTexturesPackIDs(ManageTexture::NUMBERS),
+                               polygons,
+                               polygonsPositionAttr,
+                               polygonsTextureAttr,
+                               polygonsTransformationAttr,
+                               "000");
+
+    // Label of score two for single
+    singleScoreTwo = new Label(matrix,
+                               0.4f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
+                               textures->getTexturesPackIDs(ManageTexture::NUMBERS),
+                               polygons,
+                               polygonsPositionAttr,
+                               polygonsTextureAttr,
+                               polygonsTransformationAttr,
+                               "000");
+
+    // Label of score one for multi
+    multiScoreOne = new Label(matrix,
+                               -0.25f, 0.75f, LABEL_WIDTH, LABEL_HEIGHT,
+                               textures->getTexturesPackIDs(ManageTexture::NUMBERS),
+                               polygons,
+                               polygonsPositionAttr,
+                               polygonsTextureAttr,
+                               polygonsTransformationAttr,
+                               "000");
+
+    // Label of score two for multi
+    multiScoreTwo = new Label(matrix,
+                               -0.25f, -0.75f + LABEL_HEIGHT, LABEL_WIDTH, LABEL_HEIGHT,
+                               textures->getTexturesPackIDs(ManageTexture::NUMBERS),
+                               polygons,
+                               polygonsPositionAttr,
+                               polygonsTextureAttr,
+                               polygonsTransformationAttr,
+                               "000");
 
     // Field
     field = new Platform( PLATFORMS_SPEED,
@@ -359,12 +399,29 @@ void Main::step(){
             // Draw
             drawFrameForMulti();
             break;
-
-        case State::EXIT:
-            LOGI("STATE - EXIT");
-            break;
-
     }
+}
+
+void Main::setDefault(){
+    playPause->setState(false);
+    playPauseTwo->setState(false);
+
+    player->clearScore();
+    playerTwo->clearScore();
+    enemy->clearScore();
+
+    player->setDefaultPosition();
+    playerTwo->setDefaultPosition();
+    enemy->setDefaultPosition();
+
+    ball->setIsOut(false);
+    ball->setDefaultPosition();
+
+    singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 4));
+    singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
+    singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
+    multiScoreOne->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 3));
+    multiScoreTwo->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 3));
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -407,11 +464,13 @@ void Main::logicMenu(){
 
 // -------------------------------------------------------------------------------------------------
 // BACK BLOCK
-void Main::backAction(){
+bool Main::backAction(){
     if(gameState == State::SINGLE || gameState == State::MULTI){
+        setDefault();
         gameState = State::MENU;
+        return false;
     } else if(gameState == State::MENU){
-        gameState = State::EXIT;
+        return true;
     }
 }
 
@@ -438,14 +497,25 @@ void Main::logicSingle(){
     ((Platform *)enemy)->collision(field);
     ball->collision(player);
     ball->collision((Platform *)enemy);
-    ball->collision(field);
+
+    switch(ball->collision(field)){
+        case Object::DOWN:
+            player->setScore();
+            break;
+        case Object::UP:
+            enemy->setScore();
+            break;
+    }
 
     if(ball->getIsOut()){
         playPause->setState(false);
         ball->setIsOut(false);
     }
 
-    speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
+    singleSpeed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
+    singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((enemy->getScore())), '0', 3));
+    singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((player->getScore())), '0', 3));
+
     ball->move();
 
     plumeObj->setPlumePoints(ball->getPlumePoints());
@@ -478,7 +548,13 @@ void Main::renderSingleInterface(){
     bordUp->render();
 
     // Speed
-    speed->render();
+    singleSpeed->render();
+
+    // Score one
+    singleScoreOne->render();
+
+    // Score two
+    singleScoreTwo->render();
 
     // Button left
     left->render();
@@ -534,7 +610,15 @@ void Main::logicMulti(){
 
     ball->collision(player);
     ball->collision(playerTwo);
-    ball->collision(field);
+
+    switch(ball->collision(field)){
+        case Object::DOWN:
+            player->setScore();
+            break;
+        case Object::UP:
+            playerTwo->setScore();
+            break;
+    }
 
     if(ball->getIsOut()){
         playPause->setState(false);
@@ -542,7 +626,8 @@ void Main::logicMulti(){
         ball->setIsOut(false);
     }
 
-    speed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
+    multiScoreOne->setNumber(Methods::fillLeft(Methods::intToString(player->getScore()), '0', 3));
+    multiScoreTwo->setNumber(Methods::fillLeft(Methods::intToString(playerTwo->getScore()), '0', 3));
     ball->move();
 
     plumeObj->setPlumePoints(ball->getPlumePoints());
@@ -559,6 +644,12 @@ void Main::renderMultiInterface(){
 
     // Bord up
     bordDownTwo->render();
+
+    // Score one
+    multiScoreOne->render();
+
+    // Score two
+    multiScoreTwo->render();
 
     // Button left
     left->render();

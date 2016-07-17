@@ -58,7 +58,7 @@ extern "C" {
                                 press);
     }
 
-    JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_back(JNIEnv* env, jobject obj){
-        game->backAction();
+    JNIEXPORT jboolean JNICALL Java_ru_simpleapps_game_GameLib_back(JNIEnv* env, jobject obj){
+        return game->backAction();
     }
 }

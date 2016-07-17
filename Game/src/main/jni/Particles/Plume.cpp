@@ -34,7 +34,7 @@ void Plume::render() {
     glEnableVertexAttribArray(colorEndAttr);
     checkGLError("Plume - glVertexAttribPointer - colorEndAttr - enabled");
 
-    // Delta speed
+    // Delta singleSpeed
     glVertexAttribPointer(deltaAttr, 1, GL_FLOAT, GL_FALSE, 0, deltaArray);
     checkGLError("Plume - glVertexAttribPointer - deltaAttr");
     glEnableVertexAttribArray(deltaAttr);

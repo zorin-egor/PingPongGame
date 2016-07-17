@@ -29,7 +29,10 @@ public class MainActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            GameLib.back();
+            if(GameLib.back()){
+                finish();
+            }
+
             return true;
         }
         return super.onKeyDown(keyCode, event);

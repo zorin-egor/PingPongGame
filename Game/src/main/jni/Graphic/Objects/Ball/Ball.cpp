@@ -70,20 +70,22 @@ bool Ball::collision(Platform * object){
     return false;
 }
 
-bool Ball::collision(Object * object){
+Object::CROSS_SIDE Ball::collision(Object * object){
 
     // It's occurs more
-    if(collisionLeftRightWall(object))
-        return true;
+    Object::CROSS_SIDE cross_side = collisionLeftRightWall(object);
+    if(cross_side != Object::NONE)
+        return cross_side;
 
     // It's less
-    if(collisionUpDownWall(object))
-        return true;
+    cross_side = collisionUpDownWall(object);
+    if(cross_side != Object::NONE)
+        return cross_side;
 
-    return false;
+    return Object::NONE;
 }
 
-bool Ball::collisionLeftRightWall(Object * object) {
+Object::CROSS_SIDE Ball::collisionLeftRightWall(Object * object) {
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
 
@@ -93,7 +95,7 @@ bool Ball::collisionLeftRightWall(Object * object) {
             if(crossPoint->size() >= 4){
                 dX = -1.0f * dX;
                 move();
-                return true;
+                return Object::LEFT;
             }
 
     crossPoint->clear();
@@ -104,14 +106,14 @@ bool Ball::collisionLeftRightWall(Object * object) {
             if(crossPoint->size() >= 4){
                 dX = -1.0f * dX;
                 move();
-                return true;
+                return Object::RIGHT;
             }
 
     crossPoint->clear();
-    return false;
+    return Object::NONE;
 }
 
-bool Ball::collisionUpDownWall(Object * object){
+Object::CROSS_SIDE Ball::collisionUpDownWall(Object * object){
 
     // Cross points
     std::vector<GLfloat> * crossPoint = getCrossPoints();
@@ -123,7 +125,7 @@ bool Ball::collisionUpDownWall(Object * object){
                 setDefaultPosition();
                 dX = 0.0f;
                 isOut = true;
-                return true;
+                return Object::UP;
             }
 
     crossPoint->clear();
@@ -135,7 +137,7 @@ bool Ball::collisionUpDownWall(Object * object){
                 setDefaultPosition();
                 dX = 0.0f;
                 isOut = true;
-                return true;
+                return Object::DOWN;
             }
 
     crossPoint->clear();
@@ -145,10 +147,10 @@ bool Ball::collisionUpDownWall(Object * object){
             setDefaultPosition();
             dX = 0.0f;
             isOut = true;
-            return true;
+            return Object::NONE;
     }
 
-    return false;
+    return Object::NONE;
 }
 
 void Ball::increaseSpeed(){

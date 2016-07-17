@@ -51,7 +51,7 @@ class Ball : public Object {
                 sign = 1.0f;
         }
 
-        bool collision(Object * object);
+        Object::CROSS_SIDE collision(Object * object);
         bool collision(Platform * object);
 
         bool getIsOut() const {
@@ -87,8 +87,8 @@ class Ball : public Object {
         float sign;
 
         bool isOut;
-        bool collisionLeftRightWall(Object * object);
-        bool collisionUpDownWall(Object * object);
+        Object::CROSS_SIDE collisionLeftRightWall(Object * object);
+        Object::CROSS_SIDE collisionUpDownWall(Object * object);
         void increaseSpeed();
 };
 

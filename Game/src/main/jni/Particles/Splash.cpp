@@ -38,7 +38,7 @@ void Splash::render() {
     glEnableVertexAttribArray(colorEndAttr);
     checkGLError("Splash - glVertexAttribPointer - colorEndAttr - enabled");
 
-    // Delta speed
+    // Delta singleSpeed
     glVertexAttribPointer(deltaAttr, 1, GL_FLOAT, GL_FALSE, 0, deltaArray);
     checkGLError("Splash - glVertexAttribPointer - deltaAttr");
     glEnableVertexAttribArray(deltaAttr);
@@ -75,7 +75,7 @@ void Splash::initArrays(){
     sizeArray[0] = 3.0f;
     sizeArray[1] = 10.0f;
 
-    // dt for speed
+    // dt for singleSpeed
     dxArray = new GLfloat[count];
     dyArray = new GLfloat[count];
     for(int i = 0; i < count; i++){

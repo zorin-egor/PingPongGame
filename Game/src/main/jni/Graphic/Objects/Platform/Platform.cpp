@@ -1,6 +1,6 @@
 #include "Platform.h"
 
-bool Platform::collision(Object * object){
+Object::CROSS_SIDE Platform::collision(Object * object){
 
     // Move and check collision, If true change dX and do step back
     move();
@@ -14,7 +14,7 @@ bool Platform::collision(Object * object){
             if(crossPoint->size() >= 4){
                 setDx(-1.0f * dX);
                 move();
-                return true;
+                return Object::LEFT;
             }
 
     crossPoint->clear();
@@ -25,11 +25,11 @@ bool Platform::collision(Object * object){
             if(crossPoint->size() >= 4){
                 setDx(-1.0f * dX);
                 move();
-                return true;
+                return Object::RIGHT;
             }
 
     crossPoint->clear();
-    return false;
+    return Object::NONE;
 }
 
 Platform::REBOUND_AREA Platform::getRebound(float x, float y, float width){

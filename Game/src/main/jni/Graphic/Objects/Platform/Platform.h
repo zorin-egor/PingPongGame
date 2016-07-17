@@ -39,15 +39,30 @@ class Platform : public Object {
                                                     _matrixCoords )
 
             {
-
+                score = 0;
             }
 
     virtual ~Platform(){
 
     }
 
-    bool collision(Object * object);
+    int getScore() const {
+        return score;
+    }
+
+    void setScore() {
+        ++score;
+    }
+
+    void clearScore() {
+        score = 0;
+    }
+
+    Object::CROSS_SIDE collision(Object * object);
     REBOUND_AREA getRebound(float x, float y, float width);
+
+    private:
+        int score;
 };
 
 

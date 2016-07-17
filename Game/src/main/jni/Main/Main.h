@@ -52,7 +52,7 @@ class Main {
                 BALL_SPEED(0.02f),
                 STOP_MOVE(0.0f),
                 LABEL_HEIGHT(0.1f),
-                LABEL_WIDTH(1.0f),
+                LABEL_WIDTH(0.5f),
                 BUTTON_MENU_WIDTH(1.6f),
                 BUTTON_MENU_HEIGHT(0.5f)
         {
@@ -84,6 +84,11 @@ class Main {
             delete bordDownTwo;
             delete single;
             delete multi;
+            delete singleScoreOne;
+            delete singleScoreTwo;
+            delete singleSpeed;
+            delete multiScoreOne;
+            delete multiScoreTwo;
         }
 
         void step();
@@ -141,7 +146,7 @@ class Main {
         }
 
         // For back
-        void backAction();
+        bool backAction();
 
         GLint getSpritesDelta() const {
             return spritesDelta;
@@ -189,6 +194,8 @@ class Main {
 
     private:
         void init();
+        void setDefault();
+
         void createObjects();
         void rotateBackground();
         void renderBackground();
@@ -258,7 +265,6 @@ class Main {
         // Common
         View * background;
         View * center;
-        Label * speed;
         View * bordDown;
         Object * field;
         Ball * ball;
@@ -267,12 +273,17 @@ class Main {
         Button * right;
 
         // For single
+        Label * singleSpeed;
+        Label * singleScoreOne;
+        Label * singleScoreTwo;
         View * bordUp;
         Platform * player;
         Platform * playerTwo;
         Enemy * enemy;
 
         // For multi
+        Label * multiScoreOne;
+        Label * multiScoreTwo;
         Button * leftTwo;
         Button * playPauseTwo;
         Button * rightTwo;

@@ -58,7 +58,7 @@ void Particles::render() {
     glUniform2f(sizeUniform, sizeUniformArray[0], sizeUniformArray[1]);
     checkGLError("Particles - glUniform2f - sizeUniform");
 
-    // Total speed
+    // Total singleSpeed
     glUniform1f(totalDeltaSpeedUniform, totalDeltaSpeed);
     checkGLError("Particles - glUniform2f - totalDeltaSpeedUniform");
 
@@ -95,7 +95,7 @@ void Particles::initArrays(){
     for(int i = 0; i < count; i++)
         randomArrayRadius[i] = Methods::getShortRandom();
 
-    // Random speed
+    // Random singleSpeed
     randomArraySpeed = new GLfloat[count];
     for(int i = 0; i < count; i++)
         randomArraySpeed[i] = Methods::getShortRandom() * 0.5f;
