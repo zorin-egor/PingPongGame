@@ -44,11 +44,13 @@ class Ball : public Object {
                                         DX_MAX(0.06f),
                                         DX_MIN(0.03),
                                         INCREASE_SPEED_TO(_height),
-                                        DELTA_SPEED(0.00001f)
+                                        DELTA_SPEED(0.0001f),
+                                        DEFAULT_SPEED(_step)
         {
                 setDy(Methods::getRandSign() * _step);
                 isOut = false;
                 sign = 1.0f;
+                speed = 0;
         }
 
         Object::CROSS_SIDE collision(Object * object);
@@ -60,6 +62,15 @@ class Ball : public Object {
 
         void setIsOut(bool isOut) {
             Ball::isOut = isOut;
+        }
+
+        int getSpeed(){
+            return speed;
+        }
+
+        void resetSpeed(){
+            dY = DEFAULT_SPEED;
+            speed = 0;
         }
 
         std::queue<GLfloat> * getLastPoint(){
@@ -83,8 +94,10 @@ class Ball : public Object {
         const float DX_MAX;
         const float INCREASE_SPEED_TO;
         const float DELTA_SPEED;
+        const float DEFAULT_SPEED;
 
         float sign;
+        int speed;
 
         bool isOut;
         Object::CROSS_SIDE collisionLeftRightWall(Object * object);

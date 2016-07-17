@@ -310,7 +310,7 @@ void Main::createObjects(){
                                matrix->getDefaultMatrix4x4());
 
     // Enemy platform
-    enemy = new Enemy( PLATFORMS_SPEED + 0.04,
+    enemy = new Enemy( PLATFORMS_SPEED,
                         -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                         textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                         polygons,
@@ -416,6 +416,7 @@ void Main::setDefault(){
 
     ball->setIsOut(false);
     ball->setDefaultPosition();
+    ball->resetSpeed();
 
     singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 4));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
@@ -512,8 +513,10 @@ void Main::logicSingle(){
         ball->setIsOut(false);
     }
 
-    singleSpeed->setNumber(Methods::fillLeft(Methods::intToString((int)(ball->getStep() * 1000.0f)), '0', 4));
-    singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((enemy->getScore())), '0', 3));
+    if(ball->getSpeed() > 0)
+        singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(ball->getSpeed()), '0', 3));
+
+    singleScoreTwo->setNumber(Methods::fillLeft(Methods::intToString((enemy->getScore())), '0', 3));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((player->getScore())), '0', 3));
 
     ball->move();
