@@ -89,6 +89,7 @@ class Main {
             delete singleSpeed;
             delete multiScoreOne;
             delete multiScoreTwo;
+            delete menuHeader;
         }
 
         void step();
@@ -266,6 +267,8 @@ class Main {
         View * background;
         View * center;
         View * bordDown;
+        View * menuHeader;
+
         Object * field;
         Ball * ball;
         Button * left;

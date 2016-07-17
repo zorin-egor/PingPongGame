@@ -333,10 +333,20 @@ void Main::createObjects(){
                     matrix->getDefaultMatrix4x4(),
                     splashObj);
 
+    // Menu header
+    menuHeader = new View(textures->getTexturesPackIDs(ManageTexture::BORD_UP),
+                          polygons,
+                          polygonsPositionAttr,
+                          polygonsTextureAttr,
+                          polygonsTransformationAttr,
+                          Matrix::setVerticesCoords(-0.8f, 0.95f, 1.6f, 0.3f, matrix->getDefaultVerticesCoords()),
+                          matrix->getDefaultTextureCoord(),
+                          matrix->getDefaultMatrix4x4());
+
     // Choose single mode
     single = new Button(false,
                           true,
-                          -0.8f, 0.5f + BUTTON_MENU_HEIGHT, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
+                          -0.8f, 0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -349,7 +359,7 @@ void Main::createObjects(){
     // Choose multiplayer mode
     multi = new Button(false,
                           true,
-                          -0.8f, 0.0f + BUTTON_MENU_HEIGHT, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
+                          -0.8f, 0.0f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -449,6 +459,7 @@ void Main::rotateBackground(){
 // -------------------------------------------------------------------------------------------------
 // MENU BLOCK
 void Main::drawFrameMenu(){
+    menuHeader->render();
     single->render();
     multi->render();
 }

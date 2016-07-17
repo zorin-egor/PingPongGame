@@ -154,7 +154,7 @@ Object::CROSS_SIDE Ball::collisionUpDownWall(Object * object){
 }
 
 void Ball::increaseSpeed(){
-    if(fabsf(dY) < INCREASE_SPEED_TO * 0.7f){
+    if(fabsf(dY) < INCREASE_SPEED_TO * 0.5f){
         ++speed;
 
         if(dY > 0)
