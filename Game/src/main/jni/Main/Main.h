@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 #include <stdlib.h>
+#include <algorithm>
 
 #include "Graphic/Objects/Platform/Enemy.h"
 #include "Graphic/Objects/Ball/Ball.h"

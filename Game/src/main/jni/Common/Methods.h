@@ -71,6 +71,18 @@ class Methods {
             return array;
         }
 
+        template <class A>
+        static A * mirrorArray(A * array, int size){
+            A temp;
+            for(int i = 0; i < size / 2; i++){
+                temp = array[i];
+                array[i] = array[size - 1 - i];
+                array[size - 1 - i] = temp;
+            }
+
+            return array;
+        }
+
         inline static int getRandSign(){
             int sign[2] = {-1, 1};
             return sign[rand() % 2];

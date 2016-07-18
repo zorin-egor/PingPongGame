@@ -8,6 +8,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 class Label {
 
@@ -22,18 +23,20 @@ class Label {
               GLint _positionAttr,
               GLint _textureAttr,
               GLint _transformationAttr,
-              std::string _number) :
-                                    matrix(_matrix),
-                                    x(_x),
-                                    y(_y),
-                                    width(_width),
-                                    height(_height),
-                                    textureID(_textureID),
-                                    programID(_programID),
-                                    positionAttr(_positionAttr),
-                                    textureAttr(_textureAttr),
-                                    transformationAttr(_transformationAttr),
-                                    number(_number)
+              std::string _number,
+              bool _isInverse) : matrix(_matrix),
+                                 x(_x),
+                                 y(_y),
+                                 width(_width),
+                                 height(_height),
+                                 textureID(_textureID),
+                                 programID(_programID),
+                                 positionAttr(_positionAttr),
+                                 textureAttr(_textureAttr),
+                                 transformationAttr(_transformationAttr),
+                                 number(_number),
+                                 isInverse(_isInverse)
+
         {
             init();
         }
@@ -65,6 +68,8 @@ class Label {
         GLint positionAttr;
         GLint textureAttr;
         GLint transformationAttr;
+
+        bool isInverse;
 };
 
 #endif //GAME_PINGPONG_NUMBERS_H

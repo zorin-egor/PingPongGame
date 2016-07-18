@@ -228,7 +228,8 @@ void Main::createObjects(){
                             polygonsPositionAttr,
                             polygonsTextureAttr,
                             polygonsTransformationAttr,
-                            "000");
+                            "000",
+                            false);
 
     // Label of score one for single
     singleScoreOne = new Label(matrix,
@@ -238,7 +239,8 @@ void Main::createObjects(){
                                polygonsPositionAttr,
                                polygonsTextureAttr,
                                polygonsTransformationAttr,
-                               "000");
+                               "000",
+                               false);
 
     // Label of score two for single
     singleScoreTwo = new Label(matrix,
@@ -248,17 +250,19 @@ void Main::createObjects(){
                                polygonsPositionAttr,
                                polygonsTextureAttr,
                                polygonsTransformationAttr,
-                               "000");
+                               "000",
+                               false);
 
     // Label of score one for multi
     multiScoreOne = new Label(matrix,
-                               -0.25f, 0.8f, LABEL_WIDTH, LABEL_HEIGHT,
+                               -0.27f, 0.8f, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
                                polygonsTextureAttr,
                                polygonsTransformationAttr,
-                               "000");
+                               "000",
+                               true);
 
     // Label of score two for multi
     multiScoreTwo = new Label(matrix,
@@ -268,7 +272,8 @@ void Main::createObjects(){
                                polygonsPositionAttr,
                                polygonsTextureAttr,
                                polygonsTransformationAttr,
-                               "000");
+                               "000",
+                               false);
 
     // Field
     field = new Platform( PLATFORMS_SPEED,
@@ -294,7 +299,7 @@ void Main::createObjects(){
                            polygonsTextureAttr,
                            polygonsTransformationAttr,
                            matrix->getDefaultVerticesCoords(),
-                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO),
+                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                            matrix->getDefaultMatrix4x4());
     // Enemy platform
     enemy = new Enemy( PLATFORMS_SPEED,
@@ -305,7 +310,7 @@ void Main::createObjects(){
                        polygonsTextureAttr,
                        polygonsTransformationAttr,
                        matrix->getDefaultVerticesCoords(),
-                       Matrix::rotateTextureCoord(Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE), 2),
+                       Matrix::rotateTextureCoord(Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::TWO), 2),
                        matrix->getDefaultMatrix4x4());
 
     // Player two
@@ -640,6 +645,7 @@ void Main::logicMulti(){
         ball->setIsOut(false);
     }
 
+    // Reverse score for player one
     multiScoreOne->setNumber(Methods::fillLeft(Methods::intToString(player->getScore()), '0', 3));
     multiScoreTwo->setNumber(Methods::fillLeft(Methods::intToString(playerTwo->getScore()), '0', 3));
     ball->move();

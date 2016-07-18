@@ -8,13 +8,17 @@ void  Label::init(){
             char symbol = number.at(i);
             int position = atoi(&symbol);
 
+            GLfloat * textureCoord = Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 4, 4, position);
+            if(isInverse)
+                Matrix::rotateTextureCoord(textureCoord, 2);
+
             View * partOfLabel = new View(textureID,
                                           programID,
                                           positionAttr,
                                           textureAttr,
                                           transformationAttr,
                                           Matrix::setVerticesCoords(x + width_one * (float)i, y, width_one, height, matrix->getDefaultVerticesCoords()),
-                                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 4, 4, position),
+                                          textureCoord,
                                           matrix->getDefaultMatrix4x4());
             labelLinks.push_back(partOfLabel);
         }
@@ -23,6 +27,10 @@ void  Label::init(){
 
 void Label::setNumber(std::string _number){
     clearLabels();
+
+    if(isInverse)
+        std::reverse(_number.begin(), _number.end());
+
     number = _number;
     init();
 }
