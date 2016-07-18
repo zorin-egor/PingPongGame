@@ -9,7 +9,6 @@ extern "C" {
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_init(JNIEnv* env, jobject obj, jint width, jint height, jobject pngManager, jobject assetManager){
         game = new Main(env, width, height, pngManager, assetManager);
-
     }
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_step(JNIEnv* env, jobject obj){

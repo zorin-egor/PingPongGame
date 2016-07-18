@@ -128,7 +128,7 @@ void Main::createObjects(){
                             polygonsTextureAttr,
                             polygonsTransformationAttr,
                             setBordDownPosition(matrix->getDefaultVerticesCoords(), true),
-                            matrix->getInverseTextureCoord(),
+                            Matrix::rotateTextureCoord(matrix->getDefaultTextureCoord(), 2),
                             matrix->getDefaultMatrix4x4());
 
     // Bord up
@@ -305,7 +305,7 @@ void Main::createObjects(){
                        polygonsTextureAttr,
                        polygonsTransformationAttr,
                        matrix->getDefaultVerticesCoords(),
-                       Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
+                       Matrix::rotateTextureCoord(Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE), 2),
                        matrix->getDefaultMatrix4x4());
 
     // Player two
@@ -317,7 +317,7 @@ void Main::createObjects(){
                                polygonsTextureAttr,
                                polygonsTransformationAttr,
                                matrix->getDefaultVerticesCoords(),
-                               Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
+                               Matrix::rotateTextureCoord(Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE), 2),
                                matrix->getDefaultMatrix4x4());
 
     // Enemy platform

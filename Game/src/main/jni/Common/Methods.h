@@ -51,6 +51,26 @@ class Methods {
             return result;
         }
 
+        template <class A>
+        static A * shiftArrayLeft(A * array, int size){
+            A temp = array[0];
+            for(int i = 1; i < size; i++)
+                array[i - 1] = array[i];
+
+            array[size - 1] = temp;
+            return array;
+        }
+
+        template <class A>
+        static A * shiftArrayRight(A * array, int size){
+            A temp = array[size - 1];
+            for(int i = size - 1; i >= 0 ; i--)
+                array[i] = array[i - 1];
+
+            array[0] = temp;
+            return array;
+        }
+
         inline static int getRandSign(){
             int sign[2] = {-1, 1};
             return sign[rand() % 2];
