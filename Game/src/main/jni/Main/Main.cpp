@@ -112,39 +112,39 @@ void Main::createObjects(){
                       matrix->getDefaultMatrix4x4());
 
     // Bord down
-    bordDown = new View(textures->getTexturesPackIDs(ManageTexture::BORD_DOWN),
+    bordDown = new View(textures->getTexturesPackIDs(ManageTexture::BORDERS),
                         polygons,
                         polygonsPositionAttr,
                         polygonsTextureAttr,
                         polygonsTransformationAttr,
                         setBordDownPosition(matrix->getDefaultVerticesCoords(), false),
-                        matrix->getDefaultTextureCoord(),
+                        Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 1, 2, Matrix::TWO),
                         matrix->getDefaultMatrix4x4());
 
     // Bord down for player two
-    bordDownTwo = new View(textures->getTexturesPackIDs(ManageTexture::BORD_DOWN),
+    bordDownTwo = new View(textures->getTexturesPackIDs(ManageTexture::BORDERS),
                             polygons,
                             polygonsPositionAttr,
                             polygonsTextureAttr,
                             polygonsTransformationAttr,
                             setBordDownPosition(matrix->getDefaultVerticesCoords(), true),
-                            Matrix::rotateTextureCoord(matrix->getDefaultTextureCoord(), 2),
+                            Matrix::rotateTextureCoord(Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 1, 2, Matrix::TWO), 2),
                             matrix->getDefaultMatrix4x4());
 
     // Bord up
-    bordUp = new View(textures->getTexturesPackIDs(ManageTexture::BORD_UP),
+    bordUp = new View(textures->getTexturesPackIDs(ManageTexture::BORDERS),
                         polygons,
                         polygonsPositionAttr,
                         polygonsTextureAttr,
                         polygonsTransformationAttr,
                         setBordUpPosition(matrix->getDefaultVerticesCoords()),
-                        matrix->getDefaultTextureCoord(),
+                        Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 1, 2, Matrix::ONE),
                         matrix->getDefaultMatrix4x4());
 
     // Left button
     left = new Button(false,
                       true,
-                      -0.88f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                      -0.91f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                       polygons,
                       polygonsPositionAttr,
@@ -157,7 +157,7 @@ void Main::createObjects(){
     // Right button
     right = new Button(false,
                        true,
-                       0.58f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                       0.60f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -184,7 +184,7 @@ void Main::createObjects(){
     // Left button player two
     leftTwo = new Button(false,
                           true,
-                         -0.91f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                         -0.93f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -197,7 +197,7 @@ void Main::createObjects(){
     // Right button player two
     rightTwo = new Button(false,
                            true,
-                           0.56f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                           0.58f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                            polygons,
                            polygonsPositionAttr,
@@ -222,7 +222,7 @@ void Main::createObjects(){
 
     // Label of singleSpeed
     singleSpeed = new Label(matrix,
-                            -0.25f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
+                            -0.23f, 0.98f, LABEL_WIDTH, LABEL_HEIGHT,
                             textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                             polygons,
                             polygonsPositionAttr,
@@ -233,7 +233,7 @@ void Main::createObjects(){
 
     // Label of score one for single
     singleScoreOne = new Label(matrix,
-                               -0.9f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
+                               -0.93f, 0.98f, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
@@ -244,7 +244,7 @@ void Main::createObjects(){
 
     // Label of score two for single
     singleScoreTwo = new Label(matrix,
-                               0.4f, 0.95f, LABEL_WIDTH, LABEL_HEIGHT,
+                               0.43f, 0.98f, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
@@ -339,13 +339,13 @@ void Main::createObjects(){
                     splashObj);
 
     // Menu header
-    menuHeader = new View(textures->getTexturesPackIDs(ManageTexture::BORD_UP),
+    menuHeader = new View(textures->getTexturesPackIDs(ManageTexture::BORDERS),
                           polygons,
                           polygonsPositionAttr,
                           polygonsTextureAttr,
                           polygonsTransformationAttr,
                           Matrix::setVerticesCoords(-0.8f, 0.95f, 1.6f, 0.3f, matrix->getDefaultVerticesCoords()),
-                          matrix->getDefaultTextureCoord(),
+                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 1, 2, Matrix::ONE),
                           matrix->getDefaultMatrix4x4());
 
     // Choose single mode
@@ -432,7 +432,7 @@ void Main::setDefault(){
     ball->setDefaultPosition();
     ball->resetSpeed();
 
-    singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 4));
+    singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 3));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
     multiScoreOne->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 3));
@@ -665,12 +665,6 @@ void Main::renderMultiInterface(){
     // Bord up
     bordDownTwo->render();
 
-    // Score one
-    multiScoreOne->render();
-
-    // Score two
-    multiScoreTwo->render();
-
     // Button left
     left->render();
 
@@ -688,6 +682,12 @@ void Main::renderMultiInterface(){
 
     // Button playPause
     playPauseTwo->render();
+
+    // Score one
+    multiScoreOne->render();
+
+    // Score two
+    multiScoreTwo->render();
 }
 
 void Main::renderMultiObjects(){

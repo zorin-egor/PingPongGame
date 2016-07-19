@@ -19,8 +19,7 @@ void ManageTexture::loadTexture(){
     arrayTextures[ManageTexture::BACKGROUND] = loadPNG("textures/space.png");
     arrayTextures[ManageTexture::BUTTONS] = loadPNG("textures/buttons.png");
     arrayTextures[ManageTexture::BACKGROUND_CENTER] = loadPNG("textures/space_center.png");
-    arrayTextures[ManageTexture::BORD_DOWN] = loadPNG("textures/bord_down.png");
-    arrayTextures[ManageTexture::BORD_UP] = loadPNG("textures/bord_up.png");
+    arrayTextures[ManageTexture::BORDERS] = loadPNG("textures/borders.png");
     arrayTextures[ManageTexture::NUMBERS] = loadPNG("textures/numbers.png");
     arrayTextures[ManageTexture::OBJECTS] = loadPNG("textures/objects.png");
     arrayTextures[ManageTexture::SPLASH] = loadPNG("textures/splash.png");
