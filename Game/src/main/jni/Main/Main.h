@@ -56,7 +56,7 @@ class Main {
                 LABEL_HEIGHT(0.1f),
                 LABEL_WIDTH(0.5f),
                 BUTTON_MENU_WIDTH(1.6f),
-                BUTTON_MENU_HEIGHT(0.5f)
+                BUTTON_MENU_HEIGHT(0.4f)
         {
             deltaRotate = -3.14f;
             srand(static_cast<unsigned> (time(0)));
@@ -92,6 +92,8 @@ class Main {
             delete multiScoreOne;
             delete multiScoreTwo;
             delete menuHeader;
+            delete sound;
+            delete exit;
         }
 
         void step();
@@ -297,6 +299,8 @@ class Main {
         // For menu
         Button * single;
         Button * multi;
+        Button * sound;
+        Button * exit;
 
         ManageTexture * textures;
 

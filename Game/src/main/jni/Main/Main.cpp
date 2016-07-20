@@ -144,7 +144,7 @@ void Main::createObjects(){
     // Left button
     left = new Button(false,
                       true,
-                      -0.91f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
+                      -0.91f, -0.73f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                       polygons,
                       polygonsPositionAttr,
@@ -157,7 +157,7 @@ void Main::createObjects(){
     // Right button
     right = new Button(false,
                        true,
-                       0.60f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
+                       0.60f, -0.73f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -339,19 +339,19 @@ void Main::createObjects(){
                     splashObj);
 
     // Menu header
-    menuHeader = new View(textures->getTexturesPackIDs(ManageTexture::BORDERS),
+    menuHeader = new View(textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
                           polygonsTextureAttr,
                           polygonsTransformationAttr,
                           Matrix::setVerticesCoords(-0.8f, 0.95f, 1.6f, 0.3f, matrix->getDefaultVerticesCoords()),
-                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 1, 2, Matrix::ONE),
+                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::SEVEN),
                           matrix->getDefaultMatrix4x4());
 
     // Choose single mode
     single = new Button(false,
                           true,
-                          -0.8f, 0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::ONE, Matrix::TWO,
+                          -0.8f, 0.7f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::FOUR, Matrix::FIFE,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -364,7 +364,7 @@ void Main::createObjects(){
     // Choose multiplayer mode
     multi = new Button(false,
                           true,
-                          -0.8f, 0.0f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::ONE, Matrix::TWO,
+                          -0.8f, 0.3f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::SIX, Matrix::SEVEN,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -373,6 +373,32 @@ void Main::createObjects(){
                           matrix->getDefaultVerticesCoords(),
                           matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
+
+    // Sound off/on
+    sound = new Button(false,
+                       true,
+                       -0.8f, -0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::EIGHT, Matrix::NINE,
+                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                       polygons,
+                       polygonsPositionAttr,
+                       polygonsTextureAttr,
+                       polygonsTransformationAttr,
+                       matrix->getDefaultVerticesCoords(),
+                       matrix->getDefaultTextureCoord(),
+                       matrix->getDefaultMatrix4x4());
+
+    // Exit
+    exit = new Button(false,
+                       true,
+                       -0.8f, -0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::TEN, Matrix::ELEVEN,
+                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                       polygons,
+                       polygonsPositionAttr,
+                       polygonsTextureAttr,
+                       polygonsTransformationAttr,
+                       matrix->getDefaultVerticesCoords(),
+                       matrix->getDefaultTextureCoord(),
+                       matrix->getDefaultMatrix4x4());
 }
 
 void Main::step(){
@@ -467,6 +493,8 @@ void Main::drawFrameMenu(){
     menuHeader->render();
     single->render();
     multi->render();
+    sound->render();
+    exit->render();
 }
 
 void Main::logicMenu(){
