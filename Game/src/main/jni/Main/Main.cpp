@@ -351,7 +351,7 @@ void Main::createObjects(){
     // Choose single mode
     single = new Button(false,
                           true,
-                          -0.8f, 0.7f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::FOUR, Matrix::FIFE,
+                          -0.8f, 0.7f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::FIFE, Matrix::FOUR,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -364,7 +364,7 @@ void Main::createObjects(){
     // Choose multiplayer mode
     multi = new Button(false,
                           true,
-                          -0.8f, 0.3f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::SIX, Matrix::SEVEN,
+                          -0.8f, 0.3f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::SEVEN, Matrix::SIX,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -377,7 +377,7 @@ void Main::createObjects(){
     // Sound off/on
     sound = new Button(false,
                        true,
-                       -0.8f, -0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::EIGHT, Matrix::NINE,
+                       -0.8f, -0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -390,7 +390,7 @@ void Main::createObjects(){
     // Exit
     exit = new Button(false,
                        true,
-                       -0.8f, -0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::TEN, Matrix::ELEVEN,
+                       -0.8f, -0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::ELEVEN, Matrix::TEN,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
