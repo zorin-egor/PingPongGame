@@ -20,17 +20,9 @@ void Button::action( float _x, float _y, int _buttonId, bool _isDown){
 }
 
 void Button::setTextureCoords(bool isPressed){
-	if(isUpButton){
-		if(isPressed){
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::TWO);
-		} else {
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::ONE);
-		}
+	if(isPressed){
+		Matrix::setTextureCoords(getTextureCoordinates(), textureX, textureY, positionOn);
 	} else {
-		if(isPressed){
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::THREE);
-		} else {
-			Matrix::setTextureCoords(getTextureCoordinates(), 2, 4, Matrix::FOUR);
-		}
+		Matrix::setTextureCoords(getTextureCoordinates(), textureX, textureX, positionOff);
 	}
 }

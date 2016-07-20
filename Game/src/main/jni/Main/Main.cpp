@@ -144,80 +144,80 @@ void Main::createObjects(){
     // Left button
     left = new Button(false,
                       true,
-                      -0.91f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                      -0.91f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                       polygons,
                       polygonsPositionAttr,
                       polygonsTextureAttr,
                       polygonsTransformationAttr,
                       matrix->getDefaultVerticesCoords(),
-                      Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::ONE),
+                      matrix->getDefaultTextureCoord(),
                       matrix->getDefaultMatrix4x4());
 
     // Right button
     right = new Button(false,
                        true,
-                       0.60f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                       0.60f, -0.72f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
                        polygonsTextureAttr,
                        polygonsTransformationAttr,
                        matrix->getDefaultVerticesCoords(),
-                       Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 4, Matrix::ONE),
+                       matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
 
     // Play pause button
     playPause = new Button(true,
                            false,
-                           -0.24f, -0.65f, BUTTON_START_WIDTH, BUTTON_START_HEIGHT,
+                           -0.24f, -0.65f, BUTTON_START_WIDTH, BUTTON_START_HEIGHT, 4, 4, Matrix::ONE, Matrix::THREE,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                            polygons,
                            polygonsPositionAttr,
                            polygonsTextureAttr,
                            polygonsTransformationAttr,
                            matrix->getDefaultVerticesCoords(),
-                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::FOUR),
+                           matrix->getDefaultTextureCoord(),
                            matrix->getDefaultMatrix4x4());
 
 
     // Left button player two
     leftTwo = new Button(false,
                           true,
-                         -0.93f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                         -0.93f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,  4, 4, Matrix::TWO, Matrix::ONE,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
                           polygonsTextureAttr,
                           polygonsTransformationAttr,
                           matrix->getDefaultVerticesCoords(),
-                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::ONE),
+                          matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
 
     // Right button player two
     rightTwo = new Button(false,
                            true,
-                           0.58f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,
+                           0.58f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                            polygons,
                            polygonsPositionAttr,
                            polygonsTextureAttr,
                            polygonsTransformationAttr,
                            matrix->getDefaultVerticesCoords(),
-                           Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 4, Matrix::ONE),
+                           matrix->getDefaultTextureCoord(),
                            matrix->getDefaultMatrix4x4());
 
     // Play pause button player two
     playPauseTwo = new Button(true,
                                false,
-                               -0.26f, 0.65f + BUTTON_START_HEIGHT, BUTTON_START_WIDTH, BUTTON_START_HEIGHT,
+                               -0.26f, 0.65f + BUTTON_START_HEIGHT, BUTTON_START_WIDTH, BUTTON_START_HEIGHT, 4, 4, Matrix::ONE, Matrix::THREE,
                                textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                                polygons,
                                polygonsPositionAttr,
                                polygonsTextureAttr,
                                polygonsTransformationAttr,
                                matrix->getDefaultVerticesCoords(),
-                               Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::FOUR),
+                               matrix->getDefaultTextureCoord(),
                                matrix->getDefaultMatrix4x4());
 
     // Label of singleSpeed
@@ -351,27 +351,27 @@ void Main::createObjects(){
     // Choose single mode
     single = new Button(false,
                           true,
-                          -0.8f, 0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
+                          -0.8f, 0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::ONE, Matrix::TWO,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
                           polygonsTextureAttr,
                           polygonsTransformationAttr,
                           matrix->getDefaultVerticesCoords(),
-                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 4, Matrix::ONE),
+                          matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
 
     // Choose multiplayer mode
     multi = new Button(false,
                           true,
-                          -0.8f, 0.0f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,
+                          -0.8f, 0.0f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::ONE, Matrix::TWO,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
                           polygonsTextureAttr,
                           polygonsTransformationAttr,
                           matrix->getDefaultVerticesCoords(),
-                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(),  2, 4, Matrix::ONE),
+                          matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
 }
 

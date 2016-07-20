@@ -15,6 +15,10 @@ class Button : public View {
 			   float _y,
 			   float _width,
 			   float _height,
+			   int _textureX,
+			   int _textureY,
+			   Matrix::TEXTURE_COORDS _positionOn,
+			   Matrix::TEXTURE_COORDS _positionOff,
 			   GLuint _textureID,
 			   GLuint _programID,
 			   GLint _positionAttr,
@@ -28,7 +32,7 @@ class Button : public View {
 											 	_textureAttr,
 											 	_transformationAttr,
 											 	Matrix::setVerticesCoords(_x, _y, _width, _height, _verticesCoords),
-											    _textureCoords,
+											    Matrix::setTextureCoords(_textureCoords, _textureX, _textureY, _positionOff),
 											    _matrixCoords),
 
 										  	isSwitch(_isSwitch),
@@ -36,7 +40,11 @@ class Button : public View {
 											x(_x),
 											y(_y),
 											width(_width),
-											height(_height)
+											height(_height),
+										  	textureX(_textureX),
+										  	textureY(_textureY),
+										    positionOn(_positionOn),
+										    positionOff(_positionOff)
 		{
 			pressed = false;
 			buttonId = -1;
@@ -61,6 +69,10 @@ class Button : public View {
 		// Button position
 		float width, height;
 		float x, y;
+
+		// Texture grid
+		int textureX, textureY;
+		int positionOn, positionOff;
 
 		// Button state
 		bool pressed;
