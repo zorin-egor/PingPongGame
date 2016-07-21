@@ -1,5 +1,6 @@
 package ru.simpleapps.game;
 
+import android.app.Activity;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -26,7 +27,9 @@ public class GameView extends GLSurfaceView {
         switch(event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
-                GameLib.action(event.getX(event.getActionIndex()), event.getY(event.getActionIndex()), event.getPointerId(event.getActionIndex()), true);
+                if(GameLib.action(event.getX(event.getActionIndex()), event.getY(event.getActionIndex()), event.getPointerId(event.getActionIndex()), true))
+                    ((Activity)context).finish();
+
                 Log.d("Button", "COUNT: " + event.getPointerCount() +
                         "\nACTION INDEX: " + event.getActionIndex() +
                         "\nPOINTER ID: " + event.getPointerId(event.getActionIndex()) +

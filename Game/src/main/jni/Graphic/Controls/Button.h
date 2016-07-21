@@ -59,7 +59,7 @@ class Button : public View {
 			setTextureCoords(pressed);
 		}
 
-		void action(float _x, float _y, int _buttonsId, bool _isDown);
+		bool action(float _x, float _y, int _buttonsId, bool _isDown);
 
 	private:
 

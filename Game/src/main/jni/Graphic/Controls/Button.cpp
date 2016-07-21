@@ -1,6 +1,6 @@
 #include "Button.h"
 
-void Button::action( float _x, float _y, int _buttonId, bool _isDown){
+bool Button::action( float _x, float _y, int _buttonId, bool _isDown){
 	//LOGI("Button coordinates: %f - %f; %f - %f", x, y, _x, _y);
 	if(_x > x && _y < y && _x < (x + width) && _y > (y - height) && _isDown){
 		//LOGI("Button click!");
@@ -17,6 +17,8 @@ void Button::action( float _x, float _y, int _buttonId, bool _isDown){
 				setTextureCoords(pressed = false);
 				buttonId = -1;
 			}
+
+	return pressed;
 }
 
 void Button::setTextureCoords(bool isPressed){

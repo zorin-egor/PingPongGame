@@ -15,46 +15,16 @@ extern "C" {
         game->step();
     }
 
-    JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_action(JNIEnv* env, jobject obj, jfloat x, jfloat y, jint id, jboolean press){
-        game->getLeft()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                id,
-                                press);
+    JNIEXPORT jboolean JNICALL Java_ru_simpleapps_game_GameLib_action(JNIEnv* env, jobject obj, jfloat x, jfloat y, jint id, jboolean press){
+        for (std::vector<Button *>::iterator it = game->getAllButtons()->begin(); it != game->getAllButtons()->end(); it++)
+            (*it)->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x), Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                          id, press);
 
-        game->getRight()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                 Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                 id,
-                                 press);
-
-        game->getPlayPause()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                     Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                     id,
-                                     press);
-
-        game->getLeftTwo()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                id,
-                                press);
-
-        game->getRightTwo()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                     Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                     id,
-                                     press);
-
-        game->getPlayPauseTwo()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                         Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                         id,
-                                         press);
-
-        game->getSingle()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                id,
-                                press);
-
-        game->getMulti()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
-                                Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
-                                id,
-                                press);
+        return game->getExit()->getVisible()?
+                    game->getExit()->action(Methods::convertCoordinatesToOpenGL(false, game->getWidth(), x),
+                                             Methods::convertCoordinatesToOpenGL(true, game->getHeight(), y),
+                                             id,
+                                             press) : false;
     }
 
     JNIEXPORT jboolean JNICALL Java_ru_simpleapps_game_GameLib_back(JNIEnv* env, jobject obj){

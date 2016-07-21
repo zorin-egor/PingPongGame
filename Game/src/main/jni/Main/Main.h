@@ -138,12 +138,24 @@ class Main {
             return multi;
         }
 
+        Button * getSound() const {
+            return sound;
+        }
+
+        Button * getExit() const {
+            return exit;
+        }
+
         int getWidth() const {
             return width;
         }
 
         int getHeight() const {
             return height;
+        }
+
+        std::vector<Button *> * getAllButtons(){
+            return &allButtons;
         }
 
         void setGameState(const State &gameState) {
@@ -223,6 +235,7 @@ class Main {
         void drawFrameMenu();
         void logicMenu();
 
+        std::vector<Button *> allButtons;
         State gameState;
 
         Matrix * matrix;

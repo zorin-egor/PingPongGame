@@ -153,6 +153,7 @@ void Main::createObjects(){
                       matrix->getDefaultVerticesCoords(),
                       matrix->getDefaultTextureCoord(),
                       matrix->getDefaultMatrix4x4());
+    allButtons.push_back(left);
 
     // Right button
     right = new Button(false,
@@ -166,6 +167,7 @@ void Main::createObjects(){
                        matrix->getDefaultVerticesCoords(),
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
+    allButtons.push_back(right);
 
     // Play pause button
     playPause = new Button(true,
@@ -179,7 +181,7 @@ void Main::createObjects(){
                            matrix->getDefaultVerticesCoords(),
                            matrix->getDefaultTextureCoord(),
                            matrix->getDefaultMatrix4x4());
-
+    allButtons.push_back(playPause);
 
     // Left button player two
     leftTwo = new Button(false,
@@ -193,6 +195,7 @@ void Main::createObjects(){
                           matrix->getDefaultVerticesCoords(),
                           matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
+    allButtons.push_back(leftTwo);
 
     // Right button player two
     rightTwo = new Button(false,
@@ -206,6 +209,7 @@ void Main::createObjects(){
                            matrix->getDefaultVerticesCoords(),
                            matrix->getDefaultTextureCoord(),
                            matrix->getDefaultMatrix4x4());
+    allButtons.push_back(rightTwo);
 
     // Play pause button player two
     playPauseTwo = new Button(true,
@@ -219,6 +223,7 @@ void Main::createObjects(){
                                matrix->getDefaultVerticesCoords(),
                                matrix->getDefaultTextureCoord(),
                                matrix->getDefaultMatrix4x4());
+    allButtons.push_back(playPauseTwo);
 
     // Label of singleSpeed
     singleSpeed = new Label(matrix,
@@ -360,6 +365,7 @@ void Main::createObjects(){
                           matrix->getDefaultVerticesCoords(),
                           matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
+    allButtons.push_back(single);
 
     // Choose multiplayer mode
     multi = new Button(false,
@@ -373,6 +379,7 @@ void Main::createObjects(){
                           matrix->getDefaultVerticesCoords(),
                           matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
+    allButtons.push_back(multi);
 
     // Sound off/on
     sound = new Button(false,
@@ -386,6 +393,7 @@ void Main::createObjects(){
                        matrix->getDefaultVerticesCoords(),
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
+    allButtons.push_back(sound);
 
     // Exit
     exit = new Button(false,
@@ -399,6 +407,7 @@ void Main::createObjects(){
                        matrix->getDefaultVerticesCoords(),
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
+    allButtons.push_back(exit);
 }
 
 void Main::step(){
@@ -498,10 +507,14 @@ void Main::drawFrameMenu(){
 }
 
 void Main::logicMenu(){
+    exit->setVisible(true);
+
     if(single->getState()){
         gameState = State::SINGLE;
+        exit->setVisible(false);
     } else if(multi->getState()){
         gameState = State::MULTI;
+        exit->setVisible(false);
     }
 }
 
