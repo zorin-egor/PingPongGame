@@ -81,6 +81,10 @@ class Ball : public Object {
             return &plumePoints;
         }
 
+        virtual ~Ball(){
+            LOGI("~Ball");
+        }
+
     private:
 
         void setPreviousPoint();

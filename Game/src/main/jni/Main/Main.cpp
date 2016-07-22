@@ -423,14 +423,12 @@ void Main::step(){
     // Main state of application
     switch(gameState){
         case State::MENU:
-            LOGI("STATE - MENU");
             Main::logicMenu();
             // Draw
             drawFrameMenu();
             break;
 
         case State::SINGLE:
-            LOGI("STATE - SINGLE");
             // Logic
             if(playPause->getState())
                 logicSingle();
@@ -440,7 +438,6 @@ void Main::step(){
             break;
 
         case State::MULTI:
-            LOGI("STATE - MULTI");
             // Logic
             if(playPause->getState() && playPauseTwo->getState())
                 logicMulti();

@@ -61,6 +61,10 @@ class Button : public View {
 
 		bool action(float _x, float _y, int _buttonsId, bool _isDown);
 
+		virtual ~Button(){
+			LOGI("~Button");
+		}
+
 	private:
 
 		bool isSwitch;

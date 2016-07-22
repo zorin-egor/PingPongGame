@@ -2,6 +2,7 @@ package ru.simpleapps.game;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 public class MainActivity extends Activity {
@@ -22,6 +23,8 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onStop() {
+        Log.d("MainActivity", "onStop");
+        GameLib.stop();
         super.onStop();
         finish();
     }

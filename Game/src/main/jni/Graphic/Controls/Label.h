@@ -46,6 +46,7 @@ class Label {
         void clearLabels();
 
         ~Label(){
+            LOGI("~Label");
             clearLabels();
         };
 

@@ -41,6 +41,7 @@ class Enemy : public Platform{
         void collision(Ball * ball);
 
         virtual ~Enemy(){
+            LOGI("~Enemy");
             delete [] crossHorizonArray;
         }
 

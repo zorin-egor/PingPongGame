@@ -43,7 +43,7 @@ class Platform : public Object {
             }
 
     virtual ~Platform(){
-
+        LOGI("~Platform");
     }
 
     int getScore() const {

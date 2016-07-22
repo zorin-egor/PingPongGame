@@ -42,8 +42,9 @@ class ManageTexture {
             Texture() : pixels(NULL), width(0), height(0){}
             Texture(char * p, int w, int h) : pixels(p), width(w), height(h){}
             ~Texture(){
+                LOGI("~Texture");
                 if(pixels){
-                    delete[] pixels;
+                    delete [] pixels;
                     pixels = NULL;
                 }
             }
@@ -55,6 +56,12 @@ class ManageTexture {
 
         GLuint getTexturesPackIDs(ManageTexture::TEXTURE_TYPE texture){
             return texturesIDs[texture];
+        }
+
+        ~ManageTexture(){
+            LOGI("~ManageTexture");
+            delete [] arrayTextures;
+            delete [] texturesIDs;
         }
 
     private:

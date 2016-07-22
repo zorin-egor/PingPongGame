@@ -66,34 +66,50 @@ class Main {
         }
 
         ~Main(){
+            LOGI("~Main");
+
             delete matrix;
+            delete particles;
+            delete splashObj;
+            delete plumeObj;
+
+            // Objects
+            // Common
             delete background;
+            delete center;
+            delete bordDown;
+            delete menuHeader;
+
+            delete field;
+            delete ball;
             delete left;
             delete playPause;
             delete right;
-            delete textures;
-            delete bordDown;
-            delete field;
+
+            // For single
+            delete singleSpeed;
+            delete singleScoreOne;
+            delete singleScoreTwo;
+            delete bordUp;
             delete player;
-            delete enemy;
-            delete splashObj;
-            delete particles;
-            delete plumeObj;
             delete playerTwo;
+            delete enemy;
+
+            // For multi
+            delete multiScoreOne;
+            delete multiScoreTwo;
             delete leftTwo;
             delete playPauseTwo;
             delete rightTwo;
             delete bordDownTwo;
+
+            // For menu
             delete single;
             delete multi;
-            delete singleScoreOne;
-            delete singleScoreTwo;
-            delete singleSpeed;
-            delete multiScoreOne;
-            delete multiScoreTwo;
-            delete menuHeader;
             delete sound;
             delete exit;
+
+            delete textures;
         }
 
         void step();

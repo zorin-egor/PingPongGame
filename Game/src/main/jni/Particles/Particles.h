@@ -41,6 +41,7 @@ class Particles : public Render {
         }
 
         virtual ~Particles(){
+            LOGI("~Particles");
             delete [] positionArray;
             delete [] colorStartArray;
             delete [] colorEndArray;

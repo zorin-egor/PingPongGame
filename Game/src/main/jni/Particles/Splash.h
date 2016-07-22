@@ -47,6 +47,7 @@ class Splash : public Render {
     }
 
     virtual ~Splash(){
+        LOGI("~Splash");
         delete [] positionArray;
         delete [] colorStartArray;
         delete [] colorEndArray;

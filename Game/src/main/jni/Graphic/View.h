@@ -73,7 +73,7 @@ class View : public Render {
         }
 
         virtual ~View(){
-
+            LOGI("~View");
         }
 
     protected:

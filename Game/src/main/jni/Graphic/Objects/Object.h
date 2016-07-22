@@ -85,7 +85,7 @@ class Object : public View {
         virtual CROSS_SIDE collision(Object * object) = 0;
 
         virtual ~Object(){
-
+            LOGI("~Object");
         }
 
     protected:

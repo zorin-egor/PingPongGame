@@ -43,6 +43,7 @@ class Plume : public Render {
     void setPlumePoints(std::queue<GLfloat> * points);
 
     virtual ~Plume(){
+        LOGI("~Plume");
         delete [] positionArray;
         delete [] colorStartArray;
         delete [] colorEndArray;

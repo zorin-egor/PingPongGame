@@ -14,6 +14,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class GameView extends GLSurfaceView {
     private static Context context;
     private HashMap<Integer, Integer> touchBuffer = new HashMap<>();
+    public static boolean isGameOn = true;
 
     public GameView(Context context) {
         super(context);
@@ -27,8 +28,11 @@ public class GameView extends GLSurfaceView {
         switch(event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
-                if(GameLib.action(event.getX(event.getActionIndex()), event.getY(event.getActionIndex()), event.getPointerId(event.getActionIndex()), true))
+                if(GameLib.action(event.getX(event.getActionIndex()), event.getY(event.getActionIndex()), event.getPointerId(event.getActionIndex()), true)){
+                    isGameOn = false;
                     ((Activity)context).finish();
+                }
+
 
                 Log.d("Button", "COUNT: " + event.getPointerCount() +
                         "\nACTION INDEX: " + event.getActionIndex() +
@@ -63,7 +67,8 @@ public class GameView extends GLSurfaceView {
 
         @Override
         public void onDrawFrame(GL10 gl) {
-            GameLib.step();
+            if(isGameOn)
+                GameLib.step();
         }
     }
 }
