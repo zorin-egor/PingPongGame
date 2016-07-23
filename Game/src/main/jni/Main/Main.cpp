@@ -382,7 +382,7 @@ void Main::createObjects(){
     allButtons.push_back(multi);
 
     // Sound off/on
-    sound = new Button(false,
+    sound = new Button(true,
                        true,
                        -0.8f, -0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),

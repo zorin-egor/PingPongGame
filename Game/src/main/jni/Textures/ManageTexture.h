@@ -60,6 +60,9 @@ class ManageTexture {
 
         ~ManageTexture(){
             LOGI("~ManageTexture");
+            for(int i = 0; i < TEXTURE_TYPE::SIZE; i++)
+                delete arrayTextures[i];
+
             delete [] arrayTextures;
             delete [] texturesIDs;
         }

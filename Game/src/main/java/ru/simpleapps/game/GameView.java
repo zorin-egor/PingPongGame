@@ -33,7 +33,6 @@ public class GameView extends GLSurfaceView {
                     ((Activity)context).finish();
                 }
 
-
                 Log.d("Button", "COUNT: " + event.getPointerCount() +
                         "\nACTION INDEX: " + event.getActionIndex() +
                         "\nPOINTER ID: " + event.getPointerId(event.getActionIndex()) +
