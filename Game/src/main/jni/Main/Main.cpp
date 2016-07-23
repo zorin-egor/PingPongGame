@@ -408,6 +408,10 @@ void Main::createObjects(){
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
     allButtons.push_back(exit);
+
+    // Sound
+    soundObj = new OSLSound(env, assetManager, true);
+    //soundObj->playBackground();
 }
 
 void Main::step(){

@@ -25,15 +25,15 @@ class ManageTexture {
                                         PLUME = 8,
                                         SIZE = 9 };
 
-        ManageTexture(JNIEnv* _env, jobject _pngManager, jobject _assetsManager){
-            pngManager = _pngManager;
-            env = _env;
-            assetsManager = _assetsManager;
-
-            init();
-            loadTexture();
-            createPackTexture();
-        }
+        ManageTexture(JNIEnv* _env, jobject _pngManager, jobject _assetsManager) :
+                pngManager(_pngManager),
+                env(_env),
+                assetsManager(_assetsManager)
+            {
+                init();
+                loadTexture();
+                createPackTexture();
+            }
 
         struct Texture{
             char * pixels;

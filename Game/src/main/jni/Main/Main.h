@@ -6,6 +6,7 @@
 #include <string>
 #include <stdlib.h>
 #include <algorithm>
+#include <Sound/OSLSound.h>
 
 #include "Graphic/Objects/Platform/Enemy.h"
 #include "Graphic/Objects/Ball/Ball.h"
@@ -110,6 +111,7 @@ class Main {
             delete exit;
 
             delete textures;
+            delete soundObj;
         }
 
         void step();
@@ -296,6 +298,9 @@ class Main {
         GLint splashSize;
 
         // Objects
+        // Sound
+        OSLSound * soundObj;
+
         // Common
         View * background;
         View * center;
