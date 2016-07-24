@@ -59,24 +59,19 @@ bool OSLSound::create(){
 };
 
 void OSLSound::play(OSLSound::SOUND_TYPE soundType){
-    if(isSoundOn){
-        SLuint32 isPlaying = NULL;
-        (*soundPack[soundType].soundPlayer)->GetPlayState(soundPack[soundType].soundPlayer, &isPlaying);
-        if(isPlaying != SL_PLAYSTATE_PLAYING){
-            LOGI("OSLSound::play");
-            (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_PLAYING);
-        }
+    if(isSoundOn){;
+        //LOGI("OSLSound::play");
+        if(soundType != SOUND_TYPE::BACKGROUND)
+            (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_STOPPED);
+
+        (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_PLAYING);
     }
 };
 
 void OSLSound::stop(OSLSound::SOUND_TYPE soundType){
     if(isSoundOn){
-        SLuint32 isStop = NULL;
-        (*soundPack[soundType].soundPlayer)->GetPlayState(soundPack[soundType].soundPlayer, &isStop);
-        if(isStop != SL_PLAYSTATE_STOPPED){
-            LOGI("OSLSound::stop");
-            (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_STOPPED);
-        }
+        //LOGI("OSLSound::stop");
+        (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_STOPPED);
     }
 };
 

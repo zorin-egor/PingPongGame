@@ -69,6 +69,8 @@ class Main {
         ~Main(){
             LOGI("~Main");
 
+            delete soundObj;
+
             delete matrix;
             delete particles;
             delete splashObj;
@@ -111,7 +113,6 @@ class Main {
             delete exit;
 
             delete textures;
-            delete soundObj;
         }
 
         void step();

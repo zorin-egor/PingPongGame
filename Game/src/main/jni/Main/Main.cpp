@@ -557,15 +557,17 @@ void Main::logicSingle(){
 
     enemy->collision(ball);
     ((Platform *)enemy)->collision(field);
-    ball->collision(player);
-    ball->collision((Platform *)enemy);
+    if(ball->collision(player) || ball->collision((Platform *)enemy))
+        soundObj->play(OSLSound::BALL);
 
     switch(ball->collision(field)){
         case Object::DOWN:
             player->setScore();
+            soundObj->play(OSLSound::BALL);
             break;
         case Object::UP:
             enemy->setScore();
+            soundObj->play(OSLSound::BALL);
             break;
     }
 
@@ -674,15 +676,17 @@ void Main::logicMulti(){
         playerTwo->getCrossPoints()->clear();
     }
 
-    ball->collision(player);
-    ball->collision(playerTwo);
+    if(ball->collision(player) || ball->collision(playerTwo))
+        soundObj->play(OSLSound::BALL);
 
     switch(ball->collision(field)){
         case Object::DOWN:
             player->setScore();
+            soundObj->play(OSLSound::BALL);
             break;
         case Object::UP:
             playerTwo->setScore();
+            soundObj->play(OSLSound::BALL);
             break;
     }
 
@@ -690,6 +694,7 @@ void Main::logicMulti(){
         playPause->setState(false);
         playPauseTwo->setState(false);
         ball->setIsOut(false);
+        soundObj->play(OSLSound::OUT);
     }
 
     // Reverse score for player one
