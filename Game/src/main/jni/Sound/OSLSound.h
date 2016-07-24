@@ -42,9 +42,10 @@ struct ResourseDescriptor{
 class OSLSound {
 
     public:
-        static const enum SOUND_TYPE {BACKGROUND = 0,
+        static const enum SOUND_TYPE {  BACKGROUND = 0,
                                         BALL = 1,
-                                        SIZE = 2 };
+                                        OUT = 2,
+                                        SIZE = 3 };
 
         OSLSound(JNIEnv * _env, jobject _assetsManager, bool _isSoundOn) :
                 env(_env),
@@ -59,12 +60,11 @@ class OSLSound {
             isSoundOn = _isSoundOn;
         }
 
-        void playBackground();
-        void playBall();
+        void play(SOUND_TYPE soundType);
+        void stop(SOUND_TYPE soundType);
+        void stopAll();
 
-        ~OSLSound(){
-
-        };
+        ~OSLSound();
 
     private:
         AAssetManager * aAssetManager;
@@ -73,6 +73,7 @@ class OSLSound {
 
         bool init();
         bool create();
+        void destroy(SLObjectItf & object);
         bool isSoundOn;
 
         SLuint32 createAudioPlayer(SLObjectItf& playerObj, SLPlayItf& player, SLSeekItf& seek, ResourseDescriptor resourseDescriptor);
@@ -83,13 +84,22 @@ class OSLSound {
         SLEngineItf engine = NULL;
         SLObjectItf slObjectItf = NULL;
 
-        SLObjectItf backgroundObj, ballObj;
-        SLPlayItf backgroundPlayer, ballPlayer;
-        SLSeekItf backgroundSeek, ballSeek;
+        struct SoundPack {
+            ResourseDescriptor resourseDescriptor;
+            SLObjectItf soundObj;
+            SLPlayItf soundPlayer;
+            SLSeekItf soundSeek;
+        };
+
+        SoundPack soundPack[SOUND_TYPE::SIZE];
 
         const SLuint32 numOptions = 0;
         const SLuint32 numInterfaces = 1;
         const SLInterfaceID pInterfaceIDs[1] = { SL_IID_ENGINE };
         const SLboolean pInterfaceRequired[1]  = { SL_BOOLEAN_TRUE };
+
+        const SLuint32 outputMixIIDCount = 0;
+        const SLInterfaceID outputMixIIDs[0] = {};
+        const SLboolean outputMixRequired[0] = {};
 };
 #endif //GAME_PINGPONG_OSLSOUND_H

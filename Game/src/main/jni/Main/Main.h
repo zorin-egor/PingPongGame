@@ -6,7 +6,6 @@
 #include <string>
 #include <stdlib.h>
 #include <algorithm>
-#include <Sound/OSLSound.h>
 
 #include "Graphic/Objects/Platform/Enemy.h"
 #include "Graphic/Objects/Ball/Ball.h"
@@ -23,6 +22,7 @@
 #include "Common/Structures.h"
 #include "Common/LogGL.h"
 #include "Main/State.h"
+#include "Sound/OSLSound.h"
 
 
 class Main {

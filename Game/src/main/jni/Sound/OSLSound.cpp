@@ -15,16 +15,13 @@ bool OSLSound::init() {
         LOGE("OSLSound - Error engineObj Realize");
         return false;
     }
+
     // Получаем необходимые интерфейсы, с помощью которого мы будем иметь доступ к динамикам
     result = (*engineObj)->GetInterface(engineObj, SL_IID_ENGINE, &engine);
     if(result != SL_RESULT_SUCCESS){
         LOGE("OSLSound - Error GetInterface");
         return false;
     }
-
-    const SLuint32 outputMixIIDCount = 0;
-    const SLInterfaceID outputMixIIDs[] = {};
-    const SLboolean outputMixRequired[] = {};
 
     // slObjectItf – это объект, представляющий устройство вывода звука(динамик, наушники).
     result = (*engine)->CreateOutputMix(engine, &slObjectItf, outputMixIIDCount, outputMixIIDs, outputMixRequired);
@@ -45,25 +42,39 @@ bool OSLSound::init() {
 }
 
 bool OSLSound::create(){
-    ResourseDescriptor background = loadResourceDescriptor("sound/background.mp3");
-    ResourseDescriptor ball = loadResourceDescriptor("sound/ball.mp3");
+    bool isCreate = true;
 
-    createAudioPlayer(backgroundObj, backgroundPlayer, backgroundSeek,  background);
-    createAudioPlayer(ballObj, ballPlayer, ballSeek,  ball);
+    soundPack[SOUND_TYPE::BACKGROUND].resourseDescriptor = loadResourceDescriptor("sound/background.mp3");
+    soundPack[SOUND_TYPE::BALL].resourseDescriptor = loadResourceDescriptor("sound/ball.mp3");
+    soundPack[SOUND_TYPE::OUT].resourseDescriptor = loadResourceDescriptor("sound/out.mp3");
+
+    for(int i = 0; i < SOUND_TYPE::SIZE; i++)
+        if(createAudioPlayer(soundPack[i].soundObj, soundPack[i].soundPlayer, soundPack[i].soundSeek,  soundPack[i].resourseDescriptor) != SL_RESULT_SUCCESS){
+            LOGE("OSLSound::createAudioPlayer: %d", i);
+            isCreate = false;
+        }
+
+    return isCreate;
 };
 
-void OSLSound::playBackground(){
-    LOGI("Audio::playGameBackground");
+void OSLSound::play(OSLSound::SOUND_TYPE soundType){
+    LOGI("OSLSound::play");
     if(isSoundOn){
-        (*backgroundPlayer)->SetPlayState(backgroundPlayer, SL_PLAYSTATE_PLAYING);
+        (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_PLAYING);
     }
 };
 
-void OSLSound::playBall(){
-    LOGI("Audio::playGameBackground");
+void OSLSound::stop(OSLSound::SOUND_TYPE soundType){
+    LOGI("OSLSound::stop");
     if(isSoundOn){
-        (*ballPlayer)->SetPlayState(ballPlayer, SL_PLAYSTATE_PLAYING);
+        (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_STOPPED);
     }
+};
+
+void OSLSound::stopAll(){
+    LOGI("OSLSound::stopAll");
+    for(int i = 0; i < SOUND_TYPE::SIZE; i++)
+        (*soundPack[i].soundPlayer)->SetPlayState(soundPack[i].soundPlayer, SL_PLAYSTATE_STOPPED);
 };
 
 SLuint32 OSLSound::createAudioPlayer(SLObjectItf& playerObj, SLPlayItf& player, SLSeekItf& seek, ResourseDescriptor resourseDescriptor){
@@ -154,3 +165,26 @@ ResourseDescriptor OSLSound::loadResourceDescriptor(const char * path){
     AAsset_close(asset);
     return resourceDescriptor;
 }
+
+void OSLSound::destroy(SLObjectItf & object){
+    if(object){
+        (*object)->Destroy(object);
+        object = NULL;
+    }
+}
+
+OSLSound::~OSLSound(){
+    LOGI("~OSLSound");
+    for(int i = 0; i < SOUND_TYPE::SIZE; i++){
+        if(soundPack[i].soundPlayer){
+            (*soundPack[i].soundPlayer)->SetPlayState(soundPack[i].soundPlayer, SL_PLAYSTATE_STOPPED);
+            soundPack[i].soundPlayer = NULL;
+            soundPack[i].soundSeek = NULL;
+        }
+
+        destroy(soundPack[i].soundObj);
+    }
+
+    destroy(slObjectItf);
+    destroy(engineObj);
+};

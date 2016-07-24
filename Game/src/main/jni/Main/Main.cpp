@@ -411,7 +411,7 @@ void Main::createObjects(){
 
     // Sound
     soundObj = new OSLSound(env, assetManager, true);
-    //soundObj->playBackground();
+    soundObj->play(OSLSound::BACKGROUND);
 }
 
 void Main::step(){

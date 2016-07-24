@@ -26,8 +26,8 @@ class ManageTexture {
                                         SIZE = 9 };
 
         ManageTexture(JNIEnv* _env, jobject _pngManager, jobject _assetsManager) :
-                pngManager(_pngManager),
                 env(_env),
+                pngManager(_pngManager),
                 assetsManager(_assetsManager)
             {
                 init();
