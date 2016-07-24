@@ -60,6 +60,10 @@ class OSLSound {
             isSoundOn = _isSoundOn;
         }
 
+        bool getSound(){
+            return isSoundOn;
+        }
+
         void play(SOUND_TYPE soundType);
         void stop(SOUND_TYPE soundType);
         void stopAll();

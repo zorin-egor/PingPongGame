@@ -54,25 +54,33 @@ bool OSLSound::create(){
             isCreate = false;
         }
 
+    (*soundPack[SOUND_TYPE::BACKGROUND].soundSeek)->SetLoop(soundPack[SOUND_TYPE::BACKGROUND].soundSeek, SL_BOOLEAN_TRUE, 0, SL_TIME_UNKNOWN);
     return isCreate;
 };
 
 void OSLSound::play(OSLSound::SOUND_TYPE soundType){
-    LOGI("OSLSound::play");
     if(isSoundOn){
-        (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_PLAYING);
+        SLuint32 isPlaying = NULL;
+        (*soundPack[soundType].soundPlayer)->GetPlayState(soundPack[soundType].soundPlayer, &isPlaying);
+        if(isPlaying != SL_PLAYSTATE_PLAYING){
+            LOGI("OSLSound::play");
+            (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_PLAYING);
+        }
     }
 };
 
 void OSLSound::stop(OSLSound::SOUND_TYPE soundType){
-    LOGI("OSLSound::stop");
     if(isSoundOn){
-        (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_STOPPED);
+        SLuint32 isStop = NULL;
+        (*soundPack[soundType].soundPlayer)->GetPlayState(soundPack[soundType].soundPlayer, &isStop);
+        if(isStop != SL_PLAYSTATE_STOPPED){
+            LOGI("OSLSound::stop");
+            (*soundPack[soundType].soundPlayer)->SetPlayState(soundPack[soundType].soundPlayer, SL_PLAYSTATE_STOPPED);
+        }
     }
 };
 
 void OSLSound::stopAll(){
-    LOGI("OSLSound::stopAll");
     for(int i = 0; i < SOUND_TYPE::SIZE; i++)
         (*soundPack[i].soundPlayer)->SetPlayState(soundPack[i].soundPlayer, SL_PLAYSTATE_STOPPED);
 };
@@ -105,41 +113,44 @@ SLuint32 OSLSound::createAudioPlayer(SLObjectItf& playerObj, SLPlayItf& player, 
     const SLInterfaceID lBGMPlayerIIDs[] = {SL_IID_PLAY, SL_IID_SEEK};
     const SLboolean lBGMPlayerReqs[] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
 
-    SLresult result = (*engine)->CreateAudioPlayer(
-            engine,
-            &playerObj,
-            &lDataSource,
-            &lDataSink,
-            lBGMPlayerIIDCount,
-            lBGMPlayerIIDs,
-            lBGMPlayerReqs
-    );
+    SLresult result = (*engine)->CreateAudioPlayer( engine,
+                                                    &playerObj,
+                                                    &lDataSource,
+                                                    &lDataSink,
+                                                    lBGMPlayerIIDCount,
+                                                    lBGMPlayerIIDs,
+                                                    lBGMPlayerReqs);
 
     if(result != SL_RESULT_SUCCESS){
-        LOGE("Can not CreateAudioPlayer %d", result);
+        LOGE("OSLSound::createAudioPlayer - can not CreateAudioPlayer %d", result);
         playerObj = NULL;
         return result;
     }
 
     result = (*playerObj)->Realize(playerObj, SL_BOOLEAN_FALSE);
     if(result != SL_RESULT_SUCCESS){
-        LOGE("Can not Realize playerObj");
+        LOGE("OSLSound::createAudioPlayer - can not Realize playerObj");
         playerObj = NULL;
         return result;
     }
 
     result = (*playerObj)->GetInterface(playerObj, SL_IID_PLAY, &player);
-
     if(result != SL_RESULT_SUCCESS){
-        LOGE("Can not GetInterface player");
-        //destroyAndNull(playerObj);
+        LOGE("OSLSound::createAudioPlayer - can not GetInterface player");
+        destroy(playerObj);
         player = NULL;
         return result;
     }
 
     result = (*playerObj)->GetInterface(playerObj, SL_IID_SEEK, &seek);
+    if(result != SL_RESULT_SUCCESS){
+        LOGE("OSLSound::createAudioPlayer - can not GetInterface seek");
+        destroy(playerObj);
+        player = NULL;
+        return result;
+    }
 
-    (*seek)->SetLoop(seek, SL_BOOLEAN_TRUE, 0, SL_TIME_UNKNOWN);
+    (*seek)->SetLoop(seek, SL_BOOLEAN_FALSE, 0, SL_TIME_UNKNOWN);
     (*player)->SetPlayState(player, SL_PLAYSTATE_STOPPED);
 
     return SL_RESULT_SUCCESS;

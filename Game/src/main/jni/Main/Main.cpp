@@ -509,6 +509,7 @@ void Main::drawFrameMenu(){
 
 void Main::logicMenu(){
     exit->setVisible(true);
+    soundObj->setSound(!sound->getState());
 
     if(single->getState()){
         gameState = State::SINGLE;
@@ -516,9 +517,12 @@ void Main::logicMenu(){
     } else if(multi->getState()){
         gameState = State::MULTI;
         exit->setVisible(false);
+    } else if(soundObj->getSound()){
+        soundObj->play(OSLSound::BACKGROUND);
+    } else if(!soundObj->getSound()){
+        soundObj->stopAll();
     }
 }
-
 
 // -------------------------------------------------------------------------------------------------
 // BACK BLOCK
@@ -568,6 +572,7 @@ void Main::logicSingle(){
     if(ball->getIsOut()){
         playPause->setState(false);
         ball->setIsOut(false);
+        soundObj->play(OSLSound::OUT);
     }
 
     if(ball->getSpeed() > 0)
