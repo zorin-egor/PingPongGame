@@ -26,13 +26,17 @@ void  Label::init(){
 }
 
 void Label::setNumber(std::string _number){
-    clearLabels();
-
+    number = _number;
     if(isInverse)
         std::reverse(_number.begin(), _number.end());
 
-    number = _number;
-    init();
+    for(int i = 0; i < labelLinks.size(); i++){
+        char symbol = number.at(i);
+        int position = atoi(&symbol);
+        Matrix::setTextureCoords(labelLinks.at(i)->getTextureCoordinates(), 4, 4, position);
+        if(isInverse)
+            Matrix::rotateTextureCoord(labelLinks.at(i)->getTextureCoordinates(), 2);
+    }
 }
 
 void Label::render(){
