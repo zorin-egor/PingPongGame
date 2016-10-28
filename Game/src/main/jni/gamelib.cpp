@@ -34,6 +34,6 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_ru_simpleapps_game_GameLib_stop(JNIEnv* env, jobject obj){
-        game->~Main();
+        delete game;
     }
 }
