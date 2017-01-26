@@ -9,6 +9,7 @@ public class MainActivity extends Activity {
 
     GameView gameView;
 
+    // Check git on linux
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
