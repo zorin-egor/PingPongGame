@@ -10,7 +10,7 @@
 class Particles : public Render {
 
     public:
-        Particles(unsigned int _count,
+        Particles(GLuint _count,
                   GLuint _programID,
                   GLuint _textureID,
                   GLuint _randomPositionAttr,
@@ -32,11 +32,11 @@ class Particles : public Render {
                 colorEndAttr(_colorEndAttr),
                 sizeUniform(_sizeUniform),
                 totalDeltaSpeedUniform(_totalDeltaSpeedUniform)
-
         {
             isVisible = true;
             totalDeltaSpeed = 0.0f;
             deltaSpeed = 0.01f;
+            pointSize = 7.0f;
             initArrays();
         }
 
@@ -52,6 +52,7 @@ class Particles : public Render {
             delete [] randomArrayDelta;
         }
 
+        void initArrays();
         void render();
 
         void setVisible(bool _isVisible){
@@ -62,9 +63,16 @@ class Particles : public Render {
             return isVisible;
         }
 
+        void setParticlesSize(GLfloat _size){
+            pointSize = _size > 0 && _size < 100 ? _size : pointSize;
+        }
+
+        void setParticlesCount(GLuint _count){
+            count = _count > 0 && _count < 5000? _count : count;
+        }
+
     private:
 
-        void initArrays();
         void setValues();
 
         GLuint textureID;
@@ -78,6 +86,7 @@ class Particles : public Render {
         GLint colorStartAttr;
         GLint colorEndAttr;
         GLint sizeUniform;
+        GLfloat pointSize;
 
         GLfloat * positionArray;
         GLfloat * colorStartArray;
@@ -89,7 +98,7 @@ class Particles : public Render {
         GLfloat * randomArraySpeed;
         GLfloat * randomArrayDelta;
 
-        unsigned int count;
+        GLuint count;
         bool isVisible;
 
         float totalDeltaSpeed;

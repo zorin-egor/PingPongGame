@@ -11,8 +11,8 @@
 class Splash : public Render {
 
     public:
-        Splash(unsigned int _count,
-               int _lifeTime,
+        Splash(GLuint _count,
+               GLuint _lifeTime,
                GLuint _programID,
                GLuint _textureID,
                GLuint _positionAttr,
@@ -35,6 +35,7 @@ class Splash : public Render {
             setSplashPosition(0.0f, 0.0f);
         }
 
+    void initArrays();
     void render();
     void setSplashPosition(GLfloat _x, GLfloat _y);
 
@@ -44,6 +45,10 @@ class Splash : public Render {
 
     bool getVisible(){
         return isVisible;
+    }
+
+    void setParticlesCount(GLuint _count){
+        count = _count > 0 && _count < 5000? _count : count;
     }
 
     virtual ~Splash(){
@@ -56,14 +61,13 @@ class Splash : public Render {
     }
 
     private:
-        void initArrays();
         void setValues();
 
         bool isVisible;
 
-        const unsigned int TOTAL_LIFE_TIME;
-        unsigned int count;
-        int lifeTime;
+        const GLuint TOTAL_LIFE_TIME;
+        GLuint count;
+        GLint lifeTime;
 
         GLuint programID;
         GLuint textureID;

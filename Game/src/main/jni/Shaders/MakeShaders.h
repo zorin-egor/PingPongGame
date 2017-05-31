@@ -19,6 +19,10 @@ class MakeShaders {
         const static char * f_splash_shader;
         const static char * v_splash_shader;
 
+        // Shader for draw background shape
+        const static char * f_shape_shader;
+        const static char * v_shape_shader;
+
         // For compiling shader program
         static GLuint compileShader(GLenum shaderType, const char* pSource);
 

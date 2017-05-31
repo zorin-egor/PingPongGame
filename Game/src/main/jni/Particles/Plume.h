@@ -7,14 +7,14 @@
 class Plume : public Render {
 
     public:
-        Plume(unsigned int _count,
+        Plume( GLuint _count,
                GLuint _programID,
                GLuint _textureID,
                GLuint _positionAttr,
                GLuint _colorStartAttr,
                GLuint _colorEndAttr,
                GLuint _deltaAttr,
-               GLuint _sizeUniform ) : currentCount(_count),
+               GLuint _sizeUniform ) : count(_count),
                                        programID(_programID),
                                        textureID(_textureID),
                                        positionAttr(_positionAttr),
@@ -30,6 +30,7 @@ class Plume : public Render {
             initArrays();
         }
 
+    void initArrays();
     void render();
 
     void setVisible(bool _isVisible){
@@ -38,6 +39,10 @@ class Plume : public Render {
 
     bool getVisible(){
         return isVisible;
+    }
+
+    void setParticlesCount(GLuint _count){
+        count = _count > 0 && _count < 500? _count : count;
     }
 
     void setPlumePoints(std::queue<GLfloat> * points);
@@ -52,14 +57,13 @@ class Plume : public Render {
     }
 
     private:
-        void initArrays();
         void setValues();
 
         bool isVisible;
-        unsigned int currentCount;
-        const unsigned int MAX_COUNT;
-        const unsigned int MAX_SIZE;
-        const unsigned int MIN_SIZE;
+        GLuint count;
+        const GLuint MAX_COUNT;
+        const GLuint MAX_SIZE;
+        const GLuint MIN_SIZE;
 
         GLuint programID;
         GLuint textureID;
@@ -75,6 +79,5 @@ class Plume : public Render {
         GLfloat * deltaArray;
         GLfloat * sizeArray;
 };
-
 
 #endif //GAME_PINGPONG_PLUME_H

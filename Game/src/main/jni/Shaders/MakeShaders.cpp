@@ -62,6 +62,30 @@ const char * MakeShaders::f_splash_shader = "precision mediump float;"
                                             "    gl_FragColor = v_Color * texture2D(t_texture, gl_PointCoord);"
                                             "}";
 
+const char * MakeShaders::v_shape_shader =  "attribute float a_ArrayAngle;"
+                                            "attribute vec4 a_ArrayColor;"
+                                            "uniform vec2 u_Center;"
+                                            "uniform vec2 u_Radius;"
+                                            "uniform vec4 u_Arguments;"
+                                            "uniform float u_PointSize;"
+                                            "uniform float u_TotalDeltaSpeed;"
+                                            "varying vec4 v_Color;"
+                                            "void main(){"
+                                            "   float x_coord = u_Center.x + u_Radius.x * (cos(a_ArrayAngle + u_TotalDeltaSpeed) + cos(u_Arguments.x * (a_ArrayAngle + u_TotalDeltaSpeed)) / u_Arguments.y);"
+                                            "   float y_coord = u_Center.y + u_Radius.y * (sin(a_ArrayAngle + u_TotalDeltaSpeed) - sin(u_Arguments.z * (a_ArrayAngle + u_TotalDeltaSpeed)) / u_Arguments.w);"
+                                            "   v_Color = a_ArrayColor;"
+                                            "   gl_PointSize = u_PointSize;"
+                                            "   gl_Position = vec4(x_coord, y_coord, 1.0, 1.0);"
+                                            "}";
+
+const char * MakeShaders::f_shape_shader =  "precision mediump float;"
+                                            "varying vec4 v_Color;"
+                                            "uniform sampler2D t_texture;"
+                                            "void main(){"
+                                            "    gl_FragColor = v_Color * texture2D(t_texture, gl_PointCoord);"
+                                            "}";
+
+
 GLuint MakeShaders::compileShader(GLenum shaderType, const char* pSource) {
     // Создаём шейдер и получаем ссылку него, где shaderType - тип шейдера
     GLuint shader = glCreateShader(shaderType);

@@ -83,7 +83,7 @@ void Particles::initArrays(){
     // delta * count
     sizeUniformArray = new GLfloat[2];
     sizeUniformArray[0] = 2.0f;
-    sizeUniformArray[1] = 7.0f;
+    sizeUniformArray[1] = pointSize;
 
     // Random coords
     randomArrayCoords = new GLfloat[count * 2];
@@ -119,13 +119,13 @@ void Particles::setValues(){
         colorStartArray[i * 4] = Methods::getShortRandom() * 0.5f;
         colorStartArray[i * 4 + 1] = Methods::getShortRandom() * 0.5f;
         colorStartArray[i * 4 + 2] = Methods::getShortRandom() * 0.5f;
-        colorStartArray[i * 4 + 3] = 0.1f;
+        colorStartArray[i * 4 + 3] = 0.3f;
 
         // Color end
         colorEndArray[i * 4] = Methods::getShortRandom() + 0.5f;
         colorEndArray[i * 4 + 1] = Methods::getShortRandom() + 0.5f;
         colorEndArray[i * 4 + 2] = Methods::getShortRandom() + 0.5f;
-        colorEndArray[i * 4 + 3] = 0.9f;
+        colorEndArray[i * 4 + 3] = 0.95f;
     }
 }
 

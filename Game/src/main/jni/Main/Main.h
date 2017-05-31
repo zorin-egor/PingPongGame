@@ -16,6 +16,7 @@
 #include "Particles/Particles.h"
 #include "Particles/Splash.h"
 #include "Particles/Plume.h"
+#include "Particles/Shape.h"
 #include "Shaders/MakeShaders.h"
 #include "Graphic/View.h"
 #include "Textures/ManageTexture.h"
@@ -57,9 +58,8 @@ class Main {
                 LABEL_HEIGHT(0.1f),
                 LABEL_WIDTH(0.5f),
                 BUTTON_MENU_WIDTH(1.6f),
-                BUTTON_MENU_HEIGHT(0.4f)
+                BUTTON_MENU_HEIGHT(0.3f)
         {
-            deltaRotate = -3.14f;
             srand(static_cast<unsigned> (time(0)));
             init();
             createObjects();
@@ -75,11 +75,10 @@ class Main {
             delete particles;
             delete splashObj;
             delete plumeObj;
+            delete shapeObj;
 
             // Objects
             // Common
-            delete background;
-            delete center;
             delete bordDown;
             delete menuHeader;
 
@@ -233,7 +232,6 @@ class Main {
         void setDefault();
 
         void createObjects();
-        void rotateBackground();
         void renderBackground();
 
         // For single
@@ -261,6 +259,7 @@ class Main {
         Particles * particles;
         Splash * splashObj;
         Plume * plumeObj;
+        Shape * shapeObj;
 
         // Screen
         int width;
@@ -275,6 +274,7 @@ class Main {
         GLuint polygons;
         GLuint sprites;
         GLuint splash;
+        GLuint shape;
 
         // Polygons
         GLint polygonsPositionAttr;
@@ -298,13 +298,20 @@ class Main {
         GLint splashDelta;
         GLint splashSize;
 
+        // Shape
+        GLint shapeAngle;
+        GLint shapeColor;
+        GLint shapeCenter;
+        GLint shapeRadius;
+        GLint shapeArguments;
+        GLint shapeSize;
+        GLint shapeTotalDeltaSpeed;
+
         // Objects
         // Sound
         OSLSound * soundObj;
 
         // Common
-        View * background;
-        View * center;
         View * bordDown;
         View * menuHeader;
 
@@ -335,11 +342,10 @@ class Main {
         Button * single;
         Button * multi;
         Button * sound;
+        Button * quality;
         Button * exit;
 
         ManageTexture * textures;
-
-        float deltaRotate;
 
         const float SCREEN_COEFFICIENT;
         const float CENTER_ROTATE;

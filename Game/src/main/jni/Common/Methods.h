@@ -22,6 +22,26 @@ class Methods {
             return (coordinate / screenSize * 2 - 1) * (inverse? -1 : 1);
         }
 
+        inline static int getStrictModRandom(int strict, int mod){
+            int value;
+            while((value = (rand() % strict)) % mod != 0);
+            return value;
+        }
+
+        inline static int getStrictRandom(int strict){
+            return rand() % strict;
+        }
+
+        template <class T>
+        static void fillArrayRGBA(T * array, GLuint count, T red, T green, T blue, T transparancy){
+            for(int i = 0; i < count; i++){
+                array[i * 4] = red;
+                array[i * 4 + 1] = green;
+                array[i * 4 + 2] = blue;
+                array[i * 4 + 3] = transparancy;
+            }
+        }
+
         template <class A, class B>
         static void fillArray(A * array, B content, int count){
             for(int i = 0; i < count; i++)

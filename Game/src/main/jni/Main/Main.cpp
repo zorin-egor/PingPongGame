@@ -1,6 +1,10 @@
 #include "Main.h"
 
 void Main::init() {
+
+    // Clear compilers
+    glReleaseShaderCompiler();
+
     // Polygons
     polygons = MakeShaders::createProgram(MakeShaders::v_main_shader, MakeShaders::f_main_shader);
     polygonsPositionAttr = glGetAttribLocation(polygons, "a_Position");
@@ -42,6 +46,23 @@ void Main::init() {
     splashSize = glGetUniformLocation(splash, "u_Size");
     checkGLError("Main::init - splash - u_Size");
 
+    // Shape
+    shape = MakeShaders::createProgram(MakeShaders::v_shape_shader, MakeShaders::f_shape_shader);
+    shapeAngle = glGetAttribLocation(shape, "a_ArrayAngle");
+    checkGLError("Main::init - shape - a_ArraySpeed");
+    shapeColor = glGetAttribLocation(shape, "a_ArrayColor");
+    checkGLError("Main::init - shape - a_ArrayColor");
+    shapeCenter = glGetUniformLocation(shape, "u_Center");
+    checkGLError("Main::init - shape - u_Center");
+    shapeRadius = glGetUniformLocation(shape, "u_Radius");
+    checkGLError("Main::init - shape - u_Radius");
+    shapeArguments = glGetUniformLocation(shape, "u_Arguments");
+    checkGLError("Main::init - shape - u_Arguments");
+    shapeSize = glGetUniformLocation(shape, "u_PointSize");
+    checkGLError("Main::init - shape - u_PointSize");
+    shapeTotalDeltaSpeed = glGetUniformLocation(shape, "u_TotalDeltaSpeed");
+    checkGLError("Main::init - shape - u_TotalDeltaSpeed");
+
     //On alfa-blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     checkGLError("Main::init - glBlendFunc");
@@ -58,8 +79,26 @@ void Main::createObjects(){
     matrix = new Matrix();
     textures = new ManageTexture(env, pngManager, assetManager);
 
+    // Background shape
+    shapeObj = new Shape(  15000,
+                           0.0f,
+                           0.0f,
+                           0.3f / SCREEN_COEFFICIENT,
+                           0.3f,
+                           shape,
+                           textures->getTexturesPackIDs(ManageTexture::PARTICLES),
+                           shapeAngle,
+                           shapeColor,
+                           shapeCenter,
+                           shapeRadius,
+                           shapeArguments,
+                           shapeSize,
+                           shapeTotalDeltaSpeed);
+
+
+
     // Background stars
-    particles = new Particles(1000,
+    particles = new Particles(2000,
                               sprites,
                               textures->getTexturesPackIDs(ManageTexture::PARTICLES),
                               spritesRandomPosition,
@@ -72,7 +111,7 @@ void Main::createObjects(){
                               spritesTotalDeltaSpeed);
 
     // Splash by collisions
-    splashObj = new Splash( 100, 50,
+    splashObj = new Splash( 200, 50,
                             splash,
                             textures->getTexturesPackIDs(ManageTexture::SPLASH),
                             splashPosition,
@@ -82,7 +121,7 @@ void Main::createObjects(){
                             splashSize);
 
     // Plume from ball
-    plumeObj = new Plume( 300,
+    plumeObj = new Plume( 350,
                           splash,
                           textures->getTexturesPackIDs(ManageTexture::PLUME),
                           splashPosition,
@@ -90,26 +129,6 @@ void Main::createObjects(){
                           splashColorEnd,
                           splashDelta,
                           splashSize);
-
-    // Background image
-    background = new View(textures->getTexturesPackIDs(ManageTexture::BACKGROUND),
-                          polygons,
-                          polygonsPositionAttr,
-                          polygonsTextureAttr,
-                          polygonsTransformationAttr,
-                          matrix->getDefaultVerticesCoords(),
-                          matrix->getDefaultTextureCoord(),
-                          matrix->getDefaultMatrix4x4());
-
-    // Background center image
-    center = new View(textures->getTexturesPackIDs(ManageTexture::BACKGROUND_CENTER),
-                      polygons,
-                      polygonsPositionAttr,
-                      polygonsTextureAttr,
-                      polygonsTransformationAttr,
-                      matrix->getDefaultVerticesCoords(),
-                      matrix->getDefaultTextureCoord(),
-                      matrix->getDefaultMatrix4x4());
 
     // Bord down
     bordDown = new View(textures->getTexturesPackIDs(ManageTexture::BORDERS),
@@ -370,7 +389,7 @@ void Main::createObjects(){
     // Choose multiplayer mode
     multi = new Button(false,
                           true,
-                          -0.8f, 0.3f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::SEVEN, Matrix::SIX,
+                          -0.8f, 0.4f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::SEVEN, Matrix::SIX,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -384,7 +403,7 @@ void Main::createObjects(){
     // Sound off/on
     sound = new Button(true,
                        true,
-                       -0.8f, -0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
+                       -0.8f, 0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -394,6 +413,21 @@ void Main::createObjects(){
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
     allButtons.push_back(sound);
+
+    // Quality
+    quality = new Button(true,
+                       true,
+                       -0.8f, -0.2f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
+                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                       polygons,
+                       polygonsPositionAttr,
+                       polygonsTextureAttr,
+                       polygonsTransformationAttr,
+                       matrix->getDefaultVerticesCoords(),
+                       matrix->getDefaultTextureCoord(),
+                       matrix->getDefaultMatrix4x4());
+    allButtons.push_back(quality);
+
 
     // Exit
     exit = new Button(false,
@@ -416,7 +450,7 @@ void Main::createObjects(){
 
 void Main::step(){
     // Clear screen
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     checkGLError("Main::step - glClearColor");
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     checkGLError("Main::step - glClear");
@@ -430,6 +464,8 @@ void Main::step(){
             Main::logicMenu();
             // Draw
             drawFrameMenu();
+            // Set background
+            shapeObj->setSettings();
             break;
 
         case State::SINGLE:
@@ -479,22 +515,8 @@ void Main::setDefault(){
 // BACKGROUND BLOCK
 
 void Main::renderBackground(){
-    // Background
-    background->render();
-
-    // Rotate background
-    rotateBackground();
-
     // Particles
     particles->render();
-}
-
-void Main::rotateBackground(){
-    if(deltaRotate >= CENTER_ROTATE)
-        deltaRotate = NEGATIVE * CENTER_ROTATE;
-
-    center->setTransformationMatrix(Matrix::setRotateMatrix4x4(Matrix::setRotateMatrix4x4(center->getTransformationMatrix(), deltaRotate += CENTER_SPEED, Matrix::X), deltaRotate, Matrix::Z));
-    center->render();
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -504,6 +526,7 @@ void Main::drawFrameMenu(){
     single->render();
     multi->render();
     sound->render();
+    quality->render();
     exit->render();
 }
 
@@ -634,6 +657,9 @@ void Main::renderSingleInterface(){
 }
 
 void Main::renderSingleObjects(){
+    // Background shape
+    shapeObj->render();
+
     // Plume
     if(playPause->getState())
         plumeObj->render();
@@ -743,6 +769,9 @@ void Main::renderMultiInterface(){
 }
 
 void Main::renderMultiObjects(){
+    // Background shape
+    shapeObj->render();
+
     // Plume
     if(playPause->getState() && playPauseTwo->getState())
         plumeObj->render();

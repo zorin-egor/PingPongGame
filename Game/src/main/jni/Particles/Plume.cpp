@@ -45,7 +45,7 @@ void Plume::render() {
     checkGLError("Plume - glUniform2f - sizeUniform");
 
     // Draw poligon
-    glDrawArrays(GL_POINTS, 0, currentCount);
+    glDrawArrays(GL_POINTS, 0, count);
     checkGLError("Plume - glDrawArrays");
 }
 
@@ -95,7 +95,7 @@ void Plume::setPlumePoints(std::queue<GLfloat> * points){
         std::queue<GLfloat> plumePoints(*points);
         unsigned int halfQueue = points->size() / 2;
         unsigned int pointsPerStep = MAX_COUNT / halfQueue;
-        currentCount = pointsPerStep * halfQueue;
+        count = pointsPerStep * halfQueue;
         unsigned int i = 0;
         float dispersion = 0.008f;
         float alpha = 0.005f;
