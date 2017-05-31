@@ -66,53 +66,7 @@ class Main {
             gameState = State::MENU;
         }
 
-        ~Main(){
-            LOGI("~Main");
-
-            delete soundObj;
-
-            delete matrix;
-            delete particles;
-            delete splashObj;
-            delete plumeObj;
-            delete shapeObj;
-
-            // Objects
-            // Common
-            delete bordDown;
-            delete menuHeader;
-
-            delete field;
-            delete ball;
-            delete left;
-            delete playPause;
-            delete right;
-
-            // For single
-            delete singleSpeed;
-            delete singleScoreOne;
-            delete singleScoreTwo;
-            delete bordUp;
-            delete player;
-            delete playerTwo;
-            delete enemy;
-
-            // For multi
-            delete multiScoreOne;
-            delete multiScoreTwo;
-            delete leftTwo;
-            delete playPauseTwo;
-            delete rightTwo;
-            delete bordDownTwo;
-
-            // For menu
-            delete single;
-            delete multi;
-            delete sound;
-            delete exit;
-
-            delete textures;
-        }
+        ~Main();
 
         void step();
 

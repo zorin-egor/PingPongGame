@@ -88,7 +88,7 @@ void Particles::initArrays(){
     // Random coords
     randomArrayCoords = new GLfloat[count * 2];
     for(int i = 0; i < count * 2; i++)
-        randomArrayCoords[i] = Methods::getFullRandom() * 0.9f;
+        randomArrayCoords[i] = Methods::getFullRandom() * 1.1f;
 
     // Random radius
     randomArrayRadius = new GLfloat[count];

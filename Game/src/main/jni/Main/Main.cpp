@@ -1,5 +1,54 @@
 #include "Main.h"
 
+Main::~Main(){
+    LOGI("~Main");
+
+    // Sound free
+    delete soundObj;
+
+    delete matrix;
+    delete particles;
+    delete splashObj;
+    delete plumeObj;
+    delete shapeObj;
+
+    // Objects
+    // Common
+    delete bordDown;
+    delete menuHeader;
+
+    delete field;
+    delete ball;
+    delete left;
+    delete playPause;
+    delete right;
+
+    // For single
+    delete singleSpeed;
+    delete singleScoreOne;
+    delete singleScoreTwo;
+    delete bordUp;
+    delete player;
+    delete playerTwo;
+    delete enemy;
+
+    // For multi
+    delete multiScoreOne;
+    delete multiScoreTwo;
+    delete leftTwo;
+    delete playPauseTwo;
+    delete rightTwo;
+    delete bordDownTwo;
+
+    // For menu
+    delete single;
+    delete multi;
+    delete sound;
+    delete exit;
+
+    delete textures;
+}
+
 void Main::init() {
 
     // Clear compilers
@@ -95,10 +144,8 @@ void Main::createObjects(){
                            shapeSize,
                            shapeTotalDeltaSpeed);
 
-
-
     // Background stars
-    particles = new Particles(2000,
+    particles = new Particles(3000,
                               sprites,
                               textures->getTexturesPackIDs(ManageTexture::PARTICLES),
                               spritesRandomPosition,
@@ -428,7 +475,6 @@ void Main::createObjects(){
                        matrix->getDefaultMatrix4x4());
     allButtons.push_back(quality);
 
-
     // Exit
     exit = new Button(false,
                        true,
@@ -444,8 +490,8 @@ void Main::createObjects(){
     allButtons.push_back(exit);
 
     // Sound
-    soundObj = new OSLSound(env, assetManager, true);
-    soundObj->play(OSLSound::BACKGROUND);
+    soundObj = new OSLSound(env, assetManager, false);
+    //soundObj->play(OSLSound::BACKGROUND);
 }
 
 void Main::step(){
@@ -532,7 +578,7 @@ void Main::drawFrameMenu(){
 
 void Main::logicMenu(){
     exit->setVisible(true);
-    soundObj->setSound(!sound->getState());
+    //soundObj->setSound(!sound->getState());
 
     if(single->getState()){
         gameState = State::SINGLE;
@@ -561,7 +607,6 @@ bool Main::backAction(){
 
 // -------------------------------------------------------------------------------------------------
 // SINGLE BLOCK
-
 void Main::drawFrameForSingle(){
     renderSingleObjects();
     renderSingleInterface();
@@ -679,7 +724,6 @@ void Main::renderSingleObjects(){
 
 // -------------------------------------------------------------------------------------------------
 // MULTI BLOCK
-
 void Main::logicMulti(){
 
     // Player one
@@ -787,5 +831,4 @@ void Main::renderMultiObjects(){
 
     // Splash
     splashObj->render();
-
 }

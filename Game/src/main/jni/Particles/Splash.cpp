@@ -73,7 +73,7 @@ void Splash::initArrays(){
     // Points size
     sizeArray = new GLfloat[2];
     sizeArray[0] = 3.0f;
-    sizeArray[1] = 10.0f;
+    sizeArray[1] = 15.0f;
 
     // dt for singleSpeed
     dxArray = new GLfloat[count];
