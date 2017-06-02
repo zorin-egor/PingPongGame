@@ -4,9 +4,10 @@ Main::~Main(){
     LOGI("~Main");
 
     // Sound free
+    soundObj->stopAll();
     delete soundObj;
 
-    delete matrix;
+    // Particles
     delete particles;
     delete splashObj;
     delete plumeObj;
@@ -14,6 +15,7 @@ Main::~Main(){
 
     // Objects
     // Common
+    delete matrix;
     delete bordDown;
     delete menuHeader;
 
@@ -46,16 +48,16 @@ Main::~Main(){
     delete sound;
     delete exit;
 
+    // Free textures
     delete textures;
 }
 
-void Main::init() {
-
-    // Clear compilers
-    glReleaseShaderCompiler();
-
+bool Main::init() {
     // Polygons
     polygons = MakeShaders::createProgram(MakeShaders::v_main_shader, MakeShaders::f_main_shader);
+    if(polygons == 0)
+        return false;
+
     polygonsPositionAttr = glGetAttribLocation(polygons, "a_Position");
     checkGLError("Main::init - polygons - a_Position");
     polygonsTextureAttr = glGetAttribLocation(polygons, "a_Texture");
@@ -65,6 +67,9 @@ void Main::init() {
 
     // Sprites
     sprites = MakeShaders::createProgram(MakeShaders::v_point_shader, MakeShaders::f_point_shader);
+    if(sprites == 0)
+        return false;
+
     spritesRandomPosition = glGetAttribLocation(sprites, "a_RandomArrayCoords");
     checkGLError("Main::init - sprites - a_RandomArrayCoords");
     spritesRandomSpeed = glGetAttribLocation(sprites, "a_RandomArraySpeed");
@@ -84,6 +89,9 @@ void Main::init() {
 
     // Splash
     splash = MakeShaders::createProgram(MakeShaders::v_splash_shader, MakeShaders::f_splash_shader);
+    if(splash == 0)
+        return false;
+
     splashPosition = glGetAttribLocation(splash, "a_ArrayCoords");
     checkGLError("Main::init - splash - a_ArrayCoords");
     splashColorStart = glGetAttribLocation(splash, "a_ColorStart");
@@ -97,6 +105,9 @@ void Main::init() {
 
     // Shape
     shape = MakeShaders::createProgram(MakeShaders::v_shape_shader, MakeShaders::f_shape_shader);
+    if(shape == 0)
+        return false;
+
     shapeAngle = glGetAttribLocation(shape, "a_ArrayAngle");
     checkGLError("Main::init - shape - a_ArraySpeed");
     shapeColor = glGetAttribLocation(shape, "a_ArrayColor");
@@ -112,6 +123,9 @@ void Main::init() {
     shapeTotalDeltaSpeed = glGetUniformLocation(shape, "u_TotalDeltaSpeed");
     checkGLError("Main::init - shape - u_TotalDeltaSpeed");
 
+    // Clear compiliers
+    glReleaseShaderCompiler();
+
     //On alfa-blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     checkGLError("Main::init - glBlendFunc");
@@ -121,12 +135,17 @@ void Main::init() {
     // Set viewport
     glViewport(0, 0, width, height);
     checkGLError("Main::init - glViewport");
+
+    return true;
 }
 
 void Main::createObjects(){
 
-    matrix = new Matrix();
+    // Load textures
     textures = new ManageTexture(env, pngManager, assetManager);
+
+    // For work with matrix
+    matrix = new Matrix();
 
     // Background shape
     shapeObj = new Shape(  15000,
@@ -491,7 +510,7 @@ void Main::createObjects(){
 
     // Sound
     soundObj = new OSLSound(env, assetManager, false);
-    //soundObj->play(OSLSound::BACKGROUND);
+    soundObj->play(OSLSound::BACKGROUND);
 }
 
 void Main::step(){
@@ -507,11 +526,9 @@ void Main::step(){
     // Main state of application
     switch(gameState){
         case State::MENU:
-            Main::logicMenu();
+            logicMenu();
             // Draw
             drawFrameMenu();
-            // Set background
-            shapeObj->setSettings();
             break;
 
         case State::SINGLE:
@@ -535,21 +552,29 @@ void Main::step(){
 }
 
 void Main::setDefault(){
+    // Set background shape
+    shapeObj->setSettings();
+
+    // PLayers buttons
     playPause->setState(false);
     playPauseTwo->setState(false);
 
+    // Score labels
     player->clearScore();
     playerTwo->clearScore();
     enemy->clearScore();
 
+    // Players positions
     player->setDefaultPosition();
     playerTwo->setDefaultPosition();
     enemy->setDefaultPosition();
 
+    // Balls positions
     ball->setIsOut(false);
     ball->setDefaultPosition();
     ball->resetSpeed();
 
+    // Change labels values
     singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(0), '0', 3));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((0)), '0', 3));
@@ -559,7 +584,6 @@ void Main::setDefault(){
 
 // -------------------------------------------------------------------------------------------------
 // BACKGROUND BLOCK
-
 void Main::renderBackground(){
     // Particles
     particles->render();
@@ -577,18 +601,23 @@ void Main::drawFrameMenu(){
 }
 
 void Main::logicMenu(){
+    // Show exit button
     exit->setVisible(true);
-    //soundObj->setSound(!sound->getState());
 
+    // For game mode
     if(single->getState()){
         gameState = State::SINGLE;
         exit->setVisible(false);
     } else if(multi->getState()){
         gameState = State::MULTI;
         exit->setVisible(false);
-    } else if(soundObj->getSound()){
+    }
+
+    // For set sound
+    soundObj->setSound(!sound->getState());
+    if(soundObj->getSound()){
         soundObj->play(OSLSound::BACKGROUND);
-    } else if(!soundObj->getSound()){
+    } else {
         soundObj->stopAll();
     }
 }
@@ -614,6 +643,7 @@ void Main::drawFrameForSingle(){
 
 void Main::logicSingle(){
 
+    // Check buttons and move for player
     if(left->getState() && !player->collision(field)){
         player->setDx(NEGATIVE * player->getStep());
     } else if(right->getState() && !player->collision(field)){
@@ -623,11 +653,15 @@ void Main::logicSingle(){
         player->getCrossPoints()->clear();
     }
 
+    // Check collision
     enemy->collision(ball);
     ((Platform *)enemy)->collision(field);
+
+    // Play sound  for ball-player collision
     if(ball->collision(player) || ball->collision((Platform *)enemy))
         soundObj->play(OSLSound::BALL);
 
+    // Set score for players and play sound
     switch(ball->collision(field)){
         case Object::DOWN:
             player->setScore();
@@ -639,20 +673,35 @@ void Main::logicSingle(){
             break;
     }
 
+    // Check if ball is out of field
     if(ball->getIsOut()){
         playPause->setState(false);
         ball->setIsOut(false);
         soundObj->play(OSLSound::OUT);
+
+        // Set shape color change
+        shapeObj->setColorLight();
+        shapeObj->setColorTimer();
+        shapeObj->setColorPart(enemy->getScore(), player->getScore());
+
+        // Players positions
+        player->setDefaultPosition();
+        enemy->setDefaultPosition();
     }
 
+    // Label for ball speed
     if(ball->getSpeed() > 0)
         singleSpeed->setNumber(Methods::fillLeft(Methods::intToString(ball->getSpeed()), '0', 3));
 
+
+    // Labels for player scores
     singleScoreTwo->setNumber(Methods::fillLeft(Methods::intToString((enemy->getScore())), '0', 3));
     singleScoreOne->setNumber(Methods::fillLeft(Methods::intToString((player->getScore())), '0', 3));
 
+    // Move ball
     ball->move();
 
+    // Set new position for plume
     plumeObj->setPlumePoints(ball->getPlumePoints());
 }
 
@@ -726,7 +775,7 @@ void Main::renderSingleObjects(){
 // MULTI BLOCK
 void Main::logicMulti(){
 
-    // Player one
+    // Check buttons and move for player one
     if(left->getState() && !player->collision(field)){
         player->setDx(NEGATIVE * player->getStep());
     } else if(right->getState() && !player->collision(field)){
@@ -736,7 +785,7 @@ void Main::logicMulti(){
         player->getCrossPoints()->clear();
     }
 
-    // Player two
+    // Check buttons and move for player two
     if(leftTwo->getState() && !playerTwo->collision(field)){
         playerTwo->setDx(NEGATIVE * playerTwo->getStep());
     } else if(rightTwo->getState() && !playerTwo->collision(field)){
@@ -746,9 +795,11 @@ void Main::logicMulti(){
         playerTwo->getCrossPoints()->clear();
     }
 
+    // Check collision for sound
     if(ball->collision(player) || ball->collision(playerTwo))
         soundObj->play(OSLSound::BALL);
 
+    // Set score for players and play sound
     switch(ball->collision(field)){
         case Object::DOWN:
             player->setScore();
@@ -760,11 +811,21 @@ void Main::logicMulti(){
             break;
     }
 
+    // Check if ball is out of field
     if(ball->getIsOut()){
         playPause->setState(false);
         playPauseTwo->setState(false);
         ball->setIsOut(false);
         soundObj->play(OSLSound::OUT);
+
+        // Set shape color change and colors parts
+        shapeObj->setColorLight();
+        shapeObj->setColorTimer();
+        shapeObj->setColorPart(player->getScore(), playerTwo->getScore());
+
+        // Players positions
+        player->setDefaultPosition();
+        playerTwo->setDefaultPosition();
     }
 
     // Reverse score for player one
@@ -772,6 +833,7 @@ void Main::logicMulti(){
     multiScoreTwo->setNumber(Methods::fillLeft(Methods::intToString(playerTwo->getScore()), '0', 3));
     ball->move();
 
+    // Set new position for plume
     plumeObj->setPlumePoints(ball->getPlumePoints());
 }
 

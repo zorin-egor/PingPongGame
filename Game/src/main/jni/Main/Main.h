@@ -182,7 +182,7 @@ class Main {
         }
 
     private:
-        void init();
+        bool init();
         void setDefault();
 
         void createObjects();

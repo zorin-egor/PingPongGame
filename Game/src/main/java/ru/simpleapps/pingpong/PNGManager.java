@@ -1,4 +1,4 @@
-package ru.simpleapps.game;
+package ru.simpleapps.pingpong;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;

@@ -16,9 +16,7 @@ void ManageTexture::init() {
 void ManageTexture::loadTexture(){
     LOGI("ManageTexture::loadTexture");
     arrayTextures = new Texture * [ManageTexture::SIZE];
-    arrayTextures[ManageTexture::BACKGROUND] = loadPNG("textures/space.png");
     arrayTextures[ManageTexture::BUTTONS] = loadPNG("textures/buttons.png");
-    arrayTextures[ManageTexture::BACKGROUND_CENTER] = loadPNG("textures/space_center.png");
     arrayTextures[ManageTexture::BORDERS] = loadPNG("textures/borders.png");
     arrayTextures[ManageTexture::NUMBERS] = loadPNG("textures/numbers.png");
     arrayTextures[ManageTexture::OBJECTS] = loadPNG("textures/objects.png");

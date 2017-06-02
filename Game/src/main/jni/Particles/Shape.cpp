@@ -1,14 +1,24 @@
 #include "Shape.h"
 
-const GLfloat Shape::STATIC_FIGURES[20][4] =    {
+const GLfloat Shape::STATIC_FIGURES[30][4] =    {
                                                     { 3.941473f, 2.242605f, 3.341472f, 2.392605f },
                                                     { 4.266757f, 2.573080f, 4.816757f, 2.473080f },
-                                                    { 3.533157f, 2.268258f, 3.183159f, 1.768258f },
-                                                    { 1.658111f, 1.950000f, 2.408111f, 1.550000f }
+                                                    { 2.991552f, 5.303362f, 2.641552f, 5.703362f },
+                                                    { 5.166590f, 3.200857f, 4.816589f, 3.286608f },
+                                                    { 2.466584f, 1.821339f, 2.316585f, 1.871339f },
+                                                    { 2.541554f, 3.581697f, 2.341554f, 3.931697f },
+                                                    { 2.133250f, 4.303725f, 1.533250f, 4.453724f },
+                                                    { 2.258382f, 3.602231f, 1.658382f, 3.752230f },
+                                                    { 1.916898f, 2.546700f, 1.316898f, 2.696700f },
+                                                    { 3.391655f, 4.172695f, 3.141655f, 4.522695f },
+                                                    { 2.783147f, 4.595323f, 2.833147f, 4.345323f },
+                                                    { 1.627712f, 3.734871f, 2.027712f, 4.534871f },
+                                                    { 1.833125f, 2.745408f, 2.383124f, 3.195408f },
+                                                    { 5.799956f, 3.344940f, 5.849955f, 3.394940f }
                                                 };
 
 void Shape::render() {
-    //LOGI("Graphic::render(); Cx: %f; Cy: %f; Cc: %d; Rx: %f; Ry: %f;", CENTER_X, CENTER_Y, count, radius[0], radius[1]);
+    //LOGI("Shape::render(); Cx: %f; Cy: %f; Cc: %d; Rx: %f; Ry: %f;", CENTER_X, CENTER_Y, count, radius[0], radius[1]);
     // Need draw this object?
     if(!isVisible)
         return;
@@ -70,7 +80,7 @@ void Shape::init(){
     // Default arguments
     Methods::fillArray(arguments, 1.0f, SIZE_ARRAYS);
     // For static type
-    GLuint randRow = Methods::getStrictRandom(4);
+    GLuint randRow = Methods::getStrictRandom(14);
     arguments[0] = STATIC_FIGURES[randRow][0];
     arguments[1] = STATIC_FIGURES[randRow][1];
     arguments[2] = STATIC_FIGURES[randRow][2];
@@ -83,21 +93,16 @@ void Shape::init(){
 
     // Init colors
     arrayColor = new GLfloat[count * 4];
-    Methods::fillArrayRGBA(arrayColor, count, 0.8f, 0.0f, 0.0f, 1.0f);
-
-    for(int i = 0; i < count / 2; i++){
-        arrayColor[i * 4] = 0.0f;
-        arrayColor[i * 4 + 1] = 0.0f;
-        arrayColor[i * 4 + 2] = 0.8f;
-        arrayColor[i * 4 + 3] = 0.7f;
-    }
+    colorParts = COLOR_EQUALS_PARTS;
+    setColor();
+    //setColorLight();
 
     // Initial position
     arrayPosition = new GLfloat[count];
     for(int i = 0; i < count; i++)
         arrayPosition[i] = (GLfloat)i;
 
-    //LOGI("Graphic::init - ARGS(); %ff, %ff, %ff, %ff", arguments[0], arguments[1], arguments[2], arguments[3]);
+    //LOGI("Shape::init - ARGS(); %ff, %ff, %ff, %ff", arguments[0], arguments[1], arguments[2], arguments[3]);
 }
 
 void Shape::setValues(){
@@ -106,12 +111,39 @@ void Shape::setValues(){
         dParticlesSpeed = -dParticlesSpeed;
     totalDeltaSpeed += dParticlesSpeed;
 
-    LOGI("Graphic::setValues - ARGS(); %ff, %ff, %ff, %ff", arguments[0], arguments[1], arguments[2], arguments[3]);
-    //LOGI("Graphic::setValues - DELTA(); %ff, %ff, %ff, %ff", dArgumentsTransformSpeed[0], dArgumentsTransformSpeed[1], dArgumentsTransformSpeed[2], dArgumentsTransformSpeed[3]);
+    if(isColorReset && colorResetTimer-- < 0){
+        setColor();
+        isColorReset = false;
+    }
+
+    //LOGI("Shape::setValues - colorResetTimer: %d", colorResetTimer);
+    //LOGI("Shape::setValues - ARGS(); %ff, %ff, %ff, %ff", arguments[0], arguments[1], arguments[2], arguments[3]);
+    //LOGI("Shape::setValues - DELTA(); %ff, %ff, %ff, %ff", dArgumentsTransformSpeed[0], dArgumentsTransformSpeed[1], dArgumentsTransformSpeed[2], dArgumentsTransformSpeed[3]);
 }
 
 void Shape::setSettings(){
     delete [] arrayPosition;
     delete [] arrayColor;
     init();
+}
+
+void Shape::setColor(){
+    Methods::fillArrayRGBA(arrayColor, 0, count * colorParts, 0.0f, 0.0f, 1.0f, 0.6f);
+    Methods::fillArrayRGBA(arrayColor, count * colorParts, count, 0.8f, 0.0f, 0.0f, 0.6f);
+}
+
+void Shape::setColorLight(){
+    Methods::fillArrayRGBA(arrayColor, 0, count, 1.0f, 0.922f, 0.804f, 0.8f);
+}
+
+void Shape::setColorPart(GLuint first, GLuint second){
+    colorParts = COLOR_EQUALS_PARTS;
+    if(first != second)
+        colorParts = (GLfloat)first / (GLfloat)(first + second);
+    //LOGI("Shape::setColorPart - colorParts: %ff", colorParts);
+}
+
+void Shape::setColorTimer(){
+    colorResetTimer = COLOR_INITIAL_TIMER;
+    isColorReset = true;
 }

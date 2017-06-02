@@ -1,4 +1,4 @@
-package ru.simpleapps.game;
+package ru.simpleapps.pingpong;
 
 import android.app.Activity;
 import android.content.Context;

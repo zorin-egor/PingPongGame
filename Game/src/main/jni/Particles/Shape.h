@@ -38,10 +38,15 @@ class Shape : public Render {
                                                starTotalDeltaSpeed(_starTotalDeltaSpeed),
                                                STRICT_SPEED_MAX(10000.0f),
                                                STRICT_SPEED_MIN(0.0f),
-                                               pointSize(10.0f)
+                                               pointSize(10.0f),
+                                               COLOR_EQUALS_PARTS(0.5f),
+                                               COLOR_INITIAL_TIMER(15)
     {
         LOGI("Graphic::Graphic()");
         isVisible = true;
+        isColorReset = false;
+        colorParts = COLOR_EQUALS_PARTS;
+        colorResetTimer = COLOR_INITIAL_TIMER;
         init();
     }
 
@@ -56,6 +61,10 @@ class Shape : public Render {
 
     void render();
     void setSettings();
+    void setColor();
+    void setColorLight();
+    void setColorPart(GLuint first, GLuint second);
+    void setColorTimer();
 
     void setVisible(bool _isVisible){
         isVisible = _isVisible;
@@ -100,7 +109,7 @@ private:
     // For intervals strict
     const GLfloat STRICT_SPEED_MAX;
     const GLfloat STRICT_SPEED_MIN;
-    static const GLfloat STATIC_FIGURES[20][4];
+    static const GLfloat STATIC_FIGURES[30][4];
 
     // For dynamic change
     GLfloat arguments[SIZE_ARRAYS];
@@ -112,6 +121,13 @@ private:
 
     // For visibility
     bool isVisible;
+
+    // Color reset
+    bool isColorReset;
+    GLint colorResetTimer;
+    GLfloat colorParts;
+    const GLfloat COLOR_EQUALS_PARTS;
+    const GLint COLOR_INITIAL_TIMER;
 };
 
 #endif

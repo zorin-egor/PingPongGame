@@ -1,11 +1,11 @@
-package ru.simpleapps.game;
+package ru.simpleapps.pingpong;
 
 import android.content.res.AssetManager;
 
 public class GameLib {
 
     static{
-        System.loadLibrary("SimpleGame");
+        System.loadLibrary("PingPongGame");
     }
 
     public static native void init(int width, int height, PNGManager pngManager, AssetManager assetManager);

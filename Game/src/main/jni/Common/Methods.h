@@ -33,8 +33,8 @@ class Methods {
         }
 
         template <class T>
-        static void fillArrayRGBA(T * array, GLuint count, T red, T green, T blue, T transparancy){
-            for(int i = 0; i < count; i++){
+        static void fillArrayRGBA(T * array, GLuint from, GLuint to, T red, T green, T blue, T transparancy){
+            for(int i = from; i < to; i++){
                 array[i * 4] = red;
                 array[i * 4 + 1] = green;
                 array[i * 4 + 2] = blue;
