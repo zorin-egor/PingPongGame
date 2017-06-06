@@ -54,7 +54,6 @@ void Splash::render() {
 }
 
 void Splash::initArrays(){
-
     // Two point * count
     positionArray = new GLfloat[count * 2];
     Methods::fillArray(positionArray, 0.0f, count * 2);
@@ -72,8 +71,8 @@ void Splash::initArrays(){
 
     // Points size
     sizeArray = new GLfloat[2];
-    sizeArray[0] = 3.0f;
-    sizeArray[1] = 15.0f;
+    sizeArray[0] = 2.0f;
+    sizeArray[1] = pointSize;
 
     // dt for singleSpeed
     dxArray = new GLfloat[count];
@@ -117,3 +116,29 @@ void Splash::setValues(){
     }
 }
 
+void Splash::setParticlesCount(GLuint _count){
+    count = _count > 100 && _count < 500? _count : count;
+}
+
+void Splash::setParticlesSize(GLfloat _size){
+    pointSize = _size > 2.0f && _size < 20.0f ? _size : pointSize;
+}
+
+void Splash::deleteObjects(){
+    delete [] positionArray;
+    delete [] colorStartArray;
+    delete [] colorEndArray;
+    delete [] deltaArray;
+    delete [] sizeArray;
+    delete [] dxArray;
+    delete [] dyArray;
+}
+
+void Splash::setSettings(){
+    deleteObjects();
+    initArrays();
+}
+
+void Splash::resetTimer(){
+    lifeTime = 0;
+}

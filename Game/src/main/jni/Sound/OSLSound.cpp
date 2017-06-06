@@ -75,10 +75,20 @@ void OSLSound::stop(OSLSound::SOUND_TYPE soundType){
     }
 };
 
+void OSLSound::pauseAll(){
+    for(int i = 0; i < SOUND_TYPE::SIZE; i++)
+        (*soundPack[i].soundPlayer)->SetPlayState(soundPack[i].soundPlayer, SL_PLAYSTATE_PAUSED);
+};
+
 void OSLSound::stopAll(){
     for(int i = 0; i < SOUND_TYPE::SIZE; i++)
         (*soundPack[i].soundPlayer)->SetPlayState(soundPack[i].soundPlayer, SL_PLAYSTATE_STOPPED);
 };
+
+void OSLSound::pauseStopAll(){
+    pauseAll();
+    stopAll();
+}
 
 SLuint32 OSLSound::createAudioPlayer(SLObjectItf& playerObj, SLPlayItf& player, SLSeekItf& seek, ResourseDescriptor resourseDescriptor){
     SLDataLocator_AndroidFD lDataLocatorIn;

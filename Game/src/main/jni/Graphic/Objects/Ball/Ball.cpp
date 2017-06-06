@@ -159,9 +159,9 @@ void Ball::increaseSpeed(){
         ++speed;
 
         if(dY > 0)
-            dY += DELTA_SPEED;
+            dY += DELTA_SPEED * 0.8f;
         else
-            dY -= DELTA_SPEED;
+            dY -= DELTA_SPEED * 0.8f;
     }
 }
 

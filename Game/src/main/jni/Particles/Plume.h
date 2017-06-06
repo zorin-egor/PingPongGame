@@ -24,14 +24,20 @@ class Plume : public Render {
                                        sizeUniform(_sizeUniform),
                                        MAX_COUNT(_count),
                                        MAX_SIZE(7.0f),
-                                       MIN_SIZE(4.0f)
+                                       MIN_SIZE(2.0f)
         {
             isVisible = true;
+            pointSize = MAX_SIZE;
             initArrays();
         }
 
     void initArrays();
+    void setSettings();
     void render();
+    void setParticlesCount(GLuint _count);
+    void setParticlesSize(GLfloat _size);
+    void setPlumePoints(std::queue<GLfloat> * points);
+    void deleteObjects();
 
     void setVisible(bool _isVisible){
         isVisible = _isVisible;
@@ -41,19 +47,9 @@ class Plume : public Render {
         return isVisible;
     }
 
-    void setParticlesCount(GLuint _count){
-        count = _count > 0 && _count < 500? _count : count;
-    }
-
-    void setPlumePoints(std::queue<GLfloat> * points);
-
     virtual ~Plume(){
         LOGI("~Plume");
-        delete [] positionArray;
-        delete [] colorStartArray;
-        delete [] colorEndArray;
-        delete [] deltaArray;
-        delete [] sizeArray;
+        deleteObjects();
     }
 
     private:
@@ -72,6 +68,7 @@ class Plume : public Render {
         GLuint colorEndAttr;
         GLuint deltaAttr;
         GLuint sizeUniform;
+        GLfloat pointSize;
 
         GLfloat * positionArray;
         GLfloat * colorStartArray;

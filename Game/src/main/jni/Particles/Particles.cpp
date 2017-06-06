@@ -129,3 +129,27 @@ void Particles::setValues(){
     }
 }
 
+void Particles::setSettings(){
+    deleteObjects();
+    initArrays();
+}
+
+void Particles::deleteObjects(){
+    delete [] positionArray;
+    delete [] colorStartArray;
+    delete [] colorEndArray;
+    delete [] sizeUniformArray;
+    delete [] randomArrayCoords;
+    delete [] randomArrayRadius;
+    delete [] randomArraySpeed;
+    delete [] randomArrayDelta;
+}
+
+void Particles::setParticlesSize(GLfloat _size){
+    pointSize = _size > 2.0f && _size < 100.0f ? _size : pointSize;
+}
+
+void Particles::setParticlesCount(GLuint _count){
+    count = _count > 1000 && _count < 5000? _count : count;
+}
+

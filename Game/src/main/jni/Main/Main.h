@@ -6,6 +6,7 @@
 #include <string>
 #include <stdlib.h>
 #include <algorithm>
+#include <unistd.h>
 
 #include "Graphic/Objects/Platform/Enemy.h"
 #include "Graphic/Objects/Ball/Ball.h"
@@ -42,11 +43,11 @@ class Main {
                 CENTER_SPEED(0.005f),
                 CENTER_PERIOD(-3.14f),
                 BORDER_UP(0.8f),
-                BORDER_DOWN(-0.6f),
+                BORDER_DOWN(-0.57f),
                 NEGATIVE(-1.0f),
-                BUTTON_CONTROL_HEIGHT(0.2f),
+                BUTTON_CONTROL_HEIGHT(0.22f),
                 BUTTON_CONTROL_WIDTH(0.7f),
-                BUTTON_START_HEIGHT(0.2f),
+                BUTTON_START_HEIGHT(0.12f),
                 BUTTON_START_WIDTH(0.5f),
                 PLATFORMS_WIDTH(0.5f),
                 PLATFORMS_HEIGHT(0.1f),
@@ -57,8 +58,9 @@ class Main {
                 STOP_MOVE(0.0f),
                 LABEL_HEIGHT(0.1f),
                 LABEL_WIDTH(0.5f),
-                BUTTON_MENU_WIDTH(1.6f),
-                BUTTON_MENU_HEIGHT(0.3f)
+                BUTTON_MENU_WIDTH(1.4f),
+                BUTTON_MENU_HEIGHT(0.32f),
+                BUTTON_MENU_X_POSITION((2.0f - 1.4f) / 2.0f - 1.0f)
         {
             srand(static_cast<unsigned> (time(0)));
             init();
@@ -184,7 +186,7 @@ class Main {
     private:
         bool init();
         void setDefault();
-
+        void setMenuButtonsVisibility(bool isVisible);
         void createObjects();
         void renderBackground();
 
@@ -205,8 +207,11 @@ class Main {
         // For menu
         void drawFrameMenu();
         void logicMenu();
+        void lowQuality();
+        void highQuality();
 
         std::vector<Button *> allButtons;
+        std::vector<Button *> menuButtons;
         State gameState;
 
         Matrix * matrix;
@@ -323,6 +328,7 @@ class Main {
         const float LABEL_WIDTH;
         const float BUTTON_MENU_WIDTH;
         const float BUTTON_MENU_HEIGHT;
+        const float BUTTON_MENU_X_POSITION;
 };
 
 

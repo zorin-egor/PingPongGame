@@ -11,6 +11,7 @@ class Button : public View {
 
 		Button(bool _isSwitch,
 			   bool _isUpButton,
+			   bool _isTextureInverse,
 			   float _x,
 			   float _y,
 			   float _width,
@@ -44,31 +45,29 @@ class Button : public View {
 										  	textureX(_textureX),
 										  	textureY(_textureY),
 										    positionOn(_positionOn),
-										    positionOff(_positionOff)
+										    positionOff(_positionOff),
+										  	isTextureInverse(_isTextureInverse)
 		{
 			pressed = false;
 			buttonId = -1;
-		}
-
-		bool getState(){
-			return pressed;
-		};
-
-		void setState(bool _pressed){
-			pressed = _pressed;
-			setTextureCoords(pressed);
+			setState(pressed);
 		}
 
 		bool action(float _x, float _y, int _buttonsId, bool _isDown);
+		bool getState();
+		void setState(bool _pressed);
+		bool isClicked();
 
 		virtual ~Button(){
 			LOGI("~Button");
 		}
 
 	private:
-
+		bool isBtnClicked;
 		bool isSwitch;
 		bool isUpButton;
+		bool isTextureInverse;
+
 		int buttonId;
 		// Button position
 		float width, height;

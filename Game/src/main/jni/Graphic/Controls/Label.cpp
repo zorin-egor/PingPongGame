@@ -28,7 +28,7 @@ void  Label::init(){
 void Label::setNumber(std::string _number){
     number = _number;
     if(isInverse)
-        std::reverse(_number.begin(), _number.end());
+        std::reverse(number.begin(), number.end());
 
     for(int i = 0; i < labelLinks.size(); i++){
         char symbol = number.at(i);

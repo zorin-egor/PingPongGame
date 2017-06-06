@@ -75,7 +75,7 @@ void Shape::render() {
     glDisableVertexAttribArray(starColor);
 }
 
-void Shape::init(){
+void Shape::initArrays(){
     // Parameters for functions
     // Default arguments
     Methods::fillArray(arguments, 1.0f, SIZE_ARRAYS);
@@ -102,7 +102,7 @@ void Shape::init(){
     for(int i = 0; i < count; i++)
         arrayPosition[i] = (GLfloat)i;
 
-    //LOGI("Shape::init - ARGS(); %ff, %ff, %ff, %ff", arguments[0], arguments[1], arguments[2], arguments[3]);
+    //LOGI("Shape::initArrays - ARGS(); %ff, %ff, %ff, %ff", arguments[0], arguments[1], arguments[2], arguments[3]);
 }
 
 void Shape::setValues(){
@@ -122,14 +122,13 @@ void Shape::setValues(){
 }
 
 void Shape::setSettings(){
-    delete [] arrayPosition;
-    delete [] arrayColor;
-    init();
+    deleteObjects();
+    initArrays();
 }
 
 void Shape::setColor(){
-    Methods::fillArrayRGBA(arrayColor, 0, count * colorParts, 0.0f, 0.0f, 1.0f, 0.6f);
-    Methods::fillArrayRGBA(arrayColor, count * colorParts, count, 0.8f, 0.0f, 0.0f, 0.6f);
+    Methods::fillArrayRGBA(arrayColor, 0, count * colorParts, 0.0f, 0.0f, 1.0f, 1.0f);
+    Methods::fillArrayRGBA(arrayColor, count * colorParts, count, 1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void Shape::setColorLight(){
@@ -146,4 +145,17 @@ void Shape::setColorPart(GLuint first, GLuint second){
 void Shape::setColorTimer(){
     colorResetTimer = COLOR_INITIAL_TIMER;
     isColorReset = true;
+}
+
+void Shape::setParticlesCount(GLuint _count){
+    count = _count > 5000 && _count < 30000? _count : count;
+}
+
+void Shape::setParticlesSize(GLfloat _size){
+    pointSize = _size > 0.0f && _size < 100.0f ? _size : pointSize;
+}
+
+void Shape::deleteObjects(){
+    delete [] arrayPosition;
+    delete [] arrayColor;
 }

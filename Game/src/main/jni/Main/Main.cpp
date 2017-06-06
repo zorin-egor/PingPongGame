@@ -4,7 +4,7 @@ Main::~Main(){
     LOGI("~Main");
 
     // Sound free
-    soundObj->stopAll();
+    soundObj->pauseStopAll();
     delete soundObj;
 
     // Particles
@@ -59,11 +59,11 @@ bool Main::init() {
         return false;
 
     polygonsPositionAttr = glGetAttribLocation(polygons, "a_Position");
-    checkGLError("Main::init - polygons - a_Position");
+    checkGLError("Main::initArrays - polygons - a_Position");
     polygonsTextureAttr = glGetAttribLocation(polygons, "a_Texture");
-    checkGLError("Main::init - polygons - a_Texture");
+    checkGLError("Main::initArrays - polygons - a_Texture");
     polygonsTransformationAttr = glGetUniformLocation(polygons, "u_Matrix");
-    checkGLError("Main::init - polygons - u_Matrix");
+    checkGLError("Main::initArrays - polygons - u_Matrix");
 
     // Sprites
     sprites = MakeShaders::createProgram(MakeShaders::v_point_shader, MakeShaders::f_point_shader);
@@ -71,21 +71,21 @@ bool Main::init() {
         return false;
 
     spritesRandomPosition = glGetAttribLocation(sprites, "a_RandomArrayCoords");
-    checkGLError("Main::init - sprites - a_RandomArrayCoords");
+    checkGLError("Main::initArrays - sprites - a_RandomArrayCoords");
     spritesRandomSpeed = glGetAttribLocation(sprites, "a_RandomArraySpeed");
-    checkGLError("Main::init - sprites - a_RandomArraySpeed");
+    checkGLError("Main::initArrays - sprites - a_RandomArraySpeed");
     spritesRandomRadius = glGetAttribLocation(sprites, "a_RandomArrayRadius");
-    checkGLError("Main::init - sprites - a_RandomArrayRadius");
+    checkGLError("Main::initArrays - sprites - a_RandomArrayRadius");
     spritesDelta = glGetAttribLocation(sprites, "a_Delta");
-    checkGLError("Main::init - sprites - a_Delta");
+    checkGLError("Main::initArrays - sprites - a_Delta");
     spritesSize = glGetUniformLocation(sprites, "u_Size");
-    checkGLError("Main::init - sprites - u_Size");
+    checkGLError("Main::initArrays - sprites - u_Size");
     spritesTotalDeltaSpeed = glGetUniformLocation(sprites, "u_TotalDeltaSpeed");
-    checkGLError("Main::init - sprites - u_TotalDeltaSpeed");
+    checkGLError("Main::initArrays - sprites - u_TotalDeltaSpeed");
     spritesColorStart = glGetAttribLocation(sprites, "a_ColorStart");
-    checkGLError("Main::init - sprites - a_ColorStart");
+    checkGLError("Main::initArrays - sprites - a_ColorStart");
     spritesColorEnd = glGetAttribLocation(sprites, "a_ColorEnd");
-    checkGLError("Main::init - sprites - a_ColorEnd");
+    checkGLError("Main::initArrays - sprites - a_ColorEnd");
 
     // Splash
     splash = MakeShaders::createProgram(MakeShaders::v_splash_shader, MakeShaders::f_splash_shader);
@@ -93,15 +93,15 @@ bool Main::init() {
         return false;
 
     splashPosition = glGetAttribLocation(splash, "a_ArrayCoords");
-    checkGLError("Main::init - splash - a_ArrayCoords");
+    checkGLError("Main::initArrays - splash - a_ArrayCoords");
     splashColorStart = glGetAttribLocation(splash, "a_ColorStart");
-    checkGLError("Main::init - splash - a_ColorStart");
+    checkGLError("Main::initArrays - splash - a_ColorStart");
     splashColorEnd = glGetAttribLocation(splash, "a_ColorEnd");
-    checkGLError("Main::init - splash - a_ColorEnd");
+    checkGLError("Main::initArrays - splash - a_ColorEnd");
     splashDelta = glGetAttribLocation(splash, "a_Delta");
-    checkGLError("Main::init - splash - a_Delta");
+    checkGLError("Main::initArrays - splash - a_Delta");
     splashSize = glGetUniformLocation(splash, "u_Size");
-    checkGLError("Main::init - splash - u_Size");
+    checkGLError("Main::initArrays - splash - u_Size");
 
     // Shape
     shape = MakeShaders::createProgram(MakeShaders::v_shape_shader, MakeShaders::f_shape_shader);
@@ -109,32 +109,32 @@ bool Main::init() {
         return false;
 
     shapeAngle = glGetAttribLocation(shape, "a_ArrayAngle");
-    checkGLError("Main::init - shape - a_ArraySpeed");
+    checkGLError("Main::initArrays - shape - a_ArraySpeed");
     shapeColor = glGetAttribLocation(shape, "a_ArrayColor");
-    checkGLError("Main::init - shape - a_ArrayColor");
+    checkGLError("Main::initArrays - shape - a_ArrayColor");
     shapeCenter = glGetUniformLocation(shape, "u_Center");
-    checkGLError("Main::init - shape - u_Center");
+    checkGLError("Main::initArrays - shape - u_Center");
     shapeRadius = glGetUniformLocation(shape, "u_Radius");
-    checkGLError("Main::init - shape - u_Radius");
+    checkGLError("Main::initArrays - shape - u_Radius");
     shapeArguments = glGetUniformLocation(shape, "u_Arguments");
-    checkGLError("Main::init - shape - u_Arguments");
+    checkGLError("Main::initArrays - shape - u_Arguments");
     shapeSize = glGetUniformLocation(shape, "u_PointSize");
-    checkGLError("Main::init - shape - u_PointSize");
+    checkGLError("Main::initArrays - shape - u_PointSize");
     shapeTotalDeltaSpeed = glGetUniformLocation(shape, "u_TotalDeltaSpeed");
-    checkGLError("Main::init - shape - u_TotalDeltaSpeed");
+    checkGLError("Main::initArrays - shape - u_TotalDeltaSpeed");
 
     // Clear compiliers
     glReleaseShaderCompiler();
 
     //On alfa-blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    checkGLError("Main::init - glBlendFunc");
+    checkGLError("Main::initArrays - glBlendFunc");
     glEnable(GL_BLEND);
-    checkGLError("Main::init - glEnable");
+    checkGLError("Main::initArrays - glEnable");
 
     // Set viewport
     glViewport(0, 0, width, height);
-    checkGLError("Main::init - glViewport");
+    checkGLError("Main::initArrays - glViewport");
 
     return true;
 }
@@ -229,7 +229,8 @@ void Main::createObjects(){
     // Left button
     left = new Button(false,
                       true,
-                      -0.91f, -0.73f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
+                      false,
+                      -0.88f, -0.76f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                       polygons,
                       polygonsPositionAttr,
@@ -243,7 +244,8 @@ void Main::createObjects(){
     // Right button
     right = new Button(false,
                        true,
-                       0.60f, -0.73f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
+                       false,
+                       0.52f, -0.76f, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -257,7 +259,8 @@ void Main::createObjects(){
     // Play pause button
     playPause = new Button(true,
                            false,
-                           -0.24f, -0.65f, BUTTON_START_WIDTH, BUTTON_START_HEIGHT, 4, 4, Matrix::ONE, Matrix::THREE,
+                           false,
+                           -0.25f, -0.72f, BUTTON_START_WIDTH, BUTTON_START_HEIGHT, 4, 4, Matrix::FOUR, Matrix::THREE,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                            polygons,
                            polygonsPositionAttr,
@@ -271,7 +274,8 @@ void Main::createObjects(){
     // Left button player two
     leftTwo = new Button(false,
                           true,
-                         -0.93f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,  4, 4, Matrix::TWO, Matrix::ONE,
+                          true,
+                         -0.88f, 0.76f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT,  4, 4, Matrix::TWO, Matrix::ONE,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -285,7 +289,8 @@ void Main::createObjects(){
     // Right button player two
     rightTwo = new Button(false,
                            true,
-                           0.58f, 0.72f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
+                           true,
+                           0.52f, 0.76f + BUTTON_CONTROL_HEIGHT, BUTTON_CONTROL_HEIGHT / SCREEN_COEFFICIENT, BUTTON_CONTROL_HEIGHT, 4, 4, Matrix::TWO, Matrix::ONE,
                            textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                            polygons,
                            polygonsPositionAttr,
@@ -299,7 +304,8 @@ void Main::createObjects(){
     // Play pause button player two
     playPauseTwo = new Button(true,
                                false,
-                               -0.26f, 0.65f + BUTTON_START_HEIGHT, BUTTON_START_WIDTH, BUTTON_START_HEIGHT, 4, 4, Matrix::ONE, Matrix::THREE,
+                               true,
+                               -0.25f, 0.72f + BUTTON_START_HEIGHT, BUTTON_START_WIDTH, BUTTON_START_HEIGHT, 4, 4, Matrix::FOUR, Matrix::THREE,
                                textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                                polygons,
                                polygonsPositionAttr,
@@ -312,7 +318,7 @@ void Main::createObjects(){
 
     // Label of singleSpeed
     singleSpeed = new Label(matrix,
-                            -0.23f, 0.98f, LABEL_WIDTH, LABEL_HEIGHT,
+                            -0.25f, 0.97f, LABEL_WIDTH, LABEL_HEIGHT,
                             textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                             polygons,
                             polygonsPositionAttr,
@@ -323,7 +329,7 @@ void Main::createObjects(){
 
     // Label of score one for single
     singleScoreOne = new Label(matrix,
-                               -0.93f, 0.98f, LABEL_WIDTH, LABEL_HEIGHT,
+                               -0.91f, 0.97f, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
@@ -334,7 +340,7 @@ void Main::createObjects(){
 
     // Label of score two for single
     singleScoreTwo = new Label(matrix,
-                               0.43f, 0.98f, LABEL_WIDTH, LABEL_HEIGHT,
+                               0.41f, 0.97f, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
@@ -345,7 +351,7 @@ void Main::createObjects(){
 
     // Label of score one for multi
     multiScoreOne = new Label(matrix,
-                               -0.27f, 0.8f, LABEL_WIDTH, LABEL_HEIGHT,
+                               -0.25f, 1.0f, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
@@ -356,7 +362,7 @@ void Main::createObjects(){
 
     // Label of score two for multi
     multiScoreTwo = new Label(matrix,
-                               -0.23f, -0.8f + LABEL_HEIGHT, LABEL_WIDTH, LABEL_HEIGHT,
+                               -0.25f, -1.0f + LABEL_HEIGHT, LABEL_WIDTH, LABEL_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::NUMBERS),
                                polygons,
                                polygonsPositionAttr,
@@ -382,7 +388,7 @@ void Main::createObjects(){
 
     // Player platform
     player = new Platform( PLATFORMS_SPEED,
-                           -0.25, -0.4f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
+                           -0.25, -0.45f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                            textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                            polygons,
                            polygonsPositionAttr,
@@ -392,7 +398,7 @@ void Main::createObjects(){
                            Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::ONE),
                            matrix->getDefaultMatrix4x4());
     // Enemy platform
-    enemy = new Enemy( PLATFORMS_SPEED,
+    enemy = new Enemy( PLATFORMS_SPEED * 1.4f,
                        -0.25, 0.75f, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                        textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                        polygons,
@@ -405,7 +411,7 @@ void Main::createObjects(){
 
     // Player two
     playerTwo = new Platform( PLATFORMS_SPEED,
-                               -0.25, 0.4f  + PLATFORMS_HEIGHT, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
+                               -0.25, 0.45f  + PLATFORMS_HEIGHT, PLATFORMS_WIDTH, PLATFORMS_HEIGHT,
                                textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                                polygons,
                                polygonsPositionAttr,
@@ -417,14 +423,14 @@ void Main::createObjects(){
 
     // Enemy platform
     ball = new Ball( BALL_SPEED,
-                    0.0, 0.0f, BALL_WIDTH, BALL_HEIGHT,
+                    0.0 - BALL_WIDTH * 0.5f, 0.0f + BALL_HEIGHT * 0.5f, BALL_WIDTH, BALL_HEIGHT,
                     textures->getTexturesPackIDs(ManageTexture::OBJECTS),
                     polygons,
                     polygonsPositionAttr,
                     polygonsTextureAttr,
                     polygonsTransformationAttr,
                     matrix->getDefaultVerticesCoords(),
-                    Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::FOUR),
+                    Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 2, Matrix::THREE),
                     matrix->getDefaultMatrix4x4(),
                     splashObj);
 
@@ -435,13 +441,14 @@ void Main::createObjects(){
                           polygonsTextureAttr,
                           polygonsTransformationAttr,
                           Matrix::setVerticesCoords(-0.8f, 0.95f, 1.6f, 0.3f, matrix->getDefaultVerticesCoords()),
-                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::SEVEN),
+                          Matrix::setTextureCoords(matrix->getDefaultTextureCoord(), 2, 4, Matrix::EIGHT),
                           matrix->getDefaultMatrix4x4());
 
     // Choose single mode
     single = new Button(false,
                           true,
-                          -0.8f, 0.7f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::FIFE, Matrix::FOUR,
+                          false,
+                          BUTTON_MENU_X_POSITION, 0.6f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT,  4, 4, Matrix::SIX, Matrix::FIFE,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -451,11 +458,13 @@ void Main::createObjects(){
                           matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
     allButtons.push_back(single);
+    menuButtons.push_back(single);
 
     // Choose multiplayer mode
     multi = new Button(false,
                           true,
-                          -0.8f, 0.4f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::SEVEN, Matrix::SIX,
+                          false,
+                          BUTTON_MENU_X_POSITION, 0.3f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::EIGHT, Matrix::SEVEN,
                           textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                           polygons,
                           polygonsPositionAttr,
@@ -465,11 +474,13 @@ void Main::createObjects(){
                           matrix->getDefaultTextureCoord(),
                           matrix->getDefaultMatrix4x4());
     allButtons.push_back(multi);
+    menuButtons.push_back(multi);
 
     // Sound off/on
     sound = new Button(true,
                        true,
-                       -0.8f, 0.1f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
+                       false,
+                       BUTTON_MENU_X_POSITION, 0.0f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::TEN, Matrix::NINE,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -479,25 +490,29 @@ void Main::createObjects(){
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
     allButtons.push_back(sound);
+    menuButtons.push_back(sound);
 
     // Quality
     quality = new Button(true,
-                       true,
-                       -0.8f, -0.2f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::NINE, Matrix::EIGHT,
-                       textures->getTexturesPackIDs(ManageTexture::BUTTONS),
-                       polygons,
-                       polygonsPositionAttr,
-                       polygonsTextureAttr,
-                       polygonsTransformationAttr,
-                       matrix->getDefaultVerticesCoords(),
-                       matrix->getDefaultTextureCoord(),
-                       matrix->getDefaultMatrix4x4());
+                         true,
+                         false,
+                         BUTTON_MENU_X_POSITION, -0.3f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::TWELVE, Matrix::ELEVEN,
+                         textures->getTexturesPackIDs(ManageTexture::BUTTONS),
+                         polygons,
+                         polygonsPositionAttr,
+                         polygonsTextureAttr,
+                         polygonsTransformationAttr,
+                         matrix->getDefaultVerticesCoords(),
+                         matrix->getDefaultTextureCoord(),
+                         matrix->getDefaultMatrix4x4());
     allButtons.push_back(quality);
+    menuButtons.push_back(quality);
 
     // Exit
-    exit = new Button(false,
+    exit = new Button( false,
                        true,
-                       -0.8f, -0.5f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::ELEVEN, Matrix::TEN,
+                       false,
+                       BUTTON_MENU_X_POSITION, -0.6f, BUTTON_MENU_WIDTH, BUTTON_MENU_HEIGHT, 4, 4, Matrix::FOURTEEN, Matrix::THIRTEEN,
                        textures->getTexturesPackIDs(ManageTexture::BUTTONS),
                        polygons,
                        polygonsPositionAttr,
@@ -507,10 +522,20 @@ void Main::createObjects(){
                        matrix->getDefaultTextureCoord(),
                        matrix->getDefaultMatrix4x4());
     allButtons.push_back(exit);
+    menuButtons.push_back(exit);
 
     // Sound
     soundObj = new OSLSound(env, assetManager, false);
     soundObj->play(OSLSound::BACKGROUND);
+
+    // Set default quality
+    lowQuality();
+}
+
+void Main::setMenuButtonsVisibility(bool isVisible){
+    for(int i = 0; i < menuButtons.size(); i++){
+        menuButtons[i]->setVisible(isVisible);
+    }
 }
 
 void Main::step(){
@@ -552,6 +577,9 @@ void Main::step(){
 }
 
 void Main::setDefault(){
+    // Reset splash
+    splashObj->resetTimer();
+
     // Set background shape
     shapeObj->setSettings();
 
@@ -601,15 +629,18 @@ void Main::drawFrameMenu(){
 }
 
 void Main::logicMenu(){
-    // Show exit button
+    // Show menu buttons
+    //setMenuButtonsVisibility(true);
     exit->setVisible(true);
 
     // For game mode
     if(single->getState()){
         gameState = State::SINGLE;
+        //setMenuButtonsVisibility(false);
         exit->setVisible(false);
     } else if(multi->getState()){
         gameState = State::MULTI;
+        //setMenuButtonsVisibility(false);
         exit->setVisible(false);
     }
 
@@ -618,8 +649,60 @@ void Main::logicMenu(){
     if(soundObj->getSound()){
         soundObj->play(OSLSound::BACKGROUND);
     } else {
-        soundObj->stopAll();
+        // Without pause - stop after few second...
+        soundObj->pauseStopAll();
     }
+
+    // For quality. Set once after click.
+    if(quality->isClicked()){
+        if(quality->getState()){
+            highQuality();
+        } else {
+            lowQuality();
+        }
+    }
+}
+
+void Main::lowQuality(){
+    // Background stars
+    particles->setParticlesCount(800);
+    particles->setParticlesSize(4.0f);
+    particles->setSettings();
+
+    // Background shape
+    shapeObj->setParticlesCount(7000);
+    shapeObj->setParticlesSize(5.0f);
+    shapeObj->setSettings();
+
+    // Balls effects
+    splashObj->setParticlesCount(50);
+    splashObj->setParticlesSize(3.0f);
+    splashObj->setSettings();
+
+    plumeObj->setParticlesCount(70);
+    plumeObj->setParticlesSize(3.0f);
+    plumeObj->setSettings();
+}
+
+void Main::highQuality(){
+    // Background stars
+    particles->setParticlesCount(3000);
+    particles->setParticlesSize(10.0f);
+    particles->setSettings();
+
+    // Background shape
+    shapeObj->setParticlesCount(20000);
+    shapeObj->setParticlesSize(8.0f);
+    shapeObj->setSettings();
+
+    // Balls effects
+    splashObj->setParticlesCount(200);
+    splashObj->setParticlesSize(12.0f);
+    splashObj->setSettings();
+
+    plumeObj->setParticlesCount(300);
+    plumeObj->setParticlesSize(10.0f);
+    plumeObj->setSettings();
 }
 
 // -------------------------------------------------------------------------------------------------

@@ -72,7 +72,7 @@ void Plume::initArrays(){
     // Points size
     sizeArray = new GLfloat[2];
     sizeArray[0] = MIN_SIZE;
-    sizeArray[1] = MAX_SIZE;
+    sizeArray[1] = pointSize;
 }
 
 void Plume::setValues(){
@@ -119,4 +119,25 @@ void Plume::setPlumePoints(std::queue<GLfloat> * points){
             alpha += 0.05f;
         }
     }
+}
+
+void Plume::setParticlesCount(GLuint _count){
+    count = _count > 100 && _count < 500? count : _count;
+}
+
+void Plume::setParticlesSize(GLfloat _size){
+    pointSize = _size > 2.0f && _size < 20.0f ? _size : pointSize;
+}
+
+void Plume::deleteObjects(){
+    delete [] positionArray;
+    delete [] colorStartArray;
+    delete [] colorEndArray;
+    delete [] deltaArray;
+    delete [] sizeArray;
+}
+
+void Plume::setSettings(){
+    deleteObjects();
+    initArrays();
 }

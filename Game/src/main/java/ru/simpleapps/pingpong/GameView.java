@@ -12,9 +12,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class GameView extends GLSurfaceView {
+
     private static Context context;
-    private HashMap<Integer, Integer> touchBuffer = new HashMap<>();
-    public static boolean isGameOn = true;
 
     public GameView(Context context) {
         super(context);
@@ -29,7 +28,6 @@ public class GameView extends GLSurfaceView {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
                 if(GameLib.action(event.getX(event.getActionIndex()), event.getY(event.getActionIndex()), event.getPointerId(event.getActionIndex()), true)){
-                    isGameOn = false;
                     ((Activity)context).finish();
                 }
 
@@ -54,6 +52,8 @@ public class GameView extends GLSurfaceView {
 
     private static class GameRenderer implements GLSurfaceView.Renderer{
 
+        private long startTime, endTime, dt;
+
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
@@ -65,9 +65,24 @@ public class GameView extends GLSurfaceView {
         }
 
         @Override
-        public void onDrawFrame(GL10 gl) {
-            if(isGameOn)
-                GameLib.step();
+        public void onDrawFrame(GL10 gl){
+            //frameLimit();
+            GameLib.step();
+        }
+
+        void frameLimit(){
+            endTime = System.currentTimeMillis();
+            dt = endTime - startTime;
+
+            if (dt < 33){
+                try {
+                    Thread.sleep(33 - dt);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            startTime = System.currentTimeMillis();
         }
     }
 }

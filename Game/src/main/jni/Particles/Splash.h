@@ -31,40 +31,37 @@ class Splash : public Render {
                                         TOTAL_LIFE_TIME(_lifeTime)
         {
             isVisible = true;
+            pointSize = 5.0f;
             initArrays();
             setSplashPosition(0.0f, 0.0f);
         }
 
-    void initArrays();
-    void render();
-    void setSplashPosition(GLfloat _x, GLfloat _y);
+        void initArrays();
+        void render();
+        void setSettings();
+        void deleteObjects();
+        void setParticlesCount(GLuint _count);
+        void setParticlesSize(GLfloat _size);
+        void setSplashPosition(GLfloat _x, GLfloat _y);
+        void resetTimer();
 
-    void setVisible(bool _isVisible){
-        isVisible = _isVisible;
-    }
+        void setVisible(bool _isVisible){
+            isVisible = _isVisible;
+        }
 
-    bool getVisible(){
-        return isVisible;
-    }
+        bool getVisible(){
+            return isVisible;
+        }
 
-    void setParticlesCount(GLuint _count){
-        count = _count > 0 && _count < 5000? _count : count;
-    }
-
-    virtual ~Splash(){
-        LOGI("~Splash");
-        delete [] positionArray;
-        delete [] colorStartArray;
-        delete [] colorEndArray;
-        delete [] deltaArray;
-        delete [] sizeArray;
-    }
+        virtual ~Splash(){
+            LOGI("~Splash");
+            deleteObjects();
+        }
 
     private:
         void setValues();
 
         bool isVisible;
-
         const GLuint TOTAL_LIFE_TIME;
         GLuint count;
         GLint lifeTime;
@@ -76,6 +73,7 @@ class Splash : public Render {
         GLuint colorEndAttr;
         GLuint deltaAttr;
         GLuint sizeUniform;
+        GLfloat pointSize;
 
         GLfloat * positionArray;
         GLfloat * colorStartArray;

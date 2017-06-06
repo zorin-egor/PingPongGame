@@ -40,23 +40,22 @@ class Shape : public Render {
                                                STRICT_SPEED_MIN(0.0f),
                                                pointSize(10.0f),
                                                COLOR_EQUALS_PARTS(0.5f),
-                                               COLOR_INITIAL_TIMER(15)
+                                               COLOR_INITIAL_TIMER(10)
     {
-        LOGI("Graphic::Graphic()");
+        LOGI("Shape::Shape()");
         isVisible = true;
         isColorReset = false;
         colorParts = COLOR_EQUALS_PARTS;
         colorResetTimer = COLOR_INITIAL_TIMER;
-        init();
+        initArrays();
     }
 
     virtual ~Shape(){
-        LOGI("Graphic::~Graphic()");
+        LOGI("~Shape");
         // Off attributes
         //glDisableVertexAttribArray(starsAngle);
         //glDisableVertexAttribArray(starColor);
-        delete [] arrayPosition;
-        delete [] arrayColor;
+        deleteObjects();
     }
 
     void render();
@@ -65,17 +64,12 @@ class Shape : public Render {
     void setColorLight();
     void setColorPart(GLuint first, GLuint second);
     void setColorTimer();
+    void setParticlesSize(GLfloat _size);
+    void setParticlesCount(GLuint _count);
+    void deleteObjects();
 
     void setVisible(bool _isVisible){
         isVisible = _isVisible;
-    }
-
-    void setParticlesSize(GLfloat _size){
-        pointSize = _size > 0 && _size < 100 ? _size : pointSize;
-    }
-
-    void setParticlesCount(GLuint _count){
-        count = _count > 5000 && _count < 50000? _count : count;
     }
 
     bool getVisible(){
@@ -84,7 +78,7 @@ class Shape : public Render {
 
 private:
 
-    void init();
+    void initArrays();
     void setValues();
 
     // For shader

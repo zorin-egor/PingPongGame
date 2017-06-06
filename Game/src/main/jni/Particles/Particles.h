@@ -42,18 +42,15 @@ class Particles : public Render {
 
         virtual ~Particles(){
             LOGI("~Particles");
-            delete [] positionArray;
-            delete [] colorStartArray;
-            delete [] colorEndArray;
-            delete [] sizeUniformArray;
-            delete [] randomArrayCoords;
-            delete [] randomArrayRadius;
-            delete [] randomArraySpeed;
-            delete [] randomArrayDelta;
+            deleteObjects();
         }
 
         void initArrays();
+        void setSettings();
         void render();
+        void deleteObjects();
+        void setParticlesSize(GLfloat _size);
+        void setParticlesCount(GLuint _count);
 
         void setVisible(bool _isVisible){
             isVisible = _isVisible;
@@ -61,14 +58,6 @@ class Particles : public Render {
 
         bool getVisible(){
             return isVisible;
-        }
-
-        void setParticlesSize(GLfloat _size){
-            pointSize = _size > 0 && _size < 100 ? _size : pointSize;
-        }
-
-        void setParticlesCount(GLuint _count){
-            count = _count > 0 && _count < 5000? _count : count;
         }
 
     private:

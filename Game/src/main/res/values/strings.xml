@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Galaxy ping-pong</string>
+    <string name="app_name">Ping-pong</string>
+    <string name="acra_crush_title">Ping-pong game. Internal application error.</string>
+    <string name="acra_crush_message_text">If you want, you can send the crash report to the developer by email.</string>
+    <string name="acra_crush_message_comment">Additional information.</string>
+    <string name="acra_crush_ok">Send crash report by email.</string>
 </resources>

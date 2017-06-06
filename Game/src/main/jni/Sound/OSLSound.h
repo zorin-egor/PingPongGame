@@ -66,7 +66,9 @@ class OSLSound {
 
         void play(SOUND_TYPE soundType);
         void stop(SOUND_TYPE soundType);
+        void pauseAll();
         void stopAll();
+        void pauseStopAll();
 
         ~OSLSound();
 
