@@ -1,14 +1,14 @@
-#ifndef GAME_PINGPONG_BALL_H
-#define GAME_PINGPONG_BALL_H
+#ifndef BALL_H
+#define BALL_H
 
 #include <typeinfo>
 #include <queue>
 #include <Particles/Splash.h>
 
-#include "Graphic/Objects/Platform/Platform.h"
-#include "Graphic/Objects/Object.h"
-#include "Common/Intersect.h"
-#include "Common/Structures.h"
+#include "../../../Common/Intersect.h"
+#include "../../../Common/Structures.h"
+#include "../Platform/Platform.h"
+#include "../Object.h"
 
 class Ball : public Object {
 

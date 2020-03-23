@@ -1,10 +1,10 @@
-#ifndef GAME_PINGPONG_PLATFORM_H
-#define GAME_PINGPONG_PLATFORM_H
+#ifndef PLATFORM_H
+#define PLATFORM_H
 
-#include "Graphic/Objects/Object.h"
-#include "Common/Methods.h"
-#include "Common/Intersect.h"
-#include "Common/Structures.h"
+#include "../../../Common/Methods.h"
+#include "../../../Common/Intersect.h"
+#include "../../../Common/Structures.h"
+#include "../Object.h"
 
 class Platform : public Object {
 

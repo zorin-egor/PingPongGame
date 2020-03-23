@@ -5,9 +5,9 @@
 #include <iostream>
 #include <typeinfo>
 
-#include "AbstractClasses/Render.h"
-#include "Common/LogGL.h"
-#include "Common/Structures.h"
+#include "../AbstractClasses/Render.h"
+#include "../Common/LogGL.h"
+#include "../Common/Structures.h"
 
 class View : public Render {
 

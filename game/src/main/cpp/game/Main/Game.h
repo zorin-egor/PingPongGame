@@ -1,5 +1,5 @@
-#ifndef GAME_PINGPONG_INIT_H
-#define GAME_PINGPONG_INIT_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <jni.h>
 #include <stdlib.h>
@@ -8,23 +8,24 @@
 #include <algorithm>
 #include <unistd.h>
 
-#include "Graphic/Objects/Platform/Enemy.h"
-#include "Graphic/Objects/Ball/Ball.h"
-#include "Graphic/Objects/Platform/Platform.h"
-#include "Graphic/Objects/Object.h"
-#include "Graphic/Controls/Label.h"
-#include "Graphic/Controls/Button.h"
-#include "Particles/Particles.h"
-#include "Particles/Splash.h"
-#include "Particles/Plume.h"
-#include "Particles/Shape.h"
-#include "Shaders/MakeShaders.h"
-#include "Graphic/View.h"
-#include "Textures/TexturesManager.h"
-#include "Common/Structures.h"
-#include "Common/LogGL.h"
+#include "../Graphic/Objects/Platform/Enemy.h"
+#include "../Graphic/Objects/Ball/Ball.h"
+#include "../Graphic/Objects/Platform/Platform.h"
+#include "../Graphic/Objects/Object.h"
+#include "../Graphic/Controls/Label.h"
+#include "../Graphic/Controls/Button.h"
+#include "../Particles/Particles.h"
+#include "../Particles/Splash.h"
+#include "../Particles/Plume.h"
+#include "../Particles/Shape.h"
+#include "../Shaders/MakeShaders.h"
+#include "../Graphic/View.h"
+#include "../Textures/TexturesManager.h"
+#include "../Common/Structures.h"
+#include "../Common/LogGL.h"
+#include "../Sound/OSLSound.h"
+
 #include "Main/State.h"
-#include "Sound/OSLSound.h"
 
 /*
  * TODO Refactoring jni

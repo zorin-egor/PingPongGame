@@ -1,8 +1,8 @@
-#ifndef GAME_PINGPONG_OBJECT_H
-#define GAME_PINGPONG_OBJECT_H
+#ifndef OBJECT_H
+#define OBJECT_H
 
-#include "Common/Structures.h"
-#include "Graphic/View.h"
+#include "../../Common/Structures.h"
+#include "../View.h"
 
 class Object : public View {
 

@@ -4,8 +4,8 @@
 #include <GLES2/gl2.h>
 #include <cmath>
 
-#include "AbstractClasses/Render.h"
-#include "Common/LogGL.h"
+#include "../AbstractClasses/Render.h"
+#include "../Common/LogGL.h"
 
 class Particles : public Render {
 

@@ -3,9 +3,9 @@
 
 #include <GLES2/gl2.h>
 #include <math.h>
-#include "AbstractClasses/Render.h"
-#include "Common/LogGL.h"
-#include "Common/Methods.h"
+#include "../AbstractClasses/Render.h"
+#include "../Common/LogGL.h"
+#include "../Common/Methods.h"
 
 class Shape : public Render {
 

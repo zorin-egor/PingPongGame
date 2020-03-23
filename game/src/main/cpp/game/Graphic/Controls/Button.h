@@ -1,9 +1,9 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "Graphic/View.h"
-#include "Common/Structures.h"
-#include "Common/LogGL.h"
+#include "../../Common/Structures.h"
+#include "../../Common/LogGL.h"
+#include "../View.h"
 
 class Button : public View {
 

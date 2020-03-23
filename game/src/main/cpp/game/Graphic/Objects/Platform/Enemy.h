@@ -1,9 +1,9 @@
-#ifndef GAME_PINGPONG_BOT_H
-#define GAME_PINGPONG_BOT_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
-#include "Common/Structures.h"
-#include "Graphic/Objects/Ball/Ball.h"
-#include "Graphic/Objects/Platform/Platform.h"
+#include "../../../Common/Structures.h"
+#include "../Ball/Ball.h"
+#include "../Platform/Platform.h"
 
 class Enemy : public Platform {
 

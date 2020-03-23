@@ -1,14 +1,15 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include "AbstractClasses/Render.h"
-#include "Common/Methods.h"
-#include "Common/Structures.h"
-#include "Graphic/View.h"
-
 #include <string>
 #include <vector>
 #include <algorithm>
+
+#include "../../AbstractClasses/Render.h"
+#include "../../Common/Methods.h"
+#include "../../Common/Structures.h"
+#include "../View.h"
+
 
 class Label {
 
