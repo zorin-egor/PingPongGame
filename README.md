@@ -9,7 +9,7 @@ Android NDK. OpenGL ES 2.0 and OpenSLES.
   * use OpenGL ES 2.0
   * programming language - C++
   * use android JNI
-  * load texture files and m_pSound by AssetManager
+  * load texture files and sound by AssetManager
   * for play sound use OpenSL
   * use 4 shaders
 
