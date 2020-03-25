@@ -1,5 +1,5 @@
-#ifndef GAME_PINGPONG_METHODS_H
-#define GAME_PINGPONG_METHODS_H
+#ifndef METHODS_H
+#define METHODS_H
 
 #include <ctime>
 #include <stdlib.h>
@@ -33,12 +33,12 @@ class Methods {
         }
 
         template <class T>
-        static void fillArrayRGBA(T * array, GLuint from, GLuint to, T red, T green, T blue, T transparancy) {
+        static void fillArrayRGBA(T * array, GLuint from, GLuint to, T red, T green, T blue, T transparency) {
             for(int i = from; i < to; i++) {
                 array[i * 4] = red;
                 array[i * 4 + 1] = green;
                 array[i * 4 + 2] = blue;
-                array[i * 4 + 3] = transparancy;
+                array[i * 4 + 3] = transparency;
             }
         }
 
@@ -49,10 +49,10 @@ class Methods {
             }
         }
 
-        static std::string fillLeft(std::string stringForFill, char symbole, int toLenght) {
-            int difference = toLenght - stringForFill.length();
+        static std::string fillLeft(std::string stringForFill, char symbol, int toLength) {
+            int difference = toLength - stringForFill.length();
             if (difference > 0) {
-                std::string buf(difference, symbole);
+                std::string buf(difference, symbol);
                 stringForFill = buf + stringForFill;
             }
 

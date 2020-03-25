@@ -31,7 +31,7 @@ struct Texture {
     }
 
     ~Texture() {
-        LOGI("~Texture");
+        LOGI("~Texture()");
         glDeleteTextures(1, &textureId);
         delete [] pixels;
         pixels = nullptr;

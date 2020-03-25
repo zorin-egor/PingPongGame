@@ -169,6 +169,8 @@ class Game {
 
         bool isBackPress();
 
+        bool action(uint x, uint y, int id, bool isPressed);
+
         GLuint getPolygons() {
             return m_nPolygons;
         }

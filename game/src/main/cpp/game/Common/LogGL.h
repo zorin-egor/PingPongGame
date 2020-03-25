@@ -1,5 +1,5 @@
-#ifndef GAME_LOGGL_H
-#define GAME_LOGGL_H
+#ifndef LOG_GL_H
+#define LOG_GL_H
 
 #include <android/log.h>
 #include <GLES2/gl2.h>

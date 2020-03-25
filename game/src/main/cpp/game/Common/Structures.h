@@ -1,9 +1,10 @@
-#ifndef GAME_PINGPONG_STRUCTURES_H
-#define GAME_PINGPONG_STRUCTURES_H
+#ifndef STRUCTURES_H
+#define STRUCTURES_H
 
 #include <GLES2/gl2.h>
 #include <vector>
 #include <cmath>
+
 #include "Methods.h"
 
 // Common types
@@ -100,7 +101,7 @@ struct Rectangle {
     }
 };
 
-// Work with vectors and m_pMatrix
+// Work with vectors and matrix
 class Matrix {
 
     private:
@@ -306,21 +307,21 @@ class Matrix {
             return textureCoords;
         }
 
-        // Set position coordinates with m_nWidth and m_nHeight
+        // Set position coordinates with width and height
         static GLfloat * setVerticesCoords(float x, float y, float width, float height, GLfloat * verticesCoords) {
-            // Top m_pLeft
+            // Top left
             verticesCoords[0] = x;
             verticesCoords[1] = y;
 
-            // Bottom m_pLeft
+            // Bottom left
             verticesCoords[2] = x;
             verticesCoords[3] = y - height;
 
-            // Bottom m_pRight
+            // Bottom right
             verticesCoords[4] = x + width;
             verticesCoords[5] = y - height;
 
-            // Top m_pRight
+            // Top right
             verticesCoords[6] = x + width;
             verticesCoords[7] = y;
 

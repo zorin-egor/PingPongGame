@@ -41,19 +41,8 @@ extern "C" {
         }
     }
 
-    JNI_METHOD(jboolean, action)(JNIEnv* env, jclass type, jfloat x, jfloat y, jint id, jboolean press) {
-        for (std::vector<Button *>::iterator it = pGame->getButtons()->begin(); it != pGame->getButtons()->end(); it++)
-            (*it)->action(Methods::convertCoordinatesToOpenGL(false, pGame->getWidth(), x),
-                          Methods::convertCoordinatesToOpenGL(true, pGame->getHeight(), y),
-                          id, press);
-
-        if (pGame->getExit()->getVisible() &&
-           pGame->getExit()->action(Methods::convertCoordinatesToOpenGL(false, pGame->getWidth(), x),
-                                    Methods::convertCoordinatesToOpenGL(true, pGame->getHeight(), y), id, press)) {
-            return true;
-        }
-
-        return false;
+    JNI_METHOD(jboolean, action)(JNIEnv* env, jclass type, jfloat x, jfloat y, jint id, jboolean isPressed) {
+        return pGame->action(x, y, id, isPressed);
     }
 
     JNI_METHOD(jboolean, isBackPress)(JNIEnv* env, jclass type) {

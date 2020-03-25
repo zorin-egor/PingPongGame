@@ -153,6 +153,22 @@ bool Game::isBackPress() {
     }
 }
 
+bool Game::action(uint x, uint y, int id, bool isPressed) {
+    std::for_each(getButtons()->begin(), getButtons()->end(), [&](std::vector<Button*>::value_type &item) {
+        item->action(Methods::convertCoordinatesToOpenGL(false, getWidth(), x),
+                Methods::convertCoordinatesToOpenGL(true, getHeight(), y),
+                id, isPressed);
+    });
+
+    if (getExit()->getVisible() &&
+        getExit()->action(Methods::convertCoordinatesToOpenGL(false, getWidth(), x),
+                          Methods::convertCoordinatesToOpenGL(true, getHeight(), y), id, isPressed)) {
+        return true;
+    }
+
+    return false;
+}
+
 bool Game::init(JNIEnv* env, jobject pngManager, jobject assetManager) {
     // Matrix helper
     m_pMatrix = new Matrix();
@@ -284,9 +300,9 @@ void Game::setDefault() {
 }
 
 void Game::setMenuButtonsVisibility(bool isVisible) {
-    for(int i = 0; i < m_oMenuButtons.size(); i++) {
-        m_oMenuButtons[i]->setVisible(isVisible);
-    }
+    std::for_each(m_oMenuButtons.begin(), m_oMenuButtons.end(), [&](std::vector<Button*>::value_type &item) {
+        item->setVisible(isVisible);
+    });
 }
 
 void Game::createTextureObjects() {
@@ -648,6 +664,7 @@ void Game::createTextureObjects() {
                             m_pMatrix->getDefaultVerticesCoords(),
                             m_pMatrix->getDefaultTextureCoord(),
                             m_pMatrix->getDefaultMatrix4x4());
+    m_pQuality->setState(true);
     m_oButtons.push_back(m_pQuality);
     m_oMenuButtons.push_back(m_pQuality);
 
@@ -668,7 +685,7 @@ void Game::createTextureObjects() {
     m_oMenuButtons.push_back(m_pExit);
 
     // Set default quality
-    lowQuality();
+    highQuality();
 }
 
 void Game::destroyTextureObjects() {

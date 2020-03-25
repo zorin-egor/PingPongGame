@@ -1,12 +1,12 @@
-#ifndef GAME_PINGPONG_LINEINTERSECT_H
-#define GAME_PINGPONG_LINEINTERSECT_H
+#ifndef LINE_INTERSECT_H
+#define LINE_INTERSECT_H
 
 #include <GLES2/gl2.h>
 #include <cmath>
 #include <vector>
 
-#include "Common/Methods.h"
-#include "Common/Structures.h"
+#include "Methods.h"
+#include "Structures.h"
 
 class Intersect {
 
