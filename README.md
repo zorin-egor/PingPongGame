@@ -4,13 +4,13 @@ Android NDK. OpenGL ES 2.0 and OpenSLES.
 <u><b>Play market:</u></b> https://play.google.com/store/apps/details?id=ru.testsimpleapps.pingpong
 
 - Game "Ping-pong":
-  * One m_pPlayer mode
+  * One player mode
   * Two players mode
   * use OpenGL ES 2.0
   * programming language - C++
   * use android JNI
   * load texture files and m_pSound by AssetManager
-  * for play m_pSound use OpenSL
+  * for play sound use OpenSL
   * use 4 shaders
 
 ## License
