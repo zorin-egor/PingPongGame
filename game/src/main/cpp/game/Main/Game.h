@@ -31,6 +31,7 @@
  * TODO Refactoring jni
  * TODO Refactoring opengl
  * TODO Refactoring opensl
+ * TODO Refactoring object structure
  * */
 class Game {
 
