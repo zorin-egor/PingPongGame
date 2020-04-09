@@ -2,7 +2,7 @@
 
 TexturesManager::TexturesManager(JNIEnv * env, jobject pngManager, jobject assetsManager) {
     LOGI("TexturesManager::TexturesManager()");
-    init(env, pngManager, assetsManager);
+    init(env, assetsManager, pngManager);
     loadTextures(env, pngManager);
     createTextures();
 }
@@ -15,8 +15,8 @@ TexturesManager::~TexturesManager() {
     m_oTextures.clear();
 }
 
-void TexturesManager::init(JNIEnv * env, jobject pngManager, jobject assetManager) {
-    jclass managerClass = env->GetObjectClass(pngManager);
+void TexturesManager::init(JNIEnv *env, jobject assetManager, jobject bitmapManager) {
+    jclass managerClass = env->GetObjectClass(bitmapManager);
     m_pOpenId = env->GetMethodID(managerClass, "open", "(Ljava/lang/String;)Landroid/graphics/Bitmap;");
     m_pCloseId = env->GetMethodID(managerClass, "close", "(Landroid/graphics/Bitmap;)V");
     m_pGetWidthId = env->GetMethodID(managerClass, "getWidth", "(Landroid/graphics/Bitmap;)I");
@@ -41,19 +41,19 @@ u_char * TexturesManager::argb2rgba(unsigned int * pixels, int w, int h) {
     return result;
 }
 
-Texture * TexturesManager::loadTexture(JNIEnv * env, jobject pngManager, const char* filename) {
+Texture * TexturesManager::loadTexture(JNIEnv * env, jobject bitmapManager, const char* filename) {
     LOGI("TexturesManager::loadTexture(%s)", filename);
 
     Texture * texture = new Texture();
 
     jstring name = env->NewStringUTF(filename);
-    jobject png = env->CallObjectMethod(pngManager, m_pOpenId, name);
+    jobject png = env->CallObjectMethod(bitmapManager, m_pOpenId, name);
 
     // Get bitmap pixels
-    jint width = env->CallIntMethod(pngManager, m_pGetWidthId, png);
-    jint height = env->CallIntMethod(pngManager, m_pGetHeightId, png);
+    jint width = env->CallIntMethod(bitmapManager, m_pGetWidthId, png);
+    jint height = env->CallIntMethod(bitmapManager, m_pGetHeightId, png);
     jintArray array = env->NewIntArray(width * height);
-    env->CallVoidMethod(pngManager, m_pGetPixelsId, png, array);
+    env->CallVoidMethod(bitmapManager, m_pGetPixelsId, png, array);
     jint * pixels = env->GetIntArrayElements(array, NULL);
 
     // Set texture content
@@ -62,7 +62,7 @@ Texture * TexturesManager::loadTexture(JNIEnv * env, jobject pngManager, const c
     texture->height = height;
 
     // Release bitmap
-    env->CallVoidMethod(pngManager, m_pCloseId, png);
+    env->CallVoidMethod(bitmapManager, m_pCloseId, png);
 
     // Release jvm references
     env->ReleaseIntArrayElements(array, pixels, 0);
@@ -72,15 +72,15 @@ Texture * TexturesManager::loadTexture(JNIEnv * env, jobject pngManager, const c
     return texture;
 }
 
-void TexturesManager::loadTextures(JNIEnv * env, jobject pngManager) {
+void TexturesManager::loadTextures(JNIEnv * env, jobject bitmapManager) {
     LOGI("TexturesManager::loadTextures");
-    m_oTextures[TexturesManager::BUTTONS] = loadTexture(env, pngManager, "textures/buttons.png");
-    m_oTextures[TexturesManager::BORDERS] = loadTexture(env, pngManager, "textures/borders.png");
-    m_oTextures[TexturesManager::NUMBERS] = loadTexture(env, pngManager, "textures/numbers.png");
-    m_oTextures[TexturesManager::OBJECTS] = loadTexture(env, pngManager, "textures/objects.png");
-    m_oTextures[TexturesManager::SPLASH] = loadTexture(env, pngManager, "textures/splash.png");
-    m_oTextures[TexturesManager::PARTICLES] = loadTexture(env, pngManager, "textures/particles.png");
-    m_oTextures[TexturesManager::PLUME] = loadTexture(env, pngManager, "textures/plume.png");
+    m_oTextures[TexturesManager::BUTTONS] = loadTexture(env, bitmapManager, "textures/buttons.png");
+    m_oTextures[TexturesManager::BORDERS] = loadTexture(env, bitmapManager, "textures/borders.png");
+    m_oTextures[TexturesManager::NUMBERS] = loadTexture(env, bitmapManager, "textures/numbers.png");
+    m_oTextures[TexturesManager::OBJECTS] = loadTexture(env, bitmapManager, "textures/objects.png");
+    m_oTextures[TexturesManager::SPLASH] = loadTexture(env, bitmapManager, "textures/splash.png");
+    m_oTextures[TexturesManager::PARTICLES] = loadTexture(env, bitmapManager, "textures/particles.png");
+    m_oTextures[TexturesManager::PLUME] = loadTexture(env, bitmapManager, "textures/plume.png");
 }
 
 GLuint TexturesManager::createTexture(Texture * texture) {

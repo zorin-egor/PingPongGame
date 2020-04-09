@@ -82,13 +82,13 @@ class TexturesManager {
 
     private:
 
-        void init(JNIEnv * env, jobject pngManager, jobject assetManager);
+        void init(JNIEnv *env, jobject assetManager, jobject bitmapManager);
 
         u_char * argb2rgba(unsigned int * pixels, int w, int h);
 
-        Texture * loadTexture(JNIEnv * env, jobject pngManager, const char * filename);
+        Texture * loadTexture(JNIEnv * env, jobject bitmapManager, const char * filename);
 
-        void loadTextures(JNIEnv * env, jobject pngManager);
+        void loadTextures(JNIEnv * env, jobject bitmapManager);
 
         GLuint createTexture(Texture * texture);
 

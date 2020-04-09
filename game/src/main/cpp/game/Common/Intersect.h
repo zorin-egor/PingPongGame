@@ -1,5 +1,5 @@
-#ifndef LINE_INTERSECT_H
-#define LINE_INTERSECT_H
+#ifndef INTERSECT_H
+#define INTERSECT_H
 
 #include <GLES2/gl2.h>
 #include <cmath>
