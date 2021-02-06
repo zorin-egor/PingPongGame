@@ -37,9 +37,9 @@ void  Label::init() {
     if (m_sNumber.length() > 0) {
         m_WidthOne = m_fWidth / (float)m_sNumber.length();
 
-        for(int i = 0; i < m_sNumber.length(); i++) {
-            char symbol = m_sNumber.at(i);
-            int position = atoi(&symbol);
+        for (int i = 0; i < m_sNumber.length(); i++) {
+            char symbol = m_sNumber[i];
+            int position = Methods::charToInt(symbol);
 
             GLfloat * textureCoord = Matrix::setTextureCoords(m_pMatrix->getDefaultTextureCoord(), 4, 4, position);
             if (m_bIsInverse) {
@@ -62,13 +62,14 @@ void  Label::init() {
 
 void Label::setNumber(std::string number) {
     m_sNumber = number;
+
     if (m_bIsInverse) {
         std::reverse(m_sNumber.begin(), m_sNumber.end());
     }
 
-    for(int i = 0; i < m_oLabelLinks.size(); i++) {
-        char symbol = m_sNumber.at(i);
-        int position = atoi(&symbol);
+    for (int i = 0; i < m_oLabelLinks.size(); i++) {
+        char symbol = m_sNumber[i];
+        int position = Methods::charToInt(symbol);
         Matrix::setTextureCoords(m_oLabelLinks.at(i)->getTextureCoordinates(), 4, 4, position);
 
         if (m_bIsInverse) {
@@ -78,14 +79,14 @@ void Label::setNumber(std::string number) {
 }
 
 void Label::render() {
-    for(int i = 0; i < m_oLabelLinks.size(); i++) {
-        m_oLabelLinks.at(i)->render();
+    for (auto & m_oLabelLink : m_oLabelLinks) {
+        m_oLabelLink->render();
     }
 }
 
 void Label::clearLabels() {
-    for(int i = 0; i < m_oLabelLinks.size(); i++) {
-        delete m_oLabelLinks.at(i);
+    for (auto & m_oLabelLink : m_oLabelLinks) {
+        delete m_oLabelLink;
     }
 
     m_oLabelLinks.clear();

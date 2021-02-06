@@ -87,7 +87,7 @@ void Button::setTextureCoords(bool isPressed) {
 	}
 }
 
-bool Button::getState() {
+bool Button::getState() const {
 	return m_bIsPressed;
 }
 

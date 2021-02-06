@@ -71,7 +71,7 @@ Object::CROSS_SIDE Platform::collision(Object * object) {
 
 Platform::REBOUND_AREA Platform::getRebound(float x, float y, float width) {
     // Find line of rectangle across with point
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         // If point belongs line
         if (Intersect::betweenLine(getRectangle()->iterateSides.at(i), x, y)) {
             GLfloat startX;

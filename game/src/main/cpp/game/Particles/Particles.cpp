@@ -123,25 +123,25 @@ void Particles::initArrays() {
 
     // Random coords
     m_pRandomArrayCoords = new GLfloat[m_nCount * 2];
-    for(int i = 0; i < m_nCount * 2; i++) {
+    for (int i = 0; i < m_nCount * 2; i++) {
         m_pRandomArrayCoords[i] = Methods::getFullRandom() * 1.1f;
     }
 
     // Random radius
     m_pRandomArrayRadius = new GLfloat[m_nCount];
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         m_pRandomArrayRadius[i] = Methods::getShortRandom();
     }
 
     // Random m_pSingleSpeed
     m_pRandomArraySpeed = new GLfloat[m_nCount];
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         m_pRandomArraySpeed[i] = Methods::getShortRandom() * 0.5f;
     }
 
     // Random delta
     m_pRandomArrayDelta = new GLfloat[m_nCount];
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         m_pRandomArrayDelta[i] = Methods::getShortRandom();
     }
 }
@@ -153,7 +153,7 @@ void Particles::setValues() {
 
     m_nTotalDeltaSpeed = m_nTotalDeltaSpeed + m_nDeltaSpeed;
 
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         // Color start
         m_pColorStartArray[i * 4] = Methods::getShortRandom() * 0.5f;
         m_pColorStartArray[i * 4 + 1] = Methods::getShortRandom() * 0.5f;

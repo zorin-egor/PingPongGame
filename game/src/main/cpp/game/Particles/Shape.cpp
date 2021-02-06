@@ -150,7 +150,7 @@ void Shape::initArrays() {
 
     // Initial position
     m_fArrayPosition = new GLfloat[m_nCount];
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         m_fArrayPosition[i] = (GLfloat)i;
     }
 

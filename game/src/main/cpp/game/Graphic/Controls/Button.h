@@ -60,7 +60,7 @@ class Button : public View {
 
 		bool action(float x, float y, int buttonsId, bool isDown);
 
-		bool getState();
+		bool getState() const;
 
 		void setState(bool isPressed);
 

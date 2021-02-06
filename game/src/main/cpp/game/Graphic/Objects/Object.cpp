@@ -39,26 +39,26 @@ Object::~Object() {
 }
 
 void Object::move() {
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         m_pPolygonCoordinates[i * 2] += m_fDX;
         m_pPolygonCoordinates[i * 2 + 1] += m_fDY;
     }
 }
 
 void Object::moveX(GLfloat x) {
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         m_pPolygonCoordinates[i * 2] += x;
     }
 }
 
 void Object::moveY(GLfloat y) {
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         m_pPolygonCoordinates[i * 2 + 1] += y;
     }
 }
 
 void Object::setDefaultPosition() {
-    for(int i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         m_pPolygonCoordinates[i] = m_fDefaultCoords[i];
     }
 

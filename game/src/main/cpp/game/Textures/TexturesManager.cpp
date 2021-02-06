@@ -28,8 +28,8 @@ void TexturesManager::init(JNIEnv *env, jobject assetManager, jobject bitmapMana
 u_char * TexturesManager::argb2rgba(unsigned int * pixels, int w, int h) {
     u_char * result = new u_char[w * h * 4];
 
-    for(int i = 0; i < h; i++) {
-        for(int j = 0; j < w * 4; j += 4) {
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w * 4; j += 4) {
             uint pixel = pixels[i * w + j / 4];
             result[i * w * 4 + j] 	   = (pixel >> 16) & 0xff;  // R
             result[i * w * 4 + j + 1]  = (pixel >> 8) & 0xff;   // G

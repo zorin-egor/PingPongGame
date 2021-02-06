@@ -87,7 +87,7 @@ void Plume::initArrays() {
 
     // Delta array for mix
     m_pDeltaArray = new GLfloat[MAX_COUNT];
-    for(int i = 0; i < MAX_COUNT; i++) {
+    for (int i = 0; i < MAX_COUNT; i++) {
         m_pDeltaArray[i] = Methods::getShortRandom() * 0.9;
     }
 
@@ -106,7 +106,7 @@ void Plume::initArrays() {
 }
 
 void Plume::setValues() {
-    for(int i = 0; i < MAX_COUNT; i++) {
+    for (int i = 0; i < MAX_COUNT; i++) {
         // Color start
         m_pColorStartArray[i * 4] = Methods::getShortRandom() * 0.5f;
         m_pColorStartArray[i * 4 + 1] = Methods::getShortRandom() * 0.5f;
@@ -136,7 +136,7 @@ void Plume::setPlumePoints(std::queue<GLfloat> * points) {
             GLfloat y = plumePoints.front();
             plumePoints.pop();
 
-            for(int j = 0; j < pointsPerStep; j++, i++) {
+            for (int j = 0; j < pointsPerStep; j++, i++) {
                 // Set plume position
                 m_pPositionArray[i * 2] = x + Methods::getFullRandom() * dispersion;
                 m_pPositionArray[i * 2 + 1] = y + Methods::getFullRandom() * dispersion;

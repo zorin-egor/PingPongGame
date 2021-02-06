@@ -111,7 +111,7 @@ void Splash::initArrays() {
     m_pDxArray = new GLfloat[m_nCount];
     m_pDyArray = new GLfloat[m_nCount];
 
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         m_pDxArray[i] = Methods::getFullRandom() * 0.02;
         m_pDyArray[i] = Methods::getFullRandom() * 0.02;
         m_pDeltaArray[i] = Methods::getShortRandom() * 0.9;
@@ -121,7 +121,7 @@ void Splash::initArrays() {
 void Splash::setSplashPosition(GLfloat x, GLfloat y) {
     m_nLifeTime = TOTAL_LIFE_TIME;
 
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         m_pPositionArray[i * 2] = x;
         m_pPositionArray[i * 2 + 1] = y;
     }
@@ -130,7 +130,7 @@ void Splash::setSplashPosition(GLfloat x, GLfloat y) {
 void Splash::setValues() {
     m_nLifeTime--;
 
-    for(int i = 0; i < m_nCount; i++) {
+    for (int i = 0; i < m_nCount; i++) {
         // Set new positions
         m_pPositionArray[i * 2] += m_pDxArray[i];
         m_pPositionArray[i * 2 + 1] += m_pDyArray[i];

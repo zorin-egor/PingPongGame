@@ -223,7 +223,7 @@ class Matrix {
 
         // Rotate texture coordinates. X and Y - 2 point
         static GLfloat * rotateTextureCoord(GLfloat * textureCoords, int rotate) {
-            for(int i = 0; i < rotate * 2; i++) {
+            for (int i = 0; i < rotate * 2; i++) {
                 Methods::shiftArrayRight(textureCoords, 8);
             }
 

@@ -32,9 +32,13 @@ class Methods {
             return rand() % strict;
         }
 
+        inline static int charToInt(const char ch) {
+            return ch - '0';
+        }
+
         template <class T>
         static void fillArrayRGBA(T * array, GLuint from, GLuint to, T red, T green, T blue, T transparency) {
-            for(int i = from; i < to; i++) {
+            for (int i = from; i < to; i++) {
                 array[i * 4] = red;
                 array[i * 4 + 1] = green;
                 array[i * 4 + 2] = blue;
@@ -44,7 +48,7 @@ class Methods {
 
         template <class A, class B>
         static void fillArray(A * array, B content, int count) {
-            for(int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++) {
                 array[i] = (A)content;
             }
         }
@@ -77,7 +81,7 @@ class Methods {
         static A * shiftArrayLeft(A * array, int size) {
             A temp = array[0];
 
-            for(int i = 1; i < size; i++) {
+            for (int i = 1; i < size; i++) {
                 array[i - 1] = array[i];
             }
 
@@ -89,7 +93,7 @@ class Methods {
         static A * shiftArrayRight(A * array, int size) {
             A temp = array[size - 1];
 
-            for(int i = size - 1; i >= 0 ; i--) {
+            for (int i = size - 1; i >= 0 ; i--) {
                 array[i] = array[i - 1];
             }
 
@@ -101,7 +105,7 @@ class Methods {
         static A * mirrorArray(A * array, int size) {
             A temp;
 
-            for(int i = 0; i < size / 2; i++) {
+            for (int i = 0; i < size / 2; i++) {
                 temp = array[i];
                 array[i] = array[size - 1 - i];
                 array[size - 1 - i] = temp;

@@ -106,13 +106,13 @@ class Intersect {
 
         template <class A>
         static bool intersectRect(Rectangle<A> * rect1, Rectangle<A> * rect2, std::vector<A> * crossPoints) {
-            for(int i = 0; i < 4; i++) {
-                for(int j = 0; j < 4; j++) {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
                     intersectSegments(rect1->iterateSides.at(i), rect2->iterateSides.at(j), crossPoints);
                 }
             }
 
-            return crossPoints->size() >= 4? true : false;
+            return crossPoints->size() >= 4;
         }
 };
 
