@@ -31,5 +31,5 @@ Android NDK. OpenGL ES 2.0 and OpenSLES.
   
   ## Screenshots
 <p align="center">
-<img src="https://user-images.githubusercontent.com/13707343/107118102-f847d000-688f-11eb-8fd8-f750a402d604.gif"/>
+<img src="https://user-images.githubusercontent.com/13707343/107119081-4d86e000-6896-11eb-8c5b-f8d8ea01334e.gif"/>
 </p>
