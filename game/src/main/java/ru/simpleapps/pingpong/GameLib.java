@@ -24,6 +24,4 @@ public class GameLib {
 
     public static native boolean isBackPress();
 
-
-
 }

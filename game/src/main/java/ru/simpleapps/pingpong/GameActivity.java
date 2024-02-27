@@ -7,37 +7,37 @@ import android.view.MotionEvent;
 
 public class GameActivity extends Activity {
 
-    private GameView mGameView;
+    private GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGameView = new GameView(getApplicationContext());
-        setContentView(mGameView);
+        gameView = new GameView(getApplicationContext());
+        setContentView(gameView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mGameView.start();
+        gameView.start();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mGameView.stop();
+        gameView.stop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mGameView.destroy();
+        gameView.destroy();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mGameView.isBackPress()) {
+            if (gameView.isBackPress()) {
                 finish();
             }
             return true;
@@ -48,7 +48,7 @@ public class GameActivity extends Activity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mGameView.touch(event)) {
+        if (gameView.touch(event)) {
             finish();
             return true;
         }

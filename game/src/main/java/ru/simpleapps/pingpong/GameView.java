@@ -31,8 +31,7 @@ public class GameView extends GLSurfaceView {
 
     public boolean touch(final MotionEvent event) {
         switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN: {
+            case MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
                 return GameLib.action(
                         event.getX(event.getActionIndex()),
                         event.getY(event.getActionIndex()),
@@ -40,9 +39,7 @@ public class GameView extends GLSurfaceView {
                         true
                 );
             }
-
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP: {
+            case MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
                 return GameLib.action(
                         event.getX(event.getActionIndex()),
                         event.getY(event.getActionIndex()),
