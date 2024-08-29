@@ -11,5 +11,6 @@ gradlew
 /local.properties
 .DS_Store
 /build
+/lib
 /captures
 .externalNativeBuild
