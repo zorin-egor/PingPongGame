@@ -3,6 +3,7 @@
 *.so
 *.jks
 
+game_ping_pong
 gradlew
 .gradle
 .idea

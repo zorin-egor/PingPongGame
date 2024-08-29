@@ -1,4 +1,4 @@
-package ru.simpleapps.pingpong;
+package com.simpleapps.pingpong;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

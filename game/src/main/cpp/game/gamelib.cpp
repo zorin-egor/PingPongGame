@@ -2,7 +2,7 @@
 #include <Common/Intersect.h>
 #include <Main/Game.h>
 
-#define JNI_METHOD(RTYPE, NAME) JNIEXPORT RTYPE JNICALL Java_ru_simpleapps_pingpong_GameLib_##NAME
+#define JNI_METHOD(RTYPE, NAME) JNIEXPORT RTYPE JNICALL Java_com_simpleapps_pingpong_GameLib_##NAME
 
 Game* pGame = nullptr;
 

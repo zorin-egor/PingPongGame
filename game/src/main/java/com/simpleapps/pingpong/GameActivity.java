@@ -1,4 +1,4 @@
-package ru.simpleapps.pingpong;
+package com.simpleapps.pingpong;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -52,7 +52,7 @@ public class GameActivity extends Activity {
             finish();
             return true;
         }
-
+        
         return super.onTouchEvent(event);
     }
 
