@@ -3,10 +3,10 @@
 *.so
 *.jks
 
-game_ping_pong
 gradlew
 .gradle
 .idea
+/game_ping_pong
 /keystore.properties
 /local.properties
 .DS_Store
