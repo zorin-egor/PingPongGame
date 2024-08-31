@@ -1,8 +1,6 @@
 # Ping-Pong pGame
 Android NDK. OpenGL ES 2.0 and OpenSLES.
 
-<u><b>Play market:</u></b> https://play.google.com/store/apps/details?id=com.simpleapps.pingpong
-
 - Game "Ping-pong":
   * One player mode
   * Two players mode
