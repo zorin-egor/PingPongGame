@@ -1,4 +1,4 @@
-# Ping-Pong pGame
+# Ping-Pong Game
 Android NDK. OpenGL ES 2.0 and OpenSLES.
 
 - Game "Ping-pong":
